@@ -1,8 +1,8 @@
 {
-  "name": "gatsby-starter-hello-world",
+  "name": "codevision",
   "private": true,
-  "description": "A simplified bare-bones starter for Gatsby",
-  "version": "0.1.0",
+  "description": "Convert code snippets into animated videos.",
+  "version": "1.0.0",
   "license": "0BSD",
   "scripts": {
     "build": "gatsby build",
@@ -13,9 +13,25 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
+    "@ffmpeg/core": "^0.11.0",
+    "@ffmpeg/ffmpeg": "^0.11.6",
+    "@monaco-editor/react": "^4.4.6",
+    "@reduxjs/toolkit": "^1.9.1",
+    "bootstrap": "^5.2.3",
     "gatsby": "^5.2.0",
+    "gatsby-plugin-image": "^3.2.0",
+    "gatsby-plugin-manifest": "^5.2.0",
+    "gatsby-plugin-offline": "^6.2.0",
+    "gatsby-plugin-react-helmet": "^6.2.0",
+    "gatsby-plugin-sass": "^6.2.0",
+    "gatsby-plugin-sharp": "^5.2.0",
+    "gatsby-source-filesystem": "^5.2.0",
+    "gatsby-transformer-sharp": "^5.2.0",
+    "monaco-themes": "^0.4.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
+    "react-redux": "^8.0.5"
   },
   "repository": {
     "type": "git",
@@ -23,5 +39,10 @@
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "devDependencies": {
+    "@types/react-helmet": "^6.1.6",
+    "typescript": "^4.9.3",
+    "typescript-plugin-css-modules": "^3.4.0"
   }
 }
