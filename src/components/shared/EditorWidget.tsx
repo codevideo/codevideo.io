@@ -10,6 +10,8 @@ import { EditorOverlay } from "./EditorOverlay";
 import { editorLoaderSlidesConfig } from "../../config/editorOverlaySlidesConfig";
 import { codeToVideo } from "../../utils/video/codeToVideo";
 import { useState } from "react";
+import { sleep } from "../../utils/sleep";
+import { toast } from "react-toastify";
 
 export function EditorWidget() {
   const { fileLabel, code, language } = useAppSelector(
@@ -19,9 +21,9 @@ export function EditorWidget() {
   const [isTabInEditMode, setIsTabInEditMode] = useState(false);
   const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
   const [videoUrl, setVideoUrl] = useState("");
-  // const [abortController, setAbortController] = useState(new AbortController())
   const abortController = new AbortController();
-  const signal = abortController.signal;
+
+  const [editorWidth, setEditorWidth] = useState(0);
 
   const onChangeCode = (code: string | undefined) => {
     if (code) {
@@ -55,9 +57,26 @@ export function EditorWidget() {
   };
 
   const onClickGenerate = async () => {
+    // get width of editor so loader looks nice
+    const editor = document.querySelector('.monaco-editor');
+    if (editor) {
+      setEditorWidth(editor.clientWidth);
+    }
     setIsGeneratingVideo(true);
     console.log("generating video with", fileLabel, code);
-    await codeToVideo(fileLabel, code, setVideoUrl);
+    const calculatedTimeBasedOnCodeLength = Math.floor(code.length * 0.2);
+    toast(
+      <div>
+        🕒🕒🕒
+        <br />
+        You've got <b>{code.length} characters</b> in your snippet. Using our extremely powerful ML assisted prediction model, it will take about <b>{calculatedTimeBasedOnCodeLength} seconds</b> to generate your video.
+      </div>, {
+        position: "top-center",
+      }
+    );
+
+    await sleep(20000);
+    // await codeToVideo(fileLabel, code, setVideoUrl);
     setIsGeneratingVideo(false);
   };
 
@@ -138,6 +157,7 @@ export function EditorWidget() {
               <EditorOverlay
                 isActive={isGeneratingVideo}
                 slides={editorLoaderSlidesConfig}
+                editorWidth={editorWidth}
               />
             </div>
           </div>
@@ -145,9 +165,10 @@ export function EditorWidget() {
       </div>
       <div
         // @ts-ignore
-        className={`d-flex justify-content-center align-items-center mt-5`}
+        className={`d-flex justify-content-center align-items-center`}
       >
         {videoUrl === "" && (
+          <>
           <button
             className="btn btn-primary"
             onClick={onClickGenerate}
@@ -155,6 +176,8 @@ export function EditorWidget() {
           >
             {isGeneratingVideo ? "Generating..." : "Generate a video!"}
           </button>
+          <span className="text-primary ms-1">*</span>
+          </>
         )}
         {videoUrl !== "" && (
           <button className="btn btn-primary" onClick={onClickMakeAnother}>
@@ -164,7 +187,7 @@ export function EditorWidget() {
         {/* cancel button when isbuildingvideo is true */}
         {isGeneratingVideo && (
           <button className="btn btn-danger ms-5" onClick={onClickCancel}>
-            Cancel?
+            Cancel
           </button>
         )}
       </div>
