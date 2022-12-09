@@ -18,10 +18,10 @@ export function EditorWidget() {
   const dispatch = useAppDispatch();
   const [isTabInEditMode, setIsTabInEditMode] = useState(false);
   const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
-  const [videoUrl, setVideoUrl] = useState("https://file-examples.com/wp-content/uploads/2017/04/file_example_MP4_1920_18MG.mp4");
+  const [videoUrl, setVideoUrl] = useState("");
   // const [abortController, setAbortController] = useState(new AbortController())
-  const abortController = new AbortController()
-  const signal = abortController.signal
+  const abortController = new AbortController();
+  const signal = abortController.signal;
 
   const onChangeCode = (code: string | undefined) => {
     if (code) {
@@ -57,15 +57,14 @@ export function EditorWidget() {
   const onClickGenerate = async () => {
     setIsGeneratingVideo(true);
     console.log("generating video with", fileLabel, code);
-    const videoUrl = await codeToVideo(fileLabel, code, signal);
-    setVideoUrl(videoUrl);
+    await codeToVideo(fileLabel, code, setVideoUrl);
     setIsGeneratingVideo(false);
   };
 
   const onClickCancel = () => {
     setVideoUrl("");
     setIsGeneratingVideo(false);
-    abortController.abort()
+    abortController.abort();
   };
 
   const onClickMakeAnother = () => {
@@ -83,79 +82,91 @@ export function EditorWidget() {
         className={`container d-flex flex-column justify-content-center align-items-center m-3`}
       >
         <div
+          className="container"
           style={{
-            maxWidth: "700px",
-            minHeight: "300px",
-            aspectRatio: "16 / 9",
             position: "relative",
           }}
         >
-          <ul className="nav nav-tabs" style={{ maxWidth: "700px" }}>
-            <li className="nav-item border-start border-top border-end">
-              {isTabInEditMode && (
-                <input
-                  className="form-control"
-                  value={fileLabel}
-                  onChange={onChangeFileLabel}
-                  onBlur={() => setIsTabInEditMode(false)}
+          <div className="row justify-content-center align-items-center">
+            <div className="col-12 col-md-8">
+              <ul className="nav nav-tabs">
+                <li className="nav-item border-start border-top border-end">
+                  {isTabInEditMode && (
+                    <input
+                      className="form-control"
+                      value={fileLabel}
+                      onChange={onChangeFileLabel}
+                      onBlur={() => setIsTabInEditMode(false)}
+                    />
+                  )}
+                  {!isTabInEditMode && (
+                    <button
+                      className={className}
+                      onClick={() => setIsTabInEditMode(!isTabInEditMode)}
+                    >
+                      {fileLabel}
+                    </button>
+                  )}
+                </li>
+              </ul>
+              {videoUrl === "" && (
+                <Editor
+                  path={fileLabel}
+                  height="300px"
+                  width="100%"
+                  defaultLanguage="typescript"
+                  language={language}
+                  value={code}
+                  options={{
+                    minimap: { enabled: false },
+                    scrollBeyondLastLine: false,
+                    fontFamily: "Fira Code",
+                    fontSize: 13,
+                    fontLigatures: true,
+                  }}
+                  onMount={handleOnMount}
+                  onChange={onChangeCode}
                 />
               )}
-              {!isTabInEditMode && (
-                <button
-                  className={className}
-                  onClick={() => setIsTabInEditMode(!isTabInEditMode)}
-                >
-                  {fileLabel}
-                </button>
+              {videoUrl !== "" && (
+                <video
+                  src={videoUrl}
+                  controls
+                  style={{ width: "100%", height: "100%" }}
+                />
               )}
-            </li>
-          </ul>
-          {videoUrl === "" && (
-            <Editor
-              path={fileLabel}
-              height="100%"
-              width="100%"
-              defaultLanguage="typescript"
-              language={language}
-              value={code}
-              options={{
-                minimap: { enabled: false },
-                scrollBeyondLastLine: false,
-                fontFamily: "Fira Code",
-                fontSize: 13,
-                fontLigatures: true,
-              }}
-              onMount={handleOnMount}
-              onChange={onChangeCode}
-            />
-          )}
-          {videoUrl !== "" && (
-            <video
-              src={videoUrl}
-              controls
-              style={{ width: "100%", height: "100%" }}
-            />
-          )}
-          <EditorOverlay
-            isActive={isGeneratingVideo}
-            slides={editorLoaderSlidesConfig}
-          />
+              <EditorOverlay
+                isActive={isGeneratingVideo}
+                slides={editorLoaderSlidesConfig}
+              />
+            </div>
+          </div>
         </div>
       </div>
       <div
         // @ts-ignore
         className={`d-flex justify-content-center align-items-center mt-5`}
       >
-        {videoUrl === "" && <button className="btn btn-primary" onClick={onClickGenerate} disabled={isGeneratingVideo}>
-          {isGeneratingVideo ? 'Generating...' : 'Generate a video!'}
-        </button>}
-        {videoUrl !== "" && <button className="btn btn-primary" onClick={onClickMakeAnother}>
-          Make another!
-        </button>}
+        {videoUrl === "" && (
+          <button
+            className="btn btn-primary"
+            onClick={onClickGenerate}
+            disabled={isGeneratingVideo}
+          >
+            {isGeneratingVideo ? "Generating..." : "Generate a video!"}
+          </button>
+        )}
+        {videoUrl !== "" && (
+          <button className="btn btn-primary" onClick={onClickMakeAnother}>
+            Make another!
+          </button>
+        )}
         {/* cancel button when isbuildingvideo is true */}
-        {isGeneratingVideo && <button className="btn btn-danger ms-5" onClick={onClickCancel}>
-          Cancel?
-        </button>}
+        {isGeneratingVideo && (
+          <button className="btn btn-danger ms-5" onClick={onClickCancel}>
+            Cancel?
+          </button>
+        )}
       </div>
     </>
   );
