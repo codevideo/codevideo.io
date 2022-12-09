@@ -9,7 +9,7 @@ export function AlphaWidget() {
             <p className="mt-5">
               <span className="text-primary">*</span>CodeVideo{" "}
               <span className="text-primary">is currently in alpha</span>, built
-              over the course of about 5 days. We're building a full studio editor to add many more
+              over the course of about 5 days. We're building a full studio editor and adding many more
               features in the coming weeks and months.
             </p>
           </div>
