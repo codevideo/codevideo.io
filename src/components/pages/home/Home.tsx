@@ -1,7 +1,9 @@
 import * as React from "react";
+import { AlphaWidget } from "../../shared/AlphaWidget";
 import { EditorWidget } from "../../shared/EditorWidget";
-import { SignUpWidget } from "../../shared/SignUpWidget";
-import { Hero } from "./Hero";
+import { SignUpButton } from "../../shared/SignUpButton";
+import { Hero } from "./components/Hero";
+import { HowItWorksSection } from "./components/HowItWorksSection";
 
 export function Home() {
   return (
@@ -9,7 +11,9 @@ export function Home() {
       <Hero />
       <div className="container text-center mb-5">
         <EditorWidget />
-        <SignUpWidget />
+        <AlphaWidget/>
+        <SignUpButton />
+        <HowItWorksSection/>
       </div>
     </>
   );
