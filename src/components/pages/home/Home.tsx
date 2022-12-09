@@ -1,6 +1,6 @@
 import * as React from "react";
 import { EditorWidget } from "../../shared/EditorWidget";
-import { SignUpWidget } from "../../shared/SignupWidget";
+import { SignUpWidget } from "../../shared/SignUpWidget";
 import { Hero } from "./Hero";
 
 export function Home() {
