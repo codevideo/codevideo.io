@@ -7,7 +7,7 @@ export function Home() {
   return (
     <>
       <Hero />
-      <div className="container text-center">
+      <div className="container text-center mb-5">
         <EditorWidget />
         <SignUpWidget />
       </div>
