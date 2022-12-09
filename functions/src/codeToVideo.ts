@@ -29,8 +29,15 @@ const handler: Handler = async (event: Event) => {
     };
   }
 
+  console.log('fetching!')
+  console.log({
+    filename: json.filename,
+    code: json.code,
+    saveToBucket: true,
+    apiKey: process.env.API_KEY,
+  })
   const response = await fetch(
-    "https://ler2xyky6k.execute-api.us-east-1.amazonaws.com/stage/",
+    "https://54b7w7df4hs45jkhqo7sjizqeu0ldsbg.lambda-url.us-east-1.on.aws/",
     {
       method: "POST",
       headers: {
@@ -45,6 +52,7 @@ const handler: Handler = async (event: Event) => {
     }
   );
   const responseJson = await response.json();
+  console.log(responseJson)
 
   return {
     statusCode: 200,

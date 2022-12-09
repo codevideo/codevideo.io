@@ -65,7 +65,14 @@ var handler = function (event) { return __awaiter(void 0, void 0, void 0, functi
                             body: JSON.stringify(validationErr)
                         }];
                 }
-                return [4 /*yield*/, fetch("https://ler2xyky6k.execute-api.us-east-1.amazonaws.com/stage/", {
+                console.log('fetching!');
+                console.log({
+                    filename: json.filename,
+                    code: json.code,
+                    saveToBucket: true,
+                    apiKey: process.env.API_KEY
+                });
+                return [4 /*yield*/, fetch("https://54b7w7df4hs45jkhqo7sjizqeu0ldsbg.lambda-url.us-east-1.on.aws/", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -82,6 +89,7 @@ var handler = function (event) { return __awaiter(void 0, void 0, void 0, functi
                 return [4 /*yield*/, response.json()];
             case 2:
                 responseJson = _b.sent();
+                console.log(responseJson);
                 return [2 /*return*/, {
                         statusCode: 200,
                         body: JSON.stringify({ videoUrl: responseJson.videoUrl })
