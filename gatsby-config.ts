@@ -11,7 +11,7 @@ const config: GatsbyConfig = {
   siteMetadata: {
     title: `CodeVideo`,
     description: `Convert code snippets into animated videos.`,
-    author: `Chris Frewin & Luca Bertelli`,
+    author: `Chris Frewin`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

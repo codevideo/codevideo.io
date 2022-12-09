@@ -1,12 +1,16 @@
-import * as React from 'react';
-import { EditorAndVideoGenerator } from './EditorAndVideoGenerator';
-import { Hero } from './Hero';
+import * as React from "react";
+import { EditorWidget } from "../../shared/EditorWidget";
+import { SignUpWidget } from "../../shared/SignupWidget";
+import { Hero } from "./Hero";
 
-export function Home () {
+export function Home() {
   return (
     <>
-        <Hero/>
-        <EditorAndVideoGenerator/>
+      <Hero />
+      <div className="container text-center">
+        <EditorWidget />
+        <SignUpWidget />
+      </div>
     </>
   );
 }
