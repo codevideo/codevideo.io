@@ -1,5 +1,13 @@
+[dev]
+  command = "gatsby develop"
+  port = 8888
+  publish = "public"
+
 [[headers]]
   for = "/*"
   [headers.values]
     Cross-Origin-Embedder-Policy = "require-corp"
     Cross-Origin-Opener-Policy = "same-origin"
+
+[[plugins]]
+  package = "@netlify/plugin-gatsby"

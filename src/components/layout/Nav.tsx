@@ -9,8 +9,8 @@ export function Nav(props: INavProps) {
   const { siteTitle } = props
   return (
     <nav className="navbar bg-primary">
-      <Link className="navbar-brand text-light" to="/">
-        {'/>'}
+      <Link className="navbar-brand text-light ms-3" to="/">
+        {'/> '}
         {siteTitle}
       </Link>
     </nav>

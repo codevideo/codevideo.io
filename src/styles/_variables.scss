@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Montserrat:wght@500;700&display=swap');
+@import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
 
 $customGreen: #23ffb2;
 $primary: $customGreen;
@@ -8,6 +9,7 @@ $border-radius: 0;
 $border-radius-lg: 0;
 $border-radius-sm: 0;
 $badge-pill-border-radius: 0;
+$font-size-base: 0.9rem;
 
 // Custom Colors
 $primaryLight: mix(white, $primary, 50);
