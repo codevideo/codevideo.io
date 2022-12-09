@@ -37,7 +37,7 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
                 className={`row ${flexDirection} justify-content-center align-items-center my-5`}
               >
                 <div className="col-12 col-md-6">
-                  <span className="display-4 mb-3">{item.emoji}</span>
+                  <span className="display-5 mb-3">{item.emoji}</span>
                 </div>
                 <div className="col-12 col-md-6">
                   <h5>{item.description}</h5>
@@ -53,7 +53,7 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
         <h2>The Future of Software Content Creation</h2>
         <div className={`row justify-content-center align-items-center my-5`}>
           <div className="col-12 col-md-6">
-            <span className="display-4 mb-5">🎉</span>
+            <span className="display-5 mb-5">🎉</span>
             <h5>
               <b>No more</b> trying to multi task both typing and talking for
               your YouTube videos or courses!
@@ -62,7 +62,7 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
         </div>
         <div className={`row justify-content-center align-items-center my-5`}>
           <div className="col-12 col-md-6">
-            <span className="display-4 mb-5">🎊</span>
+            <span className="display-5 mb-5">🎊</span>
             <h5>
               <b>No more</b> wasting hours on end in Shotcut or Adobe Premiere
               trying to edit down your videos!
@@ -71,7 +71,7 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
         </div>
         <div className={`row justify-content-center align-items-center my-5`}>
           <div className="col-12 col-md-6">
-            <span className="display-4 mb-5">🥳</span>
+            <span className="display-5 mb-5">🥳</span>
             <h5>
               <b>Perfect</b> for crafting videos you want share on socials like
               TikTok, Instagram Reels, or YouTube Shorts!
@@ -80,7 +80,7 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
         </div>
         <div className={`row justify-content-center align-items-center my-5`}>
           <div className="col-12 col-md-6">
-            <span className="display-4 mb-5">🌟</span>
+            <span className="display-5 mb-5">🌟</span>
             <h5>
               Join the new paradigm shift of creating coding videos! Sign up now
               for early access!
