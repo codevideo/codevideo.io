@@ -58,7 +58,7 @@ export function EditorWidget() {
 
   const onClickGenerate = async () => {
     // get width of editor so loader looks nice
-    const editor = document.querySelector('.monaco-editor');
+    const editor = document.querySelector(".monaco-editor");
     if (editor) {
       setEditorWidth(editor.clientWidth);
     }
@@ -69,14 +69,21 @@ export function EditorWidget() {
       <div>
         🕒🕒🕒
         <br />
-        You've got <b>{code.length} characters</b> in your snippet. Using our extremely powerful ML assisted prediction model, it will take about <b>{calculatedTimeBasedOnCodeLength} seconds</b> to generate your video.
-      </div>, {
+        You've got <b>{code.length} characters</b> in your snippet. Using our
+        extremely powerful ML assisted prediction model, it will take about{" "}
+        <b>{calculatedTimeBasedOnCodeLength} seconds</b> to generate your video.
+        <br />
+        <br />
+        <b>Please be patient!</b>
+      </div>,
+      {
         position: "top-center",
       }
     );
 
-    await sleep(20000);
-    // await codeToVideo(fileLabel, code, setVideoUrl);
+    // good for testing loader
+    // await sleep(20000);
+    await codeToVideo(fileLabel, code, setVideoUrl);
     setIsGeneratingVideo(false);
   };
 
@@ -149,6 +156,7 @@ export function EditorWidget() {
               )}
               {videoUrl !== "" && (
                 <video
+                  crossOrigin="anonymous"
                   src={videoUrl}
                   controls
                   style={{ width: "100%", height: "100%" }}
@@ -169,14 +177,14 @@ export function EditorWidget() {
       >
         {videoUrl === "" && (
           <>
-          <button
-            className="btn btn-primary"
-            onClick={onClickGenerate}
-            disabled={isGeneratingVideo}
-          >
-            {isGeneratingVideo ? "Generating..." : "Generate a video!"}
-          </button>
-          <span className="text-primary ms-1">*</span>
+            <button
+              className="btn btn-primary"
+              onClick={onClickGenerate}
+              disabled={isGeneratingVideo}
+            >
+              {isGeneratingVideo ? "Generating..." : "Generate a video!"}
+            </button>
+            <span className="text-primary ms-1">*</span>
           </>
         )}
         {videoUrl !== "" && (
