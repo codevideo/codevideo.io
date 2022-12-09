@@ -10,7 +10,7 @@ export const codeToVideo = async (
   // return the file name
   try {
     const response = await fetch(
-      "https://6jmr50bfgf.execute-api.us-east-1.amazonaws.com/stage/",
+      "https://ler2xyky6k.execute-api.us-east-1.amazonaws.com/stage/",
       {
         signal,
         method: "POST",
