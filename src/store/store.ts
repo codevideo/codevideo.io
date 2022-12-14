@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit"
 import editorReducer from './editorSlice'
+import videoReducer from './videoSlice'
 
 const createStore = () =>
   configureStore({
     reducer: {
       editor: editorReducer,
+      video: videoReducer,
     },
   })
 
