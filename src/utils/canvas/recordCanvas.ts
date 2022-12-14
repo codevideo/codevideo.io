@@ -1,12 +1,15 @@
-import { animateText, animateTextNew } from "./animateText";
+import MimicTypos from "../../enums/MimicTypos";
+import { animateText } from "./animateText";
 
 export const recordCanvas = async (
   canvas: HTMLCanvasElement,
-  code: string
+  code: string,
+  mimicTypos: MimicTypos
 ): Promise<Blob> => {
   var recordedChunks: Array<Blob> = [];
   var time = 0;
 
+  // capture stream at 60 fps
   var stream = canvas.captureStream(60);
 
   var mediaRecorder = new MediaRecorder(stream, {
@@ -19,9 +22,7 @@ export const recordCanvas = async (
     recordedChunks.push(e.data);
   };
 
-  // let canvas = document.querySelector("canvas");
-  // animateText(canvas, code);
-  await animateTextNew(canvas, code);
+  await animateText(canvas, code, mimicTypos);
   mediaRecorder.stop();
 
   var blob = new Blob(recordedChunks, {

@@ -2,7 +2,7 @@ import { IEditorOverlaySlide } from "./../interfaces/IEditorOverlaySlide";
 export const editorLoaderSlidesConfig: Array<IEditorOverlaySlide> = [
   {
     emoji: "⏳",
-    message: "Our server is cracking away...",
+    message: "Your browser FFMPEG is cracking away...",
     show: false,
   },
   {
