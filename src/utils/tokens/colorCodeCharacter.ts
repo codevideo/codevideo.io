@@ -18,7 +18,8 @@ export const colorCodeCharacter = (
     character === ";" ||
     character === "=" ||
     character === "," ||
-    character === ":"
+    character === ":" ||
+    character === "!"
   ) {
     return {
       token: "",

@@ -100,7 +100,7 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
         <div className={`row justify-content-center align-items-center my-5`}>
           <div className="col-12 col-md-6">
             <h5 className="mb-5">
-              Don't see a need in using CodeVideo Studio? The Docker
+              The Docker
               container that produces the videos is open source and can be found
               on GitHub.
             </h5>

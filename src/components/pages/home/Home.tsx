@@ -1,6 +1,7 @@
 import * as React from "react";
 import { AlphaWidget } from "../../shared/AlphaWidget";
 import { EditorWidget } from "../../shared/EditorWidget";
+import { HiddenCanvas } from "../../shared/HiddenCanvas";
 import { SignUpButton } from "../../shared/SignUpButton";
 import { Hero } from "./components/Hero";
 import { HowItWorksSection } from "./components/HowItWorksSection";
@@ -14,6 +15,7 @@ export function Home() {
         <AlphaWidget/>
         <SignUpButton />
         <HowItWorksSection/>
+        <HiddenCanvas/>
       </div>
     </>
   );

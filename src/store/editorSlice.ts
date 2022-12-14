@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import IEditorSettings from "../interfaces/IEditorSettings";
+import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
 interface EditorState {
   editorSetting: IEditorSettings;
