@@ -58,14 +58,12 @@ const runTypoLogic = async (
   for (let i = 1; i < typoLength + 1; i++) {
     const randomCharacter = chars[getRandomInt(0,35)]
     ctx.fillText(randomCharacter, lastX + xOffset * i, lastY);
-    console.log('typo character at', lastX + xOffset * i, lastY)
     await sleep(200);
   }
   // now do various fill rects with black to simulate "fixing" the typo
   for (let i = typoLength + 1; i > 0; i--) {
     ctx.fillStyle = "#000000";
     ctx.fillRect(lastX + xOffset * i, lastY - 20, xOffset, 30);
-    console.log('typo fix at', lastX + xOffset * i, lastY - 20)
     await sleep(200);
   }
 
@@ -100,7 +98,6 @@ export const animateText = async (
 
   const codeLines = code.split("\n");
   const tokens = (window as any).monaco.editor.tokenize(code, "typescript");
-  console.log("TOKENS ", tokens);
 
   // add a sleep for a smooth start
   await sleep(500);
