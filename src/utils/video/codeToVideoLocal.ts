@@ -33,10 +33,10 @@ export const codeToVideoLocal = async (
   fd.append("size", `${width}x${height}`);
   fd.append("binary_data", blob);
   try {
-    console.log("GATSBY_CODEVIDEO_GENERATOR_URL", process.env.GATSBY_CODEVIDEO_GENERATOR_URL)
+    console.log("GATSBY_API_URL", process.env.GATSBY_API_URL)
     const response = await fetch(
-      process.env.GATSBY_CODEVIDEO_GENERATOR_URL ||
-        "",
+      process.env.GATSBY_API_URL ||
+        "https://api.codevideo.io",
       {
         method: "POST",
         body: fd,
