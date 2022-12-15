@@ -19,14 +19,11 @@ export const EditorOverlay: React.FC<{
 
     const interval = setInterval(() => {
       setCurrentIndex(currentIndex + 1);
-      console.log("firing in interval");
     }, 5000);
     return () => {
       clearInterval(interval);
     };
   }, [currentIndex, isActive]);
-
-  console.log("currentIndex is: ", currentIndex);
 
   if (!isActive) return null;
 

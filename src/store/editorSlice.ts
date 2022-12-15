@@ -22,6 +22,8 @@ const extractLanguageFromFileLabel = (fileLabel: string): string => {
   const fileLabelSplit = fileLabel.split(".");
   const fileExtension = fileLabelSplit[fileLabelSplit.length - 1];
   switch (fileExtension) {
+    case "sh":
+      return "bash";
     case "ts":
       return "typescript";
     case "js":
