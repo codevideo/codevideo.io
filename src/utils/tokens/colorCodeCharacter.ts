@@ -40,15 +40,15 @@ export const colorCodeCharacter = (
     };
   }
 
-  console.log('JSON.stringify(token)', JSON.stringify(token))
+  // console.log('JSON.stringify(token)', JSON.stringify(token))
 
   // for some reason the editor tokens have an extension of their file type, ex. '.ts'
   // so we need to remove that before matching the token type in the theme (since themes are regardless of language)
   
   const tokenType =
     token.type.substring(0, token.type.lastIndexOf(".")) || token.type;
-  console.log("token.type", `"${token.type}"`);
-  console.log("tokenType", `"${tokenType}"`);
+  // console.log("token.type", `"${token.type}"`);
+  // console.log("tokenType", `"${tokenType}"`);
   const foreground = tokenType === 'identifier' ? 'f8f8f2' : theme.rules.find(
     (rule) => rule.token === tokenType
   )?.foreground || "272822";

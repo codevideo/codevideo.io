@@ -30,9 +30,4 @@ export const transcode = async (
   setVideoUrl(
     URL.createObjectURL(new Blob([data.buffer], { type: "video/mp4" }))
   );
-  // videoElement.src = URL.createObjectURL(
-  //   new Blob([data.buffer], { type: "video/mp4" })
-  // );
-  // downloadAnchorElement.href = videoElement.src;
-  // downloadAnchorElement.innerHTML = "download mp4";
 };

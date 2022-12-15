@@ -33,7 +33,7 @@ export const codeToVideo = async (
     //   { filename, code }
     // );
     const response = await fetch(
-      "https://54b7w7df4hs45jkhqo7sjizqeu0ldsbg.lambda-url.us-east-1.on.aws/",
+      "https://rreqxjkljzud2uoapsppwn4l3q0lftwd.lambda-url.us-east-1.on.aws/",
       {
         method: "POST",
         headers: {

@@ -42,7 +42,6 @@ export function EditorWidget() {
 
   const onChangeFileLabel = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    console.log("value is: ", value);
     dispatch(
       fileLabelEdited({
         fileLabel: value,
@@ -85,7 +84,6 @@ export function EditorWidget() {
       setEditorWidth(editor.clientWidth);
     }
     setIsGeneratingVideo(true);
-    console.log("generating video with", fileLabel, code);
     const calculatedTimeBasedOnCodeLength = Math.floor(code.length * 0.2);
     toast(
       <div>
@@ -113,7 +111,8 @@ export function EditorWidget() {
       code,
       gradientColors,
       mimicTypos,
-      setVideoUrl
+      setVideoUrl,
+      false
     );
     setIsGeneratingVideo(false);
   };
@@ -128,7 +127,6 @@ export function EditorWidget() {
     setVideoUrl("");
   };
 
-  console.log("rerendering with", fileLabel);
   const className = isTabInEditMode
     ? "nav-link active font-monospace"
     : "nav-link font-monospace";
@@ -194,7 +192,7 @@ export function EditorWidget() {
         >
           <div className="row justify-content-center align-items-center">
             <div className={wrapperClass}>
-              <ul className="nav nav-tabs">
+              <ul className={videoUrl !== "" ? "d-none" : "nav nav-tabs"}>
                 <li className="nav-item border-start border-top border-end">
                   {isTabInEditMode && (
                     <input
@@ -221,35 +219,35 @@ export function EditorWidget() {
                   )}
                 </li>
               </ul>
-              {videoUrl === "" && (
-                <Editor
-                  path={fileLabel}
-                  height={editorElementHeight}
-                  width={editorElementWidth}
-                  defaultLanguage="typescript"
-                  language={language}
-                  value={code}
-                  options={{
-                    minimap: { enabled: false },
-                    scrollBeyondLastLine: false,
-                    fontFamily: "Fira Code",
-                    fontSize: 13,
-                    fontLigatures: true,
-                    lineNumbers: "off",
-                    folding: true,
-                    automaticLayout: true,
-                    autoIndent: "full",
-                  }}
-                  onMount={handleOnMount}
-                  onChange={onChangeCode}
-                />
-              )}
+              <Editor
+                className={videoUrl !== "" ? "d-none" : ""}
+                path={fileLabel}
+                width={videoUrl !== "" ? 0 : editorElementWidth}
+                height={videoUrl !== "" ? 0 : editorElementHeight}
+                defaultLanguage="typescript"
+                language={language}
+                value={code}
+                options={{
+                  minimap: { enabled: false },
+                  scrollBeyondLastLine: false,
+                  fontFamily: "Fira Code",
+                  fontSize: 13,
+                  fontLigatures: true,
+                  lineNumbers: "off",
+                  folding: true,
+                  automaticLayout: true,
+                  autoIndent: "full",
+                }}
+                onMount={handleOnMount}
+                onChange={onChangeCode}
+              />
+
               {videoUrl !== "" && (
                 <video
                   crossOrigin="anonymous"
                   src={videoUrl}
                   controls
-                  style={{ width: "100%", height: "100%" }}
+                  style={{ width: editorElementWidth, height: editorElementHeight }}
                 />
               )}
               <EditorOverlay
@@ -262,9 +260,7 @@ export function EditorWidget() {
         </div>
       </div>
 
-      <div
-        className={`d-flex justify-content-center align-items-center mb-5`}
-      >
+      <div className={`d-flex justify-content-center align-items-center mb-5`}>
         {videoUrl === "" && (
           <>
             <button
@@ -308,6 +304,17 @@ export function EditorWidget() {
         }
       >
         <AdvancedVideoOptions />
+        {videoUrl === "" && (
+          <>
+            <button
+              className="btn btn-primary"
+              onClick={onClickGenerate}
+              disabled={isGeneratingVideo}
+            >
+              {isGeneratingVideo ? "Generating..." : "Generate! *"}
+            </button>
+          </>
+        )}
       </Collapsible>
     </>
   );

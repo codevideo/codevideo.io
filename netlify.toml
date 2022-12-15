@@ -9,6 +9,16 @@
   publish = "public"
   functions = "functions/dist"
 
+[context.dev]
+  environment = { GATSBY_API_URL = "http://localhost:3000" }
+
+[context.staging]
+  environment = { GATSBY_API_URL = "https://staging.api.codevideo.io" }
+
+[context.production]
+  environment = { GATSBY_API_URL = "https://api.codevideo.io" }
+
+
 [[headers]]
   for = "/*"
   [headers.values]
