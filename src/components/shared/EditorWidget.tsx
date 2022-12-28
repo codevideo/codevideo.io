@@ -1,5 +1,5 @@
 import * as React from "react";
-import Editor, { Monaco, useMonaco } from "@monaco-editor/react";
+import Editor, { Monaco } from "@monaco-editor/react";
 import Monokai from "monaco-themes/themes/Monokai.json";
 import * as monaco from "monaco-editor";
 import { useAppSelector } from "../../hooks/useAppSelector";
@@ -67,8 +67,8 @@ export function EditorWidget() {
     // IN OTHER WORDS DO NOT DELETE THIS BLOCK:
     if (typeof window !== "undefined") {
       setTimeout(() => {
-        const tokens = (window as any).monaco.editor.tokenize(
-          `export const dummy = () => {
+        (window as any).monaco.editor.tokenize(
+          `export const dummyFunction = () => {
         console.log('hello world')
       }`,
           "typescript"
@@ -86,7 +86,7 @@ export function EditorWidget() {
     setIsGeneratingVideo(true);
     const calculatedTimeBasedOnCodeLength = Math.floor(code.length * 0.2);
     toast(
-      <div>
+      <div className="text-center">
         🕒🕒🕒
         <br />
         You've got <b>{code.length} characters</b> in your snippet. Using our
@@ -112,7 +112,7 @@ export function EditorWidget() {
       gradientColors,
       mimicTypos,
       setVideoUrl,
-      false
+      true
     );
     setIsGeneratingVideo(false);
   };

@@ -105,7 +105,7 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
               on GitHub.
             </h5>
             <h5>
-              <b>Because we are so awesome and caring, we've even included the AWS deployment of the container so you can choose
+              <b>Because we are so awesome and caring, we've even included the Docker container so you can choose
               whether to run on premise or in the cloud.</b>
             </h5>
           </div>

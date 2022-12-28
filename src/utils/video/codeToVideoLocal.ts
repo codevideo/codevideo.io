@@ -20,6 +20,7 @@ export const codeToVideoLocal = async (
   console.log("canvas is: ", canvas);
   const blob = await recordCanvas(canvas, code, mimicTypos);
   if (local) {
+    console.log('transcoding locally')
     await transcode(
       new Uint8Array(await blob.arrayBuffer()),
       width,
