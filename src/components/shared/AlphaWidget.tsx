@@ -8,7 +8,7 @@ export function AlphaWidget() {
           <div className="col-12 col-md-4">
             <p className="mt-5">
               *CodeVideo{" "}
-              <span className="text-primary">is currently in alpha</span>, built
+              <span className="fw-bold">is currently in alpha</span>, built
               over the course of a few weeks. We're building a full studio editor and adding many more
               features in the coming weeks and months.
             </p>
