@@ -11,7 +11,7 @@ function SEO(props: ISEOProps) {
   const { description, title } = props
 
   return (
-    <Helmet>
+    <Helmet htmlAttributes={{lang: 'en'}}>
       {/* General tags */}
       <title>{title}</title>
       <meta

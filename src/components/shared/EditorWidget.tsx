@@ -195,8 +195,8 @@ export function EditorWidget() {
         >
           <div className="row justify-content-center align-items-center">
             <div className={wrapperClass}>
-              <ul className={videoUrl !== "" ? "d-none" : "nav nav-tabs"}>
-                <li className="nav-item border-start border-top border-end">
+              <ul className={videoUrl !== "" ? "d-none" : "nav nav-tabs"} >
+                <li className="nav-item border-start border-top border-end border-bottom border-primary" style={{backgroundColor: "#272822"}}>
                   {isTabInEditMode && (
                     <input
                       ref={inputRef}
