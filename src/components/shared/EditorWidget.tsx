@@ -1,7 +1,6 @@
 import * as React from "react";
 import Editor, { Monaco, loader } from "@monaco-editor/react";
 import Monokai from "monaco-themes/themes/Monokai.json";
-// import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import * as monaco from "monaco-editor"
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
@@ -10,9 +9,10 @@ import { EditorOverlay } from "./EditorOverlay";
 import { editorLoaderSlidesConfig } from "../../config/editorOverlaySlidesConfig";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { codeToVideoLocal } from "../../utils/video/codeToVideoLocal";
+import { codeToVideo } from "../../utils/video/codeToVideo";
 import Collapsible from "react-collapsible";
 import { AdvancedVideoOptions } from "./AdvancedVideoOptions";
+import Engine from "../../enums/Engine";
 
 // use local static files
 loader.config({ paths: { vs: "/vs" } });
@@ -20,7 +20,7 @@ export function EditorWidget() {
   const { fileLabel, code, language } = useAppSelector(
     (state) => state.editor.editorSetting
   );
-  const { width, height, gradientColors, mimicTypos } = useAppSelector(
+  const { width, height, gradientColors, mimicTypos, engine } = useAppSelector(
     (state) => state.video
   );
   const dispatch = useAppDispatch();
@@ -107,7 +107,7 @@ export function EditorWidget() {
     // good for testing loader
     // await sleep(20000);
     // await codeToVideo(fileLabel, code, setVideoUrl);
-    await codeToVideoLocal(
+    await codeToVideo(
       width,
       height,
       fileLabel,
@@ -115,7 +115,7 @@ export function EditorWidget() {
       gradientColors,
       mimicTypos,
       setVideoUrl,
-      true
+      engine
     );
     setIsGeneratingVideo(false);
   };
