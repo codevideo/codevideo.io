@@ -4,19 +4,52 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import {
   setDimensions,
+  setEngine,
   setGradientColors,
   setMimicTypos,
 } from "../../store/videoSlice";
+import Engine from "../../enums/Engine";
 
 export interface IAdvancedVideoOptionsProps {}
 
 export function AdvancedVideoOptions(props: IAdvancedVideoOptionsProps) {
-  const { height, width, gradientColors, mimicTypos } = useAppSelector(
+  const { height, width, gradientColors, mimicTypos, engine } = useAppSelector(
     (state) => state.video
   );
   const dispatch = useAppDispatch();
   return (
     <>
+      <label>Engine:</label>
+      <div className="d-flex flex-row justify-content-center align-items-center">
+        <div className="d-flex flex-column justify-content-center align-items-center">
+          <button
+            onClick={() => dispatch(setEngine(Engine.BACKEND))}
+            className="btn btn-dark text-light m-3"
+            style={{
+              borderColor: "#22FDB2",
+              borderStyle: "solid",
+              borderWidth: engine === Engine.BACKEND ? 5 : 0,
+            }}
+          >
+            Backend
+          </button>
+          <small>(Recommended)</small>
+        </div>
+        <div className="d-flex flex-column justify-content-center align-items-center">
+          <button
+            onClick={() => dispatch(setEngine(Engine.FRONTEND))}
+            className="btn btn-dark text-light m-3"
+            style={{
+              borderColor: "#22FDB2",
+              borderStyle: "solid",
+              borderWidth: engine === Engine.FRONTEND ? 5 : 0,
+            }}
+          >
+            Frontend
+          </button>
+          <small>(Works only on Desktop Machines)</small>
+        </div>
+      </div>
       <label>Background gradient:</label>
       <div>
         <div className="d-flex flex-row justify-content-center align-items-center">
@@ -96,7 +129,7 @@ export function AdvancedVideoOptions(props: IAdvancedVideoOptionsProps) {
         </div>
       </div>
       <label>Video Size:</label>
-      <br/>
+      <br />
       <span className="text-muted">Landscape</span>
       <div className="d-flex flex-row justify-content-center align-items-center">
         <button

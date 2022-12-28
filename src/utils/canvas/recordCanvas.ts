@@ -16,13 +16,15 @@ export const recordCanvas = async (
     mimeType: "video/webm; codecs=vp9",
   });
 
-  mediaRecorder.start(time);
 
   mediaRecorder.ondataavailable = function (e) {
     recordedChunks.push(e.data);
   };
 
+  mediaRecorder.start(0);
+
   await animateText(canvas, code, mimicTypos);
+
   mediaRecorder.stop();
 
   var blob = new Blob(recordedChunks, {
