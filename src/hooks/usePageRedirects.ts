@@ -1,7 +1,12 @@
+import { useLocalStorage } from "./useLocalStorage";
 import { useEffect } from "react";
 import { supabase } from "../services/supabaseClient";
 
 export const usePageRedirects = () => {
+  const [_, setAccessToken] = useLocalStorage<string | null>(
+    "access_token",
+    null
+  );
   // On mount, Check if the access_token is in the URL
 
   const checkForAccessToken = async () => {
@@ -14,7 +19,7 @@ export const usePageRedirects = () => {
         const refreshToken = params.get("refresh_token");
         if (accessToken && refreshToken) {
           // If the access_token is in the URL, save it to localStorage
-          localStorage.setItem("access_token", accessToken);
+          setAccessToken(accessToken);
           const { error } = await supabase.auth.setSession({
             access_token: accessToken,
             refresh_token: refreshToken,
