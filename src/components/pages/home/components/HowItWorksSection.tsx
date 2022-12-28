@@ -36,11 +36,11 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
               <div
                 className={`row ${flexDirection} justify-content-center align-items-center my-5`}
               >
-                <div className="col-12 col-md-6">
+                <div className="col-12 col-lg-6">
                   <span className="display-5 mb-3">{item.emoji}</span>
                 </div>
-                <div className="col-12 col-md-6">
-                  <h5>{item.description}</h5>
+                <div className="col-12 col-lg-6">
+                  <span className="fs-5">{item.description}</span>
                 </div>
               </div>
             );
@@ -54,37 +54,37 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
         <div className={`row justify-content-center align-items-center my-5`}>
           <div className="col-12 col-md-6">
             <span className="display-5 mb-5">🎉</span>
-            <h5>
+            <span className="fs-5">
               <b>No more</b> trying to multi task both typing and talking for
               your YouTube videos or courses!
-            </h5>
+            </span>
           </div>
         </div>
         <div className={`row justify-content-center align-items-center my-5`}>
           <div className="col-12 col-md-6">
             <span className="display-5 mb-5">🎊</span>
-            <h5>
+            <span className="fs-5">
               <b>No more</b> wasting hours on end in Shotcut or Adobe Premiere
               trying to edit down your videos!
-            </h5>
+            </span>
           </div>
         </div>
         <div className={`row justify-content-center align-items-center my-5`}>
           <div className="col-12 col-md-6">
             <span className="display-5 mb-5">🥳</span>
-            <h5>
+            <span className="fs-5">
               <b>Perfect</b> for crafting videos you want share on socials like
               TikTok, Instagram Reels, or YouTube Shorts!
-            </h5>
+            </span>
           </div>
         </div>
         <div className={`row justify-content-center align-items-center my-5`}>
           <div className="col-12 col-md-6">
             <span className="display-5 mb-5">🌟</span>
-            <h5>
+            <span className="fs-5">
               Join the new paradigm shift of creating coding videos! Sign up now
               for early access!
-            </h5>
+            </span>
           </div>
         </div>
         <SignUpButton />
@@ -99,15 +99,15 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
         </h2>
         <div className={`row justify-content-center align-items-center my-5`}>
           <div className="col-12 col-md-6">
-            <h5 className="mb-5">
+            <span className="fs-5 mb-5">
               The Docker
               container that produces the videos is open source and can be found
               on GitHub.
-            </h5>
-            <h5>
+            </span>
+            <span className="fs-5">
               <b>Because we are so awesome and caring, we've even included the Docker container so you can choose
               whether to run on premise or in the cloud.</b>
-            </h5>
+            </span>
           </div>
         </div>
         <a
