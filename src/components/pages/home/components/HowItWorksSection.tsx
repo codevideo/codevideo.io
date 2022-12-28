@@ -98,16 +98,9 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
           ...We're Open Source!
         </h2>
         <div className={`row justify-content-center align-items-center my-5`}>
-          <div className="col-12 col-md-6">
-            <span className="fs-5 mb-5">
-              The Docker
-              container that produces the videos is open source and can be found
-              on GitHub.
-            </span>
-            <span className="fs-5">
-              <b>Because we are so awesome and caring, we've even included the Docker container so you can choose
-              whether to run on premise or in the cloud.</b>
-            </span>
+          <div className="col-6 fs-5">
+            Both the backend (Docker container) and the frontend (JavaScript function) engines that power CodeVideo are open source and can
+            be found on GitHub.
           </div>
         </div>
         <a
