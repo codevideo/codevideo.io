@@ -1,7 +1,8 @@
 import * as React from "react";
-import Editor, { Monaco } from "@monaco-editor/react";
+import Editor, { Monaco, loader } from "@monaco-editor/react";
 import Monokai from "monaco-themes/themes/Monokai.json";
-import * as monaco from "monaco-editor";
+// import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import * as monaco from "monaco-editor"
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { codeEdited, fileLabelEdited } from "../../store/editorSlice";
@@ -13,6 +14,8 @@ import { codeToVideoLocal } from "../../utils/video/codeToVideoLocal";
 import Collapsible from "react-collapsible";
 import { AdvancedVideoOptions } from "./AdvancedVideoOptions";
 
+// use local static files
+loader.config({ paths: { vs: "/vs" } });
 export function EditorWidget() {
   const { fileLabel, code, language } = useAppSelector(
     (state) => state.editor.editorSetting
@@ -247,7 +250,10 @@ export function EditorWidget() {
                   crossOrigin="anonymous"
                   src={videoUrl}
                   controls
-                  style={{ width: editorElementWidth, height: editorElementHeight }}
+                  style={{
+                    width: editorElementWidth,
+                    height: editorElementHeight,
+                  }}
                 />
               )}
               <EditorOverlay

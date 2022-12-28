@@ -1,10 +1,12 @@
 import { Link } from "gatsby";
 import * as React from "react";
-import { isLoggedIn } from "../../utils/isLoggedIn";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export function SignUpButton() {
+
+  const [accessToken] = useLocalStorage("accessToken", null);
   
-  if (isLoggedIn()) {
+  if (accessToken) {
     return (
       <>
       </>
