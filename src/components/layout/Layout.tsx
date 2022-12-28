@@ -3,9 +3,12 @@ import { Nav } from "./Nav";
 import { Footer } from "./Footer";
 import { PropsWithChildren } from "react";
 import { ToastContainer } from 'react-toastify';
+import { usePageRedirects } from "../../hooks/usePageRedirects";
 
 const Layout = (props: PropsWithChildren) => {
   const { children } = props;
+
+  usePageRedirects();
 
   return (
     <>

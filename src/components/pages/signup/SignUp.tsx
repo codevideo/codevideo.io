@@ -2,7 +2,7 @@ import * as React from "react";
 import { supabase } from "../../../services/supabaseClient";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import * as EmailValidator from 'email-validator';
+import * as EmailValidator from "email-validator";
 
 export function SignUp() {
   const [loading, setLoading] = useState(false);
@@ -19,17 +19,21 @@ export function SignUp() {
     }
 
     if (!EmailValidator.validate(email)) {
-        toast("Please enter a valid email!", {
-            position: "top-center",
-        });
-        return;
+      toast("Please enter a valid email!", {
+        position: "top-center",
+      });
+      return;
     }
 
     try {
       setLoading(true);
-      const { error } = await supabase.auth.signInWithOtp({ email });
+      const { error } = await supabase.auth.signInWithOtp({ email, options: {
+        emailRedirectTo: "/signup/success",
+      } });
       if (error) throw error;
-      toast("Check your email for the login link!");
+      toast("Successfully sent! Check your email for the magic link!", {
+        position: "top-center",
+      });
     } catch (error: any) {
       alert(error.error_description || error.message);
     } finally {
@@ -38,15 +42,15 @@ export function SignUp() {
   };
 
   return (
-    <div className="container text-center mb-5 vh-100">
-      <div className="row d-flex justify-content-center align-items-center">
+    <div className="container text-center">
+      <div className="row d-flex flex-column justify-content-center align-items-center vh-100">
         <div
-          className="col-6 flex-column d-flex justify-content-center align-items-center"
+          className="col-12 col-md-10 flex-column d-flex justify-content-center align-items-center"
           aria-live="polite"
         >
           <h1 className="header">Sign Up</h1>
           <p className="description">
-            Sign in via magic link with your email below
+            Sign up via magic link with your email below
           </p>
           {loading ? (
             "Sending magic link..."
