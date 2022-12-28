@@ -4,8 +4,9 @@ import { prepareCanvas } from "../canvas/prepareCanvas";
 import MimicTypos from "../../enums/MimicTypos";
 import { ArrayOfTwoOrMore } from "../../types/ArrayOfTwoOrMore";
 import { toast } from "react-toastify";
+import Engine from "../../enums/Engine";
 
-export const codeToVideoLocal = async (
+export const codeToVideo = async (
   width: number,
   height: number,
   filename: string,
@@ -13,13 +14,13 @@ export const codeToVideoLocal = async (
   gradientColors: ArrayOfTwoOrMore<string>,
   mimicTypos: MimicTypos,
   setVideoUrl: (videoUrl: string) => void,
-  local: boolean
+  engine: Engine
 ) => {
   const canvas = document.getElementById("code-canvas") as HTMLCanvasElement;
   await prepareCanvas(canvas, width, height, gradientColors);
   console.log("canvas is: ", canvas);
   const blob = await recordCanvas(canvas, code, mimicTypos);
-  if (local) {
+  if (engine === Engine.FRONTEND) {
     console.log('transcoding locally')
     await transcode(
       new Uint8Array(await blob.arrayBuffer()),
