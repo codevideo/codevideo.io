@@ -1,7 +1,16 @@
 import { Link } from "gatsby";
 import * as React from "react";
+import { isLoggedIn } from "../../utils/isLoggedIn";
 
 export function SignUpButton() {
+  
+  if (isLoggedIn()) {
+    return (
+      <>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="container">
