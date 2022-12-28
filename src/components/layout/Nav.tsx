@@ -21,7 +21,7 @@ export function Nav(props: INavProps) {
       >
         <StaticImage
           style={{ width: "90px", height: "auto" }}
-          src="../../images/GitHub.png"
+          src="../../images/GitHubBlack.png"
           alt="Check us out on GitHub!"
         />
       </a>

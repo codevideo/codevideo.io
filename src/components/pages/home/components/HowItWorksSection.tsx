@@ -7,17 +7,17 @@ const howItWorksConfig = [
   {
     emoji: "🤖",
     description:
-      "1. We take your code snippet and send it to our super duper fancy robot simulation desktop machine.",
+      "1. We take your code snippet and put it on a canvas.",
   },
   {
     emoji: "⚙️",
     description:
-      "2. The machine opens up a Visual Studio Code instance and types out your code, just as you would.",
+      "2. The canvas stream is captured as your code is typed.",
   },
   {
     emoji: "📹",
     description:
-      "3. All the while, we record Visual Studio Code and save the output. Then we send you the link to the video!",
+      "3. The captured stream is converted to an mp4. We then send you a link to the mp4!",
   },
 ];
 
@@ -50,39 +50,55 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
       <hr className="mt-5" />
       <section>
         <span className="display-2 mb-5">🪄</span>
-        <h2>The Future of Software Content Creation</h2>
-        <div className={`row justify-content-center align-items-center my-5`}>
+        <h2 className="mb-5">The Future of Software Content Creation</h2>
+        <div className="row justify-content-center align-items-center">
           <div className="col-12 col-md-6">
-            <span className="display-5 mb-5">🎉</span>
+            <span className="display-5">🎉</span>
+          </div>
+        </div>
+        <div className="row justify-content-center align-items-center mb-5">
+          <div className="col-12 col-md-6">
             <span className="fs-5">
-              <b>No more</b> trying to multi task both typing and talking for
+              <b>Eliminate</b> the need to try to type and speak simultaneously for
               your YouTube videos or courses!
             </span>
           </div>
         </div>
-        <div className={`row justify-content-center align-items-center my-5`}>
+        <div className="row justify-content-center align-items-center">
           <div className="col-12 col-md-6">
-            <span className="display-5 mb-5">🎊</span>
+            <span className="display-5 ">🎊</span>
+          </div>
+        </div>
+        <div className="row justify-content-center align-items-center mb-5">
+          <div className="col-12 col-md-6">
             <span className="fs-5">
-              <b>No more</b> wasting hours on end in Shotcut or Adobe Premiere
-              trying to edit down your videos!
+              <b>Stop</b> wasting hours on end in Shotcut or Adobe Premiere
+              trying to chop down your videos!
             </span>
           </div>
         </div>
-        <div className={`row justify-content-center align-items-center my-5`}>
+        <div className="row justify-content-center align-items-center">
           <div className="col-12 col-md-6">
-            <span className="display-5 mb-5">🥳</span>
+            <span className="display-5">🥳</span>
+          </div>
+        </div>
+        <div className="row justify-content-center align-items-center mb-5">
+          <div className="col-12 col-md-6">
             <span className="fs-5">
               <b>Perfect</b> for crafting videos you want share on socials like
               TikTok, Instagram Reels, or YouTube Shorts!
             </span>
           </div>
         </div>
-        <div className={`row justify-content-center align-items-center my-5`}>
+        <div className="row justify-content-center align-items-center">
           <div className="col-12 col-md-6">
-            <span className="display-5 mb-5">🌟</span>
+            <span className="display-5">🌟</span>
+          </div>
+        </div>
+        <div className="row justify-content-center align-items-center mb-5">
+          <div className="col-12 col-md-6">
             <span className="fs-5">
-              Join the new paradigm shift of creating coding videos! Sign up now
+              <b>Join</b> the new paradigm shift of creating coding videos! Sign up now
               for early access!
             </span>
           </div>
@@ -99,8 +115,9 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
         </h2>
         <div className={`row justify-content-center align-items-center my-5`}>
           <div className="col-6 fs-5">
-            Both the backend (Docker container) and the frontend (JavaScript function) engines that power CodeVideo are open source and can
-            be found on GitHub.
+            Both the backend (Docker container) and the frontend (JavaScript
+            function) engines that power CodeVideo are open source and can be
+            found on GitHub.
           </div>
         </div>
         <a
