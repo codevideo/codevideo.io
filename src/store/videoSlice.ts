@@ -12,13 +12,11 @@ interface VideoState {
 }
 
 const initialState: VideoState = {
-  width: 960,
-  height: 540,
-  // width: 1920,
-  // height: 1080,
+  width: 1920,
+  height: 1080,
   gradientColors: ["#91ffd9", "#f5ff97"],
   mimicTypos: MimicTypos.NEVER,
-  engine: Engine.BACKEND
+  engine: Engine.FRONTEND
 };
 
 export const videoSlice = createSlice({
@@ -49,10 +47,11 @@ export const videoSlice = createSlice({
       action: PayloadAction<Engine>
     ) => {
       state.engine = action.payload;
-    }
+    },
+    resetVideoSettings: () => initialState,
   },
 });
 
-export const { setDimensions, setGradientColors, setMimicTypos, setEngine } = videoSlice.actions;
+export const { setDimensions, setGradientColors, setMimicTypos, setEngine, resetVideoSettings } = videoSlice.actions;
 
 export default videoSlice.reducer;
