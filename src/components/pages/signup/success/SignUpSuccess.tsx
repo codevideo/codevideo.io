@@ -1,20 +1,17 @@
-import { Link } from "gatsby";
+import { Container, Flex, Heading, Link, Text } from "@radix-ui/themes";
 import * as React from "react";
 
 export function SignUpSuccess() {
   return (
-    <div className="container text-center">
-      <div className="row d-flex flex-column justify-content-center align-items-center vh-100">
-        <div
-          className="col-12 col-md-10 flex-column d-flex justify-content-center align-items-center"
-          aria-live="polite"
-        >
-          <h1 className="header">Thank You!</h1>
-          <p>Thanks a lot for signing up for the beta.</p>
-          <p>We'll email you as soon as it's out.</p>
-          <Link to="/" className="btn btn-primary">Back to Home</Link>
-        </div>
-      </div>
-    </div>
+    <Container style={{ minHeight: "100vh" }}>
+      <Flex gap="3" direction="column" justify="center" align="center">
+        <Heading>Thank You!</Heading>
+        <Text>Thanks a lot for signing up for the <Text color="mint">{'/>'} CodeVideo AI™</Text> beta.</Text>
+        <Text>We'll email you as soon as it's out.</Text>
+        <Link href="/">
+          Back to Home
+        </Link>
+      </Flex>
+    </Container>
   );
 }

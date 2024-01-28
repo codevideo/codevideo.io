@@ -1,18 +1,18 @@
-import { Link } from "gatsby";
+import { Text, Heading, Link, Flex, Container } from "@radix-ui/themes";
 import * as React from "react";
 
 export function NotFound() {
   return (
-    <div className="vh-100 container d-flex flex-column justify-content-center align-items-center">
-      <h1>Woops, that's a 404!</h1>
-      <p>
-        CodeVideo is revolutionizing the way software creators make video
-        content.
-      </p>
-      <p>Get back to the homepage and see!</p>
-      <Link to="/" className="btn btn-primary">
-        Return Home
-      </Link>
-    </div>
+    <Container style={{ minHeight: "100vh" }}>
+      <Flex gap="3" direction="column" justify="center" align="center">
+        <Heading size="9">Woops, that's a 404!</Heading>
+        <Text>
+          CodeVideo is revolutionizing the way software creators make video
+          content.
+        </Text>
+        <Text>Get back to the homepage and see!</Text>
+        <Link href="/">Return Home</Link>
+      </Flex>
+    </Container>
   );
 }

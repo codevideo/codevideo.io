@@ -1,15 +1,15 @@
+import { Box, Flex, Heading, Text } from "@radix-ui/themes";
 import * as React from "react";
 
-export interface IHeroProps {}
-
-export function Hero(props: IHeroProps) {
+export function Hero() {
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center">
-      <h1 className="my-3">
-        <span className="text-dark">{'/>'} CodeVideo</span>
-      </h1>
-      <p className="text-center m-0">Convert code snippets to animated video with a single click.</p>
-      <p className="text-center m-0">Code in. Video out. That simple.</p>
-    </div>
+    <Flex gap="3" p="3" direction="column" justify="center" align="start">
+      <Box><Heading size="9">Code in,</Heading></Box>
+      <Box><Heading size="9" color="mint">Video out.</Heading></Box>
+      <Box><Heading size="9">That simple.</Heading></Box>
+      <Box><Heading size="7">
+        Convert code snippets to videos with a single click, <Text color="mint">directly in the browser</Text>.
+      </Heading></Box>
+    </Flex>
   );
 }
