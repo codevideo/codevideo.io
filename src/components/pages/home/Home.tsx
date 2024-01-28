@@ -1,22 +1,30 @@
 import * as React from "react";
-import { AlphaWidget } from "../../shared/AlphaWidget";
 import { EditorWidget } from "../../shared/EditorWidget";
 import { HiddenCanvas } from "../../shared/HiddenCanvas";
-import { SignUpButton } from "../../shared/SignUpButton";
 import { Hero } from "./components/Hero";
 import { HowItWorksSection } from "./components/HowItWorksSection";
+import { Box, Container, Flex, Grid } from "@radix-ui/themes";
 
 export function Home() {
   return (
     <>
-      <Hero />
-      <div className="container text-center mb-5">
-        <EditorWidget />
-        <AlphaWidget/>
-        <SignUpButton />
-        <HowItWorksSection/>
-        <HiddenCanvas/>
-      </div>
+      <Grid columns={
+        {
+          initial:"1",
+          md: "2",
+        }
+      }>
+        <Box>
+          <Hero />
+        </Box>
+        <Box width="auto">
+          <EditorWidget />
+        </Box>
+      </Grid>
+      <Container py="9">
+        <HowItWorksSection />
+        <HiddenCanvas />
+      </Container>
     </>
   );
 }

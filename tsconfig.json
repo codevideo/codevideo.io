@@ -1,7 +1,6 @@
 {
-  "include": ["./src/**/*", "custom.d.ts", "wrap-with-provider.jsx"],
+  "include": ["./src/**/*", "wrap-with-provider.jsx"],
   "compilerOptions": {
-    "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "target": "esnext",
     "module": "esnext",
     "lib": ["dom", "es2017"],

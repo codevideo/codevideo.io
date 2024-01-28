@@ -3,7 +3,6 @@ import { transcode } from "./transcode";
 import { prepareCanvas } from "../canvas/prepareCanvas";
 import MimicTypos from "../../enums/MimicTypos";
 import { ArrayOfTwoOrMore } from "../../types/ArrayOfTwoOrMore";
-import { toast } from "react-toastify";
 import Engine from "../../enums/Engine";
 
 export const codeToVideo = async (
@@ -48,7 +47,7 @@ export const codeToVideo = async (
     setVideoUrl(json.videoUrl);
   } catch (e) {
     console.log("error: ", e);
-    toast("Error uploading video. Please try again.");
+    // toast("Error uploading video. Please try again.");
     setVideoUrl("");
   }
 };

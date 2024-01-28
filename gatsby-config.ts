@@ -10,7 +10,7 @@ const config: GatsbyConfig = {
  },
   siteMetadata: {
     title: `CodeVideo`,
-    description: `Convert code snippets into animated videos.`,
+    description: `Convert code snippets into videos.`,
     author: `Chris Frewin`,
   },
   plugins: [

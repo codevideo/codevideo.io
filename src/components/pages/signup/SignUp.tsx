@@ -1,83 +1,118 @@
 import * as React from "react";
 import { supabase } from "../../../services/supabaseClient";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import * as EmailValidator from "email-validator";
+import {
+  Button,
+  Container,
+  Flex,
+  Heading,
+  Text,
+  TextField,
+} from "@radix-ui/themes";
+import { CalloutHint } from "../../shared/CalloutHint";
 
 export function SignUp() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
+  const [info, setInfo] = useState<
+    "no-email" | "invalid-email" | "none" | "success" | "unknown-error"
+  >("none");
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!email) {
-      toast("Please enter your email!", {
-        position: "top-center",
-      });
+      setInfo("no-email");
+      // toast("Please enter your email!", {
+      //   position: "top-center",
+      // });
       return;
     }
 
     if (!EmailValidator.validate(email)) {
-      toast("Please enter a valid email!", {
-        position: "top-center",
-      });
+      setInfo("invalid-email");
+      // toast("Please enter a valid email!", {
+      //   position: "top-center",
+      // });
       return;
     }
 
     try {
       setLoading(true);
-      const { error } = await supabase.auth.signInWithOtp({ email, options: {
-        emailRedirectTo: "/signup/success",
-      } });
-      if (error) throw error;
-      toast("Successfully sent! Check your email for the magic link!", {
-        position: "top-center",
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: "/signup/success",
+        },
       });
+      if (error) throw error;
+      setInfo("success");
+      // toast("Successfully sent! Check your email for the magic link!", {
+      //   position: "top-center",
+      // });
     } catch (error: any) {
-      alert(error.error_description || error.message);
+      setInfo("unknown-error");
     } finally {
       setLoading(false);
     }
   };
 
+  const renderInfo = () => {
+    switch (info) {
+      case "no-email":
+        return <CalloutHint color="crimson" text="Please enter your email!" />;
+      case "invalid-email":
+        return (
+          <CalloutHint color="crimson" text="Please enter a valid email!" />
+        );
+      case "success":
+        return (
+          <CalloutHint
+            color="mint"
+            text="Successfully sent! Check your email for the magic link!"
+          />
+        );
+      case "unknown-error":
+        return (
+          <CalloutHint
+            color="crimson"
+            text="Unknown error. Please try again later."
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div className="container text-center">
-      <div className="row d-flex flex-column justify-content-center align-items-center vh-100">
-        <div
-          className="col-12 col-md-10 flex-column d-flex justify-content-center align-items-center"
-          aria-live="polite"
-        >
-          <h1 className="header">Sign Up</h1>
-          <p className="description">
-            Sign up via magic link with your email below
-          </p>
-          {loading ? (
-            "Sending magic link..."
-          ) : (
-            <form className="form-group" onSubmit={handleLogin}>
-              <label className="form-label" htmlFor="email">
-                Email
-              </label>
-              <input
+    <Container style={{ minHeight: "100vh" }}>
+      <Flex gap="3" direction="column" justify="center" align="center">
+        <Heading>Sign Up</Heading>
+        <Text>Get early access by confirming your email via magic link.</Text>
+        <form onSubmit={handleLogin}>
+          <Flex gap="3" direction="column" justify="center" align="center">
+            <Text htmlFor="email">Email</Text>
+            <TextField.Root>
+              <TextField.Input
                 id="email"
-                className="form-control"
                 type="email"
                 placeholder="you@yours.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <button
-                type="submit"
-                className="btn btn-primary m-3"
-                aria-live="polite"
-              >
-                Send magic link
-              </button>
-            </form>
-          )}
-        </div>
-      </div>
-    </div>
+            </TextField.Root>
+            <Button type="submit" disabled={info === "success" || loading}>
+              {loading
+                ? "Sending..."
+                : info === "success"
+                ? "Sent"
+                : "Send magic link"}
+            </Button>
+          </Flex>
+        </form>
+        {renderInfo()}
+      </Flex>
+    </Container>
   );
 }
