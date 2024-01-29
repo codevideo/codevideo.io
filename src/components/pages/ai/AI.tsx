@@ -10,14 +10,10 @@ export function AI() {
           Generate step by step, dictated software lessons from articles, blog
           posts, or a prompt.
         </Heading>
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/h1g-ZAl3kVU?si=L7ueCaSpZ_daYeyL"
-          title="CodeVideo AI™ at work."
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen={true}
-        ></iframe>
+        <video width="960" height="540" controls>
+        <source src="https://codevideo.io/videos/fibonacci.mp4" type="video/mp4"/>
+        Your browser does not support the video tag.
+          </video>
         <Heading size="7" color="mint">
           Coming Q1 2024.
         </Heading>
