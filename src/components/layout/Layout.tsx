@@ -30,7 +30,7 @@ const Layout = (props: PropsWithChildren) => {
     >
       <SVGBackground />
       <Flex gap="3" p="3" direction="column" justify="between">
-        <Nav siteTitle={"CodeVideo"} />
+        <Nav />
         <main style={{marginBottom:'auto'}}>{children}</main>
         <Footer />
       </Flex>
