@@ -6,7 +6,7 @@ import SEO from "../components/SEO";
 export default function AIPage() {
   return (
     <Layout>
-      <SEO title="CodeVideo AI™" />
+      <SEO title="CodeVideo: CodeVideo: AI™" />
       <AI />
     </Layout>
   );

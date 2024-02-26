@@ -1,24 +1,23 @@
 import { Code, Container, Flex, Heading, Link, Text } from "@radix-ui/themes";
 import * as React from "react";
 import { Logo } from "../../shared/Logo";
+import { StarOnGitHub } from "../../shared/StarOnGithub";
 
 export function Pontificator() {
   return (
     <Container style={{ minHeight: "100vh" }}>
       <Flex gap="3" direction="column" justify="center" align="center">
         <Heading size="9">
-          <Code><Logo/>pontificator</Code>
+          <Code>
+            <Logo />
+            pontificator
+          </Code>
         </Heading>
         <Heading size="7">
           Generate studio quality dictated audio files from books, articles, and
           blog posts.
         </Heading>
-        <Text>
-          Give us a star{" "}
-          <a href="https://github.com/codevideo/pontificator">
-            on Github.
-          </a>
-        </Text>
+        <StarOnGitHub repoName="pontificator" repoLink="pontificator" />
         <Text>
           See an example of a dictated blog post{" "}
           <a href="https://chrisfrew.in/blog/blazor-on-netlify-with-environment-variables/">
