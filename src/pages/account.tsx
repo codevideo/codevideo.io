@@ -6,7 +6,7 @@ import { Account } from "../components/pages/account/Account";
 export default function AccountPage() {
   return (
     <Layout>
-      <SEO title="CodeVideo" />
+      <SEO title="CodeVideo: Account" />
       <Account />
     </Layout>
   );

@@ -6,7 +6,7 @@ import { SpeechShield } from "../components/pages/speech-shield/SpeechShield";
 export default function SpeechShieldPage() {
   return (
     <Layout>
-      <SEO title="speech-shield" />
+      <SEO title="CodeVideo: speech-shield" />
       <SpeechShield />
     </Layout>
   );

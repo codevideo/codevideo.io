@@ -6,7 +6,7 @@ import { RobotTs } from "../components/pages/robotts/RobotTs";
 export default function RobotTsPage() {
   return (
     <Layout>
-      <SEO title="robotts" />
+      <SEO title="CodeVideo: robotts" />
       <RobotTs />
     </Layout>
   );

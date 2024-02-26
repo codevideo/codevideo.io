@@ -20,6 +20,7 @@ export function ExampleVideo(props: IExampleVideoProps) {
           height="540"
           src={videoPath}
           title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
         ></iframe>
       ) : (

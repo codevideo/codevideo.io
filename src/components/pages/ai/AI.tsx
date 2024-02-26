@@ -177,7 +177,7 @@ export function AI() {
         <Text>As a comparison to a real video with Chris, here's Chris on Full Stack Craft's YouTube talking about building cron jobs with Go:</Text>
         <ExampleVideo
           title="Go Applications - Lesson 7: Building the Cron Job"
-          videoPath="https://www.youtube.com/watch?v=yUFotBOL52M"
+          videoPath="https://www.youtube.com/embed/yUFotBOL52M?si=EMctAua5UUeRqSdf"
         />
         <Text>Those AI versions are <i>eerily close</i> to the real thing, eh? 😄</Text>
         <Heading size="7" color="mint">
