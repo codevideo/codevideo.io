@@ -37,11 +37,11 @@ export function Nav() {
             robotts
           </Code>
         </Link>
-        <Link href="https://github.com/codevideo/codevideo-frontend">
+        <Link href="https://github.com/orgs/codevideo/repositories">
           <Flex gap="3" justify="center" align="center">
             <Code>
               <Logo />
-              give us a star on GitHub! -{">"}
+              check out our repos on GitHub! -{">"}
             </Code>
             <GitHubLogoIcon />
           </Flex>

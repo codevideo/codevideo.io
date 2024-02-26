@@ -6,7 +6,7 @@ import SEO from "../components/SEO";
 export default function PontificatorPage() {
   return (
     <Layout>
-      <SEO title="pontificator" />
+      <SEO title="CodeVideo: pontificator" />
       <Pontificator />
     </Layout>
   );

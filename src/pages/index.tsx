@@ -6,7 +6,7 @@ import SEO from "../components/SEO";
 export default function HomePage() {
   return (
     <Layout>
-      <SEO title="CodeVideo" />
+      <SEO title="CodeVideo: Home" />
       <Home />
     </Layout>
   );

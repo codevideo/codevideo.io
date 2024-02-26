@@ -1,23 +1,33 @@
 import * as React from "react";
-import { Box, Card, Flex, Grid, Heading, Link, Text } from "@radix-ui/themes";
+import { Box, Card, Code, Flex, Grid, Heading, Link, Text } from "@radix-ui/themes";
 
 export interface IHowItWorksSectionProps {}
 
 const howItWorksConfig = [
   {
-    emoji: "🤖",
+    
     description: "1. We take your code snippet and put it on a canvas.",
   },
   {
-    emoji: "⚙️",
+    
     description:
       "2. A simulation is made of typing your code, and we stream the canvas the whole time.",
   },
   {
-    emoji: "📹",
+    
     description:
-      "3. The captured stream is converted to an mp4. The mp4 is downloadable from your browser.",
+      "3. In the case of the frontend engine, a WebAssembly port of ffmpeg is used to capture the stream. Less performant, but more cool.",
   },
+  {
+    
+    description:
+      "4. In the case of the backend engine, a Node.js with a subprocess call to ffmpeg is used to capture the stream. More performant, but less cool.",
+  },
+  {
+    
+    description: "5. The captured stream is converted to an mp4. The mp4 is downloadable from your browser.",
+  }
+  
 ];
 
 export function HowItWorksSection(props: IHowItWorksSectionProps) {
@@ -29,7 +39,7 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
       }}
       gap={{
         initial: "5",
-        md: "1",
+        md: "9",
       }}
       width="auto"
     >
@@ -40,7 +50,7 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
         <Card>
           <Flex direction="column">
             {howItWorksConfig.map((item) => {
-              return <Text size="5">{item.description}</Text>;
+              return <Text size="5" my="3">{item.description}</Text>;
             })}
           </Flex>
         </Card>
@@ -51,18 +61,18 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
         </Card>
         <Card>
           <Text size="5">
-            Both the backend (Docker container) and the frontend (JavaScript
-            function) engines that power CodeVideo are open source and can be
-            found on{" "}
-            <Link
-              href="https://github.com/codevideo"
-              target="_blank"
-              rel="noreferrer"
-              type="button"
-            >
-              GitHub
-            </Link>
-            .
+            Every component of CodeVideo is open source and is distributed across a variety of repositories:
+            <ul>
+            <li><Box my="3"><Link href="https://github.com/codevideo/codevideo-ai"><Code>codevideo-ai</Code></Link> - The ai-assisted code video creation tool</Box></li>
+            <li><Box my="3"><Link href="https://github.com/codevideo/codevideo-desktop"><Code>codevideo-desktop</Code></Link> - The Electron powered desktop app for creating automated videos</Box></li>
+            <li><Box my="3"><Link href="https://github.com/codevideo/codevideo-frontend"><Code>codevideo-frontend</Code></Link> - The simple WASM based frontend engine that you see working on this page</Box></li>
+            <li><Box my="3"><Link href="https://github.com/codevideo/codevideo-backend"><Code>codevideo-backend</Code></Link> - The Node.js based backend engine that will (soon) be working on this page</Box></li>
+            <li><Box my="3"><Link href="https://github.com/codevideo/speech-shield"><Code>speech-shield</Code></Link> - Evaluates the quality and accuracy of text-to-speech AI-generated audio</Box></li>
+            <li><Box my="3"><Link href="https://github.com/codevideo/pontificator"><Code>pontificator</Code></Link> - Generate studio quality dictated audio files from books articles, and blog posts</Box></li>
+            <li><Box my="3"><Link href="https://github.com/codevideo/typoer"><Code>typoer</Code></Link> - Generate human-like typos for a given text</Box></li>
+            <li><Box my="3"><Link href="https://github.com/codevideo/robotts"><Code>robotts</Code></Link> - Node.js desktop automation for 2024.</Box></li>
+            <li><Box my="3"><Link href="https://github.com/codevideo/codevideo.io"><Code>codevideo.io</Code></Link> - This website 😄</Box></li>
+            </ul>
           </Text>
         </Card>
       </Flex>
