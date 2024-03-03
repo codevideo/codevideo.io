@@ -16,12 +16,12 @@ const howItWorksConfig = [
   {
     
     description:
-      "3. In the case of the frontend engine, a WebAssembly port of ffmpeg is used to capture the stream. Less performant, but more cool.",
+      "3. In the case of the frontend engine, a WebAssembly port of ffmpeg is used to capture the stream. (Less performant, but more cool.)",
   },
   {
     
     description:
-      "4. In the case of the backend engine, a Node.js with a subprocess call to ffmpeg is used to capture the stream. More performant, but less cool.",
+      "4. In the case of the backend engine, a Node.js with a subprocess call to ffmpeg is used to capture the stream. (More performant, but less cool.)",
   },
   {
     
