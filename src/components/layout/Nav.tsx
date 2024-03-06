@@ -41,7 +41,7 @@ export function Nav() {
           <Flex gap="3" justify="center" align="center">
             <Code>
               <Logo />
-              check out our repos on GitHub! -{">"}
+              check out all our repos on GitHub! -{">"}
             </Code>
             <GitHubLogoIcon />
           </Flex>
