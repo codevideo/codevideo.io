@@ -61,13 +61,14 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
         </Card>
         <Card>
           <Text size="5">
-            Every component of CodeVideo is open source and is distributed across a variety of repositories:
+            Every part of the CodeVideo ecosystem is open source and is distributed across a variety of repositories:
             <ul>
             <li><Box my="3"><Link href="https://github.com/codevideo/codevideo-ai"><Code>codevideo-ai</Code></Link> - The ai-assisted code video creation tool</Box></li>
             <li><Box my="3"><Link href="https://github.com/codevideo/codevideo-desktop"><Code>codevideo-desktop</Code></Link> - The Electron powered desktop app for creating automated videos</Box></li>
             <li><Box my="3"><Link href="https://github.com/codevideo/codevideo-frontend"><Code>codevideo-frontend</Code></Link> - The simple WASM based frontend engine that you see working on this page</Box></li>
             <li><Box my="3"><Link href="https://github.com/codevideo/codevideo-backend"><Code>codevideo-backend</Code></Link> - The Node.js based backend engine that will (soon) be working on this page</Box></li>
             <li><Box my="3"><Link href="https://github.com/codevideo/speech-shield"><Code>speech-shield</Code></Link> - Evaluates the quality and accuracy of text-to-speech AI-generated audio</Box></li>
+            <li><Box my="3"><Link href="https://github.com/codevideo/syntax-spy"><Code>syntax-spy</Code></Link> - Simultaneously detect and syntax check any code snippet with ease</Box></li>
             <li><Box my="3"><Link href="https://github.com/codevideo/pontificator"><Code>pontificator</Code></Link> - Generate studio quality dictated audio files from books articles, and blog posts</Box></li>
             <li><Box my="3"><Link href="https://github.com/codevideo/typoer"><Code>typoer</Code></Link> - Generate human-like typos for a given text</Box></li>
             <li><Box my="3"><Link href="https://github.com/codevideo/robotts"><Code>robotts</Code></Link> - Node.js desktop automation for 2024.</Box></li>
