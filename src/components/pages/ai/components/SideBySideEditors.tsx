@@ -1,70 +1,24 @@
-import { Button, Code, Flex, Grid, Heading } from "@radix-ui/themes";
+import {
+  Button,
+  Code,
+  Flex,
+  Heading,
+  RadioGroup,
+  Select,
+  Switch,
+  Text,
+} from "@radix-ui/themes";
 import * as React from "react";
 import { SimpleEditor } from "../../../shared/SimpleEditor";
-import { useState } from "react";
-
-const exampleSteps = `[
-    {
-      "name": "speak-before",
-      "value": "Let's learn how to use the console.log function in JavaScript!"
-    },
-    {
-      "name": "speak-before",
-      "value": "First, to make it clear that this is a JavaScript file, I'll just put a comment here"
-    },
-    {
-      "name": "type-editor",
-      "value": "// index.js"
-    },
-    {
-      "name": "enter",
-      "value": "1"
-    },
-    {
-      "name": "speak-before",
-      "value": "For starters, let's just print 'Hello world!' to the console."
-    },
-    {
-      "name": "type-editor",
-      "value": "console.log('Hello, world!');"
-    },
-    {
-      "name": "speak-before",
-      "value": "and if I wanted to write the value of some variable to the console, I could do that like so:"
-    },
-    {
-      "name": "backspace",
-      "value": "29"
-    },
-    {
-      "name": "type-editor",
-      "value": "const myVariable = 5;"
-    },
-    {
-      "name": "enter",
-      "value": "1"
-    },
-    {
-      "name": "type-editor",
-      "value": "console.log(myVariable);"
-    },
-    {
-      "name": "speak-before",
-      "value": "Now, when I run this code, I would expect the value of 'myVariable' to be printed to the console. Something like:"
-    },
-    {
-      "name": "enter",
-      "value": "1"
-    },
-    {
-      "name": "type-editor",
-      "value": "// 5"
-    },
-    {
-      "name": "speak-before",
-      "value": "Console logging is simple, yet powerful and very useful!"
-    }
-]`;
+import { useEffect, useState } from "react";
+import { ActionEditor } from "../../../shared/ActionEditor";
+import { IAction } from "@fullstackcraftllc/codevideo-types";
+import {
+  cSharpExampleSteps,
+  goLangExampleSteps,
+  javaScriptExampleSteps,
+  pythonExampleSteps,
+} from "../examples";
 
 const tokenizerCode = `[
     {
@@ -95,13 +49,31 @@ export const speakText = (text: string): Promise<void> => {
 };
 
 export function SideBySideEditors() {
-  const [stepsJson, setStepsJson] = useState(exampleSteps);
+  const [stepsJson, setStepsJson] = useState(javaScriptExampleSteps);
+  const [actions, setActions] = useState<Array<IAction>>(
+    JSON.parse(javaScriptExampleSteps)
+  );
+  const [language, setLanguage] = useState("javascript");
   const [resultCode, setResultCode] = useState("");
   const [isRunning, setIsRunning] = useState(false);
+  const [editorMode, setEditorMode] = useState(true);
+  const [interactiveMode, setInteractiveMode] = useState(false);
+  const [focusOnResultEditor, setFocusOnResultEditor] = useState(false);
+
+  // every time actions change, update the JSON string
+  useEffect(() => {
+    setStepsJson(JSON.stringify(actions, null, 2));
+  }, [actions]);
+
+  // every time stepsJson changes, update the actions
+  useEffect(() => {
+    setActions(JSON.parse(stepsJson));
+  }, [stepsJson]);
 
   const executeSteps = async () => {
     clearResultCode();
     setIsRunning(true);
+    setFocusOnResultEditor(true);
     const steps = JSON.parse(stepsJson);
     for (var i = 0; i < steps.length; i++) {
       // TODO: doesn't work, some fancy react closure issue
@@ -133,6 +105,11 @@ export function SideBySideEditors() {
         setResultCode((prev) => prev + "\n");
         await new Promise((resolve) => setTimeout(resolve, 50));
       }
+      // TODO: we need to issue the actual up arrow keystroke within the editor!
+      if (step.name === "arrow-up") {
+        // setResultCode((prev) => prev + "\u2191");
+        await new Promise((resolve) => setTimeout(resolve, 50));
+      }
     }
     setIsRunning(false);
   };
@@ -150,21 +127,99 @@ export function SideBySideEditors() {
     setResultCode("");
   };
 
+  const exportCaptionedFrames = () => {
+    // TBD
+  };
+
+  const handleExampleSelectChange = (e: string) => {
+    switch (e) {
+      case "javascript":
+        setStepsJson(javaScriptExampleSteps);
+        setActions(JSON.parse(javaScriptExampleSteps));
+        setLanguage("javascript");
+        break;
+      case "python":
+        setStepsJson(pythonExampleSteps);
+        setActions(JSON.parse(pythonExampleSteps));
+        setLanguage("python");
+        break;
+      case "csharp":
+        setStepsJson(cSharpExampleSteps);
+        setActions(JSON.parse(cSharpExampleSteps));
+        setLanguage("csharp");
+        break;
+      case "go":
+        setStepsJson(goLangExampleSteps);
+        setActions(JSON.parse(goLangExampleSteps));
+        setLanguage("go");
+        break;
+    }
+  };
+
   return (
     <Flex gap="5" direction="row" justify="center" align="start">
       <Flex gap="5" direction="column" justify="center" align="center">
-      <Heading color="mint">1. Define your <Code>steps.json</Code> (Feel free to edit!)</Heading>
-        <SimpleEditor
-          path="json/"
-          value={exampleSteps}
-          language="json"
-          tokenizerCode={tokenizerCode}
-          onChangeCode={(code) => {
-            if (code) {
-              setStepsJson(code);
-            }
-          }}
-        />
+        <Heading color="mint">
+          1. Define your <Code>steps.json</Code> (Feel free to edit!)
+        </Heading>
+        <Flex gap="5" direction="row" justify="center" align="center">
+          <Text>Select example:</Text>
+          <Select.Root
+            defaultValue="javascript"
+            value={language}
+            onValueChange={(e) => handleExampleSelectChange(e)}
+          >
+            <Select.Trigger />
+            <Select.Content>
+              <Select.Group>
+                <Select.Item value="javascript">JavaScript</Select.Item>
+                <Select.Item value="python">Python</Select.Item>
+                <Select.Item value="csharp">C#</Select.Item>
+                <Select.Item value="go">Go</Select.Item>
+              </Select.Group>
+            </Select.Content>
+          </Select.Root>
+        </Flex>
+        <RadioGroup.Root defaultValue="1">
+          <Flex gap="2" direction="row">
+            <Text as="label" size="2">
+              <Flex gap="2">
+                <RadioGroup.Item value="1" /> Declarative Mode (Define All Steps
+                Before Running)
+              </Flex>
+            </Text>
+            <Text as="label" size="2">
+              <Flex gap="2">
+                <RadioGroup.Item value="2" disabled={true} /> Interactive Mode
+                (Build and refine steps as you write your lesson's code - coming
+                soon)
+              </Flex>
+            </Text>
+          </Flex>
+        </RadioGroup.Root>
+        <Flex gap="5" direction="row" justify="center" align="center">
+          <Switch
+            defaultChecked
+            onCheckedChange={() => setEditorMode(!editorMode)}
+          />
+          <Text>{editorMode ? "Editor" : "JSON"} Mode</Text>
+        </Flex>
+        {editorMode ? (
+          <ActionEditor actions={actions} setActions={setActions} />
+        ) : (
+          <SimpleEditor
+            path="json/"
+            value={javaScriptExampleSteps}
+            language="json"
+            tokenizerCode={tokenizerCode}
+            onChangeCode={(code) => {
+              if (code) {
+                setStepsJson(code);
+              }
+            }}
+            focus={false}
+          />
+        )}
         <Flex gap="5" direction="row" justify="center" align="center">
           <Button onClick={executeSteps}>Run Steps</Button>
           <Button disabled={!isRunning} onClick={reset} color="red">
@@ -174,12 +229,18 @@ export function SideBySideEditors() {
       </Flex>
       <Flex gap="5" direction="column" justify="center" align="center">
         <Heading color="mint">2. Your Resulting Video!</Heading>
-      <SimpleEditor
-        path="result/"
-        value={resultCode}
-        language="javascript"
-        tokenizerCode='console.log("hello world!");'
-      />
+        <SimpleEditor
+          path="result/"
+          value={resultCode}
+          language={language}
+          tokenizerCode='console.log("hello world!");'
+          focus={focusOnResultEditor}
+        />
+        <Flex gap="5" direction="row" justify="center" align="center">
+          <Button onClick={exportCaptionedFrames}>
+            Export Captioned Frames
+          </Button>
+        </Flex>
       </Flex>
     </Flex>
   );
