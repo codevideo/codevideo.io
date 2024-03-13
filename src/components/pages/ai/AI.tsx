@@ -7,8 +7,9 @@ import {
   Text,
 } from "@radix-ui/themes";
 import * as React from "react";
-import { ExampleVideo } from "./ExampleVideo";
+import { ExampleVideo } from "./components/ExampleVideo";
 import { Logo } from "../../shared/Logo";
+import { SideBySideEditors } from "./components/SideBySideEditors";
 
 export function AI() {
   const fibonacciCode = `[
@@ -163,7 +164,8 @@ export function AI() {
           Generate step by step, dictated software lessons from articles, blog
           posts, or a prompt. 
         </Heading>
-        <Text>The following examples are driven 100% by automation, using a combination of a cloned voice, screen capture, and GUI automation tools.</Text>
+        <SideBySideEditors/>
+        <Text>The following examples are from our internal tool (still in active development) and are driven 100% by automation, using a combination of a cloned voice, screen capture, and GUI automation tools.</Text>
         <ExampleVideo
           jsonCode={fibonacciCode}
           title="Intermediate / Advanced Lesson: Fibonacci Function in TypeScript"

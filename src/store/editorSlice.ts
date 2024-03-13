@@ -78,9 +78,16 @@ export const editorSlice = createSlice({
         code,
       };
     },
+    setLanguage: (state, action: PayloadAction<{ language: string }>) => {
+      const { language } = action.payload;
+      state.editorSetting = {
+        ...state.editorSetting,
+        language,
+      };
+    },
   },
 });
 
-export const { fileLabelEdited, codeEdited } = editorSlice.actions;
+export const { fileLabelEdited, codeEdited, setLanguage } = editorSlice.actions;
 
 export default editorSlice.reducer;
