@@ -67,6 +67,7 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
             <li><Box my="3"><Link href="https://github.com/codevideo/codevideo-desktop"><Code>codevideo-desktop</Code></Link> - The Electron powered desktop app for creating automated videos</Box></li>
             <li><Box my="3"><Link href="https://github.com/codevideo/codevideo-frontend"><Code>codevideo-frontend</Code></Link> - The simple WASM based frontend engine that you see working on this page</Box></li>
             <li><Box my="3"><Link href="https://github.com/codevideo/codevideo-backend"><Code>codevideo-backend</Code></Link> - The Node.js based backend engine that will (soon) be working on this page</Box></li>
+            <li><Box my="3"><Link href="https://github.com/codevideo/virtual-code-block"><Code>virtual-code-block</Code></Link> - TypeScript class that simulates a code editor environment</Box></li>
             <li><Box my="3"><Link href="https://github.com/codevideo/speech-shield"><Code>speech-shield</Code></Link> - Evaluates the quality and accuracy of text-to-speech AI-generated audio</Box></li>
             <li><Box my="3"><Link href="https://github.com/codevideo/syntax-spy"><Code>syntax-spy</Code></Link> - Simultaneously detect and syntax check any code snippet with ease</Box></li>
             <li><Box my="3"><Link href="https://github.com/codevideo/pontificator"><Code>pontificator</Code></Link> - Generate studio quality dictated audio files from books articles, and blog posts</Box></li>
