@@ -13,14 +13,22 @@ export interface ISimpleEditorProps {
   language: string;
   value: string;
   tokenizerCode: string;
+  focus: boolean;
   onChangeCode?: (code: string | undefined) => void;
 }
 
 // use local static files
 loader.config({ paths: { vs: "/vs" } });
 export function SimpleEditor(props: ISimpleEditorProps) {
-  const { path, language, value, tokenizerCode, onChangeCode } = props;
+  const { path, language, value, tokenizerCode, focus, onChangeCode } = props;
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>();
+
+  // whenever focus changes and is true, focus on the editor
+  useEffect(() => {
+    if (focus && editorRef.current) {
+      editorRef.current.focus();
+    }
+  }, [focus]);
 
   const handleOnMount = (
     _editor: monaco.editor.IStandaloneCodeEditor,
