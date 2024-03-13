@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, Code, Dialog, Button, Heading, Container, Flex } from "@radix-ui/themes";
+import { Code, Dialog, Button, Heading } from "@radix-ui/themes";
 
 export interface IExampleVideoProps {
   title: string;
