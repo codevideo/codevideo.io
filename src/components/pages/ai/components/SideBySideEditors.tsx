@@ -62,6 +62,8 @@ export function SideBySideEditors() {
 
   // every time actions change, update the JSON string
   useEffect(() => {
+    console.log('updating json')
+    console.log(actions)
     setStepsJson(JSON.stringify(actions, null, 2));
   }, [actions]);
 
@@ -204,12 +206,21 @@ export function SideBySideEditors() {
           />
           <Text>{editorMode ? "Editor" : "JSON"} Mode</Text>
         </Flex>
+        <Flex gap="5" direction="row" justify="center" align="center">
+        <Button onClick={executeSteps}>Run Steps</Button>
+        <Button disabled={!isRunning} onClick={reset} color="red">
+          Stop / Reset
+        </Button>
+        <Button disabled={true} >
+            Code Check (Coming Soon)
+          </Button>
+      </Flex>
         {editorMode ? (
           <ActionEditor actions={actions} setActions={setActions} />
         ) : (
           <SimpleEditor
             path="json/"
-            value={javaScriptExampleSteps}
+            value={stepsJson}
             language="json"
             tokenizerCode={tokenizerCode}
             onChangeCode={(code) => {
@@ -224,6 +235,9 @@ export function SideBySideEditors() {
           <Button onClick={executeSteps}>Run Steps</Button>
           <Button disabled={!isRunning} onClick={reset} color="red">
             Stop / Reset
+          </Button>
+          <Button disabled={true} >
+            Code Check (Coming Soon)
           </Button>
         </Flex>
       </Flex>
