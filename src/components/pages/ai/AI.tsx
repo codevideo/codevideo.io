@@ -165,7 +165,7 @@ export function AI() {
           posts, or a prompt. 
         </Heading>
         <SideBySideEditors/>
-        <Text>The following examples below are from <Link href="https://github.com/codevideo/codevideo-ai"><Code>codevideo-ai</Code></Link> which has no UI yet and is still in active development. These examples are 100% declarative - meaning you only need to define the steps, and the rest is 100% taken over by automation, using a combination of a cloned voice, screen capture, and GUI automation tools.</Text>
+        <Text>The following examples below are from <Link href="https://github.com/codevideo/codevideo-ai"><Code>codevideo-ai</Code></Link> which has no UI yet and is still in active development. However, note these examples are 100% declarative - meaning you only need to define the steps, and the rest is 100% taken over by automation, using a combination of a cloned voice, screen capture, and GUI automation tools.</Text>
         <ExampleVideo
           jsonCode={fibonacciCode}
           title="Intermediate / Advanced Lesson: Fibonacci Function in TypeScript"
