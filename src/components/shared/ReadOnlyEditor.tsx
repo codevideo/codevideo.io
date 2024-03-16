@@ -1,43 +1,18 @@
 import * as React from "react";
-import { Card } from "@radix-ui/themes";
 import Editor, { Monaco, loader } from "@monaco-editor/react";
 import Monokai from "monaco-themes/themes/Monokai.json";
 import * as monaco from "monaco-editor";
-import { useEffect, useRef } from "react";
-import { IAction } from "@fullstackcraftllc/codevideo-types";
-import { executeActionsWithMonacoEditor } from "../../utils/executeActionsWithMonacoEditor";
+import { useRef } from "react";
 
-export interface ISimpleEditorProps {
-  path: string;
-  language: string;
-  actions: Array<IAction>;
-  tokenizerCode: string;
-  focus: boolean;
-  onChangeCode?: (code: string | undefined) => void;
-  value?: string;
+export interface IReadOnlyEditorProps {
+  value: string;
 }
 
 // use local static files
 loader.config({ paths: { vs: "/vs" } });
-export function SimpleEditor(props: ISimpleEditorProps) {
-  const { path, language, actions, value, tokenizerCode, focus, onChangeCode } = props;
+export function ReadOnlyEditor(props: IReadOnlyEditorProps) {
+  const { value } = props;
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>();
-
-  // whenever focus changes and is true, focus on the editor
-  useEffect(() => {
-    if (focus && editorRef.current) {
-      editorRef.current.focus();
-    }
-  }, [focus]);
-
-  // whenever actions change, execute them
-  useEffect(() => {
-    if (actions.length > 0 && editorRef.current) {
-      console.log('executing actions')
-      editorRef.current.focus();
-      executeActionsWithMonacoEditor(editorRef, actions);
-    }
-  }, [actions]);
 
   const handleOnMount = (
     _editor: monaco.editor.IStandaloneCodeEditor,
@@ -57,19 +32,16 @@ export function SimpleEditor(props: ISimpleEditorProps) {
     // IN OTHER WORDS DO NOT DELETE THIS BLOCK:
     if (typeof window !== "undefined") {
       setTimeout(() => {
-        (window as any).monaco.editor.tokenize(tokenizerCode, language);
+        (window as any).monaco.editor.tokenize("console.log('hello world');", "javascript");
       }, 1000);
     }
   };
 
   return (
-    <Card>
       <Editor
-        path={path}
         width="700px"
         height="500px"
-        defaultLanguage={language}
-        language={language}
+        defaultLanguage="javascript"
         value={value}
         options={{
           minimap: { enabled: false },
@@ -81,10 +53,9 @@ export function SimpleEditor(props: ISimpleEditorProps) {
           folding: true,
           automaticLayout: true,
           autoIndent: "full",
+          readOnly: true,
         }}
         onMount={handleOnMount}
-        onChange={onChangeCode}
       />
-    </Card>
   );
 }

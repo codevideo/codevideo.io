@@ -12,13 +12,15 @@ import * as React from "react";
 import { SimpleEditor } from "../../../shared/SimpleEditor";
 import { useEffect, useState } from "react";
 import { ActionEditor } from "../../../shared/ActionEditor";
-import { IAction } from "@fullstackcraftllc/codevideo-types";
+import { IAction, convertActionsToCodeActions } from "@fullstackcraftllc/codevideo-types";
 import {
   cSharpExampleSteps,
   goLangExampleSteps,
   javaScriptExampleSteps,
   pythonExampleSteps,
 } from "../examples";
+import { VirtualCodeBlock } from "@fullstackcraftllc/virtual-code-block";
+import { CodeCheckDialog } from "./CodeCheckDialog";
 
 const tokenizerCode = `[
     {
@@ -53,6 +55,7 @@ export function SideBySideEditors() {
   const [actions, setActions] = useState<Array<IAction>>(
     JSON.parse(javaScriptExampleSteps)
   );
+  const [editorActions, setEditorActions] = useState<Array<IAction>>([]);
   const [language, setLanguage] = useState("javascript");
   const [resultCode, setResultCode] = useState("");
   const [isRunning, setIsRunning] = useState(false);
@@ -72,49 +75,6 @@ export function SideBySideEditors() {
     setActions(JSON.parse(stepsJson));
   }, [stepsJson]);
 
-  const executeSteps = async () => {
-    clearResultCode();
-    setIsRunning(true);
-    setFocusOnResultEditor(true);
-    const steps = JSON.parse(stepsJson);
-    for (var i = 0; i < steps.length; i++) {
-      // TODO: doesn't work, some fancy react closure issue
-      // const currentRunSteps = isRunning;
-      // if (i !== 0 && !currentRunSteps) {
-      //   break;
-      // }
-      const step = steps[i];
-      if (step.name === "speak-before") {
-        await speakText(step.value);
-      }
-      if (step.name === "type-editor") {
-        // set result code but with small delays between each character so it looks like it's being typed
-        // await each delay so we don't go on ahead until entire code for this step is done being typed
-        const value = step.value;
-        for (var j = 0; j < value.length; j++) {
-          setResultCode((prev) => prev + value[j]);
-          await new Promise((resolve) => setTimeout(resolve, 75));
-        }
-      }
-      if (step.name === "backspace") {
-        const value = step.value;
-        for (var j = 0; j < value; j++) {
-          setResultCode((prev) => prev.slice(0, -1));
-          await new Promise((resolve) => setTimeout(resolve, 35));
-        }
-      }
-      if (step.name === "enter") {
-        setResultCode((prev) => prev + "\n");
-        await new Promise((resolve) => setTimeout(resolve, 50));
-      }
-      // TODO: we need to issue the actual up arrow keystroke within the editor!
-      if (step.name === "arrow-up") {
-        // setResultCode((prev) => prev + "\u2191");
-        await new Promise((resolve) => setTimeout(resolve, 50));
-      }
-    }
-    setIsRunning(false);
-  };
 
   // const stop = () => {
   //   setIsRunning(false);
@@ -157,6 +117,13 @@ export function SideBySideEditors() {
         break;
     }
   };
+
+  const runActions = () => {
+    clearResultCode();
+    setEditorActions(actions);
+    setIsRunning(true);
+
+  }
 
   return (
     <Flex gap="5" direction="row" justify="center" align="start">
@@ -207,13 +174,11 @@ export function SideBySideEditors() {
           <Text>{editorMode ? "Editor" : "JSON"} Mode</Text>
         </Flex>
         <Flex gap="5" direction="row" justify="center" align="center">
-        <Button onClick={executeSteps}>Run Steps</Button>
+        <Button onClick={() => setEditorActions(actions)}>Run Steps</Button>
         <Button disabled={!isRunning} onClick={reset} color="red">
           Stop / Reset
         </Button>
-        <Button disabled={true} >
-            Code Check (Coming Soon)
-          </Button>
+        <CodeCheckDialog actions={actions} />
       </Flex>
         {editorMode ? (
           <ActionEditor actions={actions} setActions={setActions} />
@@ -221,6 +186,7 @@ export function SideBySideEditors() {
           <SimpleEditor
             path="json/"
             value={stepsJson}
+            actions={[]}
             language="json"
             tokenizerCode={tokenizerCode}
             onChangeCode={(code) => {
@@ -232,20 +198,18 @@ export function SideBySideEditors() {
           />
         )}
         <Flex gap="5" direction="row" justify="center" align="center">
-          <Button onClick={executeSteps}>Run Steps</Button>
+          <Button onClick={() => setEditorActions(actions)}>Run Steps</Button>
           <Button disabled={!isRunning} onClick={reset} color="red">
             Stop / Reset
           </Button>
-          <Button disabled={true} >
-            Code Check (Coming Soon)
-          </Button>
+          <CodeCheckDialog actions={actions} />
         </Flex>
       </Flex>
       <Flex gap="5" direction="column" justify="center" align="center">
         <Heading color="mint">2. Your Resulting Video!</Heading>
         <SimpleEditor
           path="result/"
-          value={resultCode}
+          actions={editorActions}
           language={language}
           tokenizerCode='console.log("hello world!");'
           focus={focusOnResultEditor}

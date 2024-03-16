@@ -127,11 +127,11 @@ export const pythonExampleSteps = `[
 export const cSharpExampleSteps = `[
     {
       "name": "speak-before",
-      "value": "Let's learn how to use the Console.WriteLine function in C#!"
+      "value": "Let's learn how to use the Console.WriteLine function in C sharp!"
     },
     {
       "name": "speak-before",
-      "value": "First, to make it clear that this is a C# file, I'll just put a comment here"
+      "value": "First, to make it clear that this is a C sharp file, I'll just put a comment here"
     },
     {
       "name": "type-editor",
@@ -139,7 +139,7 @@ export const cSharpExampleSteps = `[
     },
     {
       "name": "enter",
-      "value": "1"
+      "value": "2"
     },
     {
       "name": "speak-before",
@@ -171,6 +171,10 @@ export const cSharpExampleSteps = `[
     },
     {
       "name": "enter",
+      "value": "2"
+    },
+    {
+      "name": "arrow-up",
       "value": "1"
     },
     {
@@ -310,7 +314,7 @@ export const goLangExampleSteps = `[
     },
     {
       "name": "enter",
-      "value": "1"
+      "value": "2"
     },
     {
         "name": "speak-before",
@@ -319,6 +323,10 @@ export const goLangExampleSteps = `[
     {
       "name": "type-editor",
       "value": "import \\"fmt\\""
+    },
+    {
+      "name": "enter",
+      "value": "10"
     },
     {
       "name": "type-editor",
@@ -341,6 +349,10 @@ export const goLangExampleSteps = `[
       "value": "1"
     },
     {
+      "name": "type-editor",
+      "value": "}"
+    },
+    {
         "name": "arrow-up",
         "value": "1"
     },
@@ -354,11 +366,11 @@ export const goLangExampleSteps = `[
     },
     {
       "name": "backspace",
-      "value": "30"
+      "value": "32"
     },
     {
       "name": "type-editor",
-      "value": "myVariable := 5"
+      "value": "    myVariable := 5"
     },
     {
       "name": "enter",
@@ -366,7 +378,7 @@ export const goLangExampleSteps = `[
     },
     {
       "name": "type-editor",
-      "value": "fmt.Println(myVariable)"
+      "value": "    fmt.Println(myVariable)"
     },
     {
       "name": "speak-before",
@@ -378,7 +390,7 @@ export const goLangExampleSteps = `[
     },
     {
       "name": "type-editor",
-      "value": "// 5"
+      "value": "    // 5"
     },
     {
       "name": "speak-before",
