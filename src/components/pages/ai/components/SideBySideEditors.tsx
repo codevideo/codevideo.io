@@ -12,14 +12,13 @@ import * as React from "react";
 import { SimpleEditor } from "../../../shared/SimpleEditor";
 import { useEffect, useState } from "react";
 import { ActionEditor } from "../../../shared/ActionEditor";
-import { IAction, convertActionsToCodeActions } from "@fullstackcraftllc/codevideo-types";
+import { IAction } from "@fullstackcraftllc/codevideo-types";
 import {
   cSharpExampleSteps,
   goLangExampleSteps,
   javaScriptExampleSteps,
   pythonExampleSteps,
 } from "../examples";
-import { VirtualCodeBlock } from "@fullstackcraftllc/virtual-code-block";
 import { CodeCheckDialog } from "./CodeCheckDialog";
 
 const tokenizerCode = `[
@@ -32,23 +31,6 @@ const tokenizerCode = `[
         "value": "// index.js"
     }
 ]`;
-
-export const speakText = (text: string): Promise<void> => {
-  return new Promise<void>((resolve, reject) => {
-    const speechSynthesis = window.speechSynthesis;
-
-    // Create a new SpeechSynthesisUtterance object
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    // Resolve the promise when speech is done
-    utterance.onend = () => {
-      resolve();
-    };
-
-    // Speak the text
-    speechSynthesis.speak(utterance);
-  });
-};
 
 export function SideBySideEditors() {
   const [stepsJson, setStepsJson] = useState(javaScriptExampleSteps);
