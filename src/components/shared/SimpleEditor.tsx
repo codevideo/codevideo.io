@@ -5,7 +5,67 @@ import Monokai from "monaco-themes/themes/Monokai.json";
 import * as monaco from "monaco-editor";
 import { useEffect, useRef } from "react";
 import { IAction } from "@fullstackcraftllc/codevideo-types";
-import { executeActionsWithMonacoEditor } from "../../utils/executeActionsWithMonacoEditor";
+import { speakText } from "../../utils/speakText";
+
+export const executeActionsWithMonacoEditor = async (
+  editor: React.MutableRefObject<
+    monaco.editor.IStandaloneCodeEditor | undefined
+  >,
+  actions: Array<IAction>
+) => {
+  if (!editor) {
+    return;
+  }
+  const editorInstance = editor.current;
+  if (!editorInstance) {
+    return;
+  }
+
+  for (let i = 0; i < actions.length; i++) {
+    const action = actions[i];
+    if (action.name === "type-editor") {
+      // for typing, add 100ms delay between each character
+      const text = action.value;
+      for (let i = 0; i < text.length; i++) {
+        editorInstance.trigger("keyboard", "type", { text: text[i] });
+
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+    } else if (action.name === "backspace") {
+      // for backspace, add 100ms delay between each backspace
+      const count = parseInt(action.value);
+      for (let i = 0; i < count; i++) {
+        // '1' is monaco.KeyCode.Backspace.toString()
+        // TODO: using monaco.KeyCode.Backspace breaks the build... so we use the string value directly
+        editorInstance.trigger("1", "deleteLeft", null);
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+    } else if (action.name === "speak-before") {
+      await speakText(action.value);
+    } else if (action.name === "arrow-up") {
+      editorInstance.trigger("keyboard", "type", {
+        text: String.fromCharCode(38),
+      });
+    } else if (action.name === "arrow-down") {
+      editorInstance.trigger("keyboard", "type", {
+        text: String.fromCharCode(40),
+      });
+    } else if (action.name === "arrow-left") {
+      editorInstance.trigger("keyboard", "type", {
+        text: String.fromCharCode(37),
+      });
+    } else if (action.name === "arrow-right") {
+      editorInstance.trigger("keyboard", "type", {
+        text: String.fromCharCode(39),
+      });
+    } else if (action.name === "enter") {
+      editorInstance.trigger("keyboard", "type", {
+        text: String.fromCharCode(13),
+      });
+    }
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  }
+};
 
 export interface ISimpleEditorProps {
   path: string;
@@ -20,7 +80,8 @@ export interface ISimpleEditorProps {
 // use local static files
 loader.config({ paths: { vs: "/vs" } });
 export function SimpleEditor(props: ISimpleEditorProps) {
-  const { path, language, actions, value, tokenizerCode, focus, onChangeCode } = props;
+  const { path, language, actions, value, tokenizerCode, focus, onChangeCode } =
+    props;
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>();
 
   // whenever focus changes and is true, focus on the editor
@@ -33,7 +94,7 @@ export function SimpleEditor(props: ISimpleEditorProps) {
   // whenever actions change, execute them
   useEffect(() => {
     if (actions.length > 0 && editorRef.current) {
-      console.log('executing actions')
+      console.log("executing actions");
       editorRef.current.focus();
       executeActionsWithMonacoEditor(editorRef, actions);
     }
