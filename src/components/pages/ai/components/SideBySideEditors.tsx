@@ -197,8 +197,8 @@ export function SideBySideEditors() {
           focus={focusOnResultEditor}
         />
         <Flex gap="5" direction="row" justify="center" align="center">
-          <Button onClick={exportCaptionedFrames}>
-            Export Captioned Frames
+          <Button onClick={exportCaptionedFrames} disabled={true}>
+            Export Frames (Coming Soon)
           </Button>
         </Flex>
       </Flex>

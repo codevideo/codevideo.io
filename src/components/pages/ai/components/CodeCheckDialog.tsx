@@ -1,8 +1,5 @@
 import * as React from "react";
-import {
-  IAction,
-  convertActionsToCodeActions,
-} from "@fullstackcraftllc/codevideo-types";
+import { IAction } from "@fullstackcraftllc/codevideo-types";
 import { VirtualCodeBlock } from "@fullstackcraftllc/virtual-code-block";
 import { Button, Code, Dialog, Flex, Text } from "@radix-ui/themes";
 import { useState } from "react";
@@ -16,38 +13,47 @@ export function CodeCheckDialog(props: ICodeCheckDialogProps) {
   const { actions } = props;
   const [codeIndex, setCodeIndex] = useState(0);
   const virtualCodeBlock = new VirtualCodeBlock([]);
-  const codeActions = convertActionsToCodeActions(actions);
-  virtualCodeBlock.applyCodeActions(codeActions);
-  const codeAtEachStep = virtualCodeBlock.getCodeAfterEachStep();
+  virtualCodeBlock.applyActions(actions);
+  const dataAtEachFrame = virtualCodeBlock.getDataForAnnotatedFrames();
   return (
     <Dialog.Root>
       <Dialog.Trigger>
-        <Button>Code Check</Button>
+        <Button>Code Frames</Button>
       </Dialog.Trigger>
       <Dialog.Content>
-        <Dialog.Title>Code Check</Dialog.Title>
+        <Dialog.Title>Code Frames</Dialog.Title>
         <Dialog.Description size="2" mb="4">
-          Resulting code based on your code steps:
+          View your code and speech captions every step of the way.
         </Dialog.Description>
         <Flex gap="2" mb="4" direction="column">
-        <Text>Step {codeIndex + 1} of {codeAtEachStep.length}:</Text>
-        <Code>
-          <ReadOnlyEditor value={codeAtEachStep[codeIndex]}/>
-        </Code>
+          <Text>
+            Step {codeIndex + 1} of {dataAtEachFrame.length}:
+          </Text>
+          {dataAtEachFrame[codeIndex].speechCaptions.length > 0 && (
+            <Text m="4">
+              "<i>{dataAtEachFrame[codeIndex].speechCaptions[0].speechValue}</i>"
+            </Text>
+          )}
+          <Code>
+            <ReadOnlyEditor
+              value={dataAtEachFrame[codeIndex].code}
+              caretPosition={dataAtEachFrame[codeIndex].caretPosition}
+            />
+          </Code>
         </Flex>
         <Flex gap="2" mt="4">
-            <Button
-                disabled={codeIndex === 0}
-                onClick={() => setCodeIndex(codeIndex - 1)}
-            >
-                {'<'}
-            </Button>
-            <Button
-                disabled={codeIndex === codeAtEachStep.length - 1}
-                onClick={() => setCodeIndex(codeIndex + 1)}
-            >
-                {'>'}
-            </Button>
+          <Button
+            disabled={codeIndex === 0}
+            onClick={() => setCodeIndex(codeIndex - 1)}
+          >
+            {"<"}
+          </Button>
+          <Button
+            disabled={codeIndex === dataAtEachFrame.length - 1}
+            onClick={() => setCodeIndex(codeIndex + 1)}
+          >
+            {">"}
+          </Button>
         </Flex>
       </Dialog.Content>
     </Dialog.Root>
