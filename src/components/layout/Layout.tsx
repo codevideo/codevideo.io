@@ -11,9 +11,25 @@ const Layout = (props: PropsWithChildren) => {
 
   usePageRedirects();
 
+  // for firefox to work with speech synthesis, need to load the voices 2x
+  // see https://caniuse.com/?search=speechsynthesis
+  const getVoices = () => {
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.getVoices();
+    }
+    setTimeout(() => {
+      if (typeof window !== "undefined" && window.speechSynthesis) {
+        window.speechSynthesis.getVoices();
+      }
+    }, 3000);
+  }
+
   useEffect(() => {
     // Add a class to the body tag
     document.body.classList.add("dark");
+
+    // Load the voices for speech synthesis
+    getVoices();
 
     // Cleanup function to remove the class on component unmount
     return () => {
