@@ -23,45 +23,63 @@ export const executeActionsWithMonacoEditor = async (
 
   for (let i = 0; i < actions.length; i++) {
     const action = actions[i];
-    if (action.name === "type-editor") {
-      // for typing, add 100ms delay between each character
-      const text = action.value;
-      for (let i = 0; i < text.length; i++) {
-        editorInstance.trigger("keyboard", "type", { text: text[i] });
+    switch (action.name) {
+      case "type-editor":
+        // for typing, add 100ms delay between each character
+        const text = action.value;
+        for (let i = 0; i < text.length; i++) {
+          editorInstance.trigger("keyboard", "type", { text: text[i] });
 
-        await new Promise((resolve) => setTimeout(resolve, 100));
-      }
-    } else if (action.name === "backspace") {
-      // for backspace, add 100ms delay between each backspace
-      const count = parseInt(action.value);
-      for (let i = 0; i < count; i++) {
-        // '1' is monaco.KeyCode.Backspace.toString()
-        // TODO: using monaco.KeyCode.Backspace breaks the build... so we use the string value directly
-        editorInstance.trigger("1", "deleteLeft", null);
-        await new Promise((resolve) => setTimeout(resolve, 100));
-      }
-    } else if (action.name === "speak-before") {
-      await speakText(action.value);
-    } else if (action.name === "arrow-up") {
-      editorInstance.trigger("keyboard", "type", {
-        text: String.fromCharCode(38),
-      });
-    } else if (action.name === "arrow-down") {
-      editorInstance.trigger("keyboard", "type", {
-        text: String.fromCharCode(40),
-      });
-    } else if (action.name === "arrow-left") {
-      editorInstance.trigger("keyboard", "type", {
-        text: String.fromCharCode(37),
-      });
-    } else if (action.name === "arrow-right") {
-      editorInstance.trigger("keyboard", "type", {
-        text: String.fromCharCode(39),
-      });
-    } else if (action.name === "enter") {
-      editorInstance.trigger("keyboard", "type", {
-        text: String.fromCharCode(13),
-      });
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+        break;
+      case "backspace":
+        // for backspace, add 100ms delay between each backspace
+        const count = parseInt(action.value);
+        for (let i = 0; i < count; i++) {
+          // '1' is monaco.KeyCode.Backspace.toString()
+          // TODO: using monaco.KeyCode.Backspace breaks the build... so we use the string value directly
+          editorInstance.trigger("1", "deleteLeft", null);
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+        break;
+      case "speak-before":
+        await speakText(action.value);
+        break;
+      case "speak-after":
+        await speakText(action.value);
+        break;
+      case "speak-during":
+        await speakText(action.value);
+        break;
+      case "arrow-up":
+        editorInstance.trigger("keyboard", "type", {
+          text: String.fromCharCode(38),
+        });
+        break;
+      case "arrow-down":
+        editorInstance.trigger("keyboard", "type", {
+          text: String.fromCharCode(40),
+        });
+        break;
+      case "arrow-left":
+        editorInstance.trigger("keyboard", "type", {
+          text: String.fromCharCode(37),
+        });
+        break;
+      case "arrow-right":
+        editorInstance.trigger("keyboard", "type", {
+          text: String.fromCharCode(39),
+        });
+        break;
+      case "enter":
+        editorInstance.trigger("keyboard", "type", {
+          text: String.fromCharCode(13),
+        });
+        break;
+      default:
+        console.log("action not found");
+        break;
     }
     await new Promise((resolve) => setTimeout(resolve, 100));
   }

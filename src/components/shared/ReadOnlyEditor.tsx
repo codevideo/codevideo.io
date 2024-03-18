@@ -2,16 +2,20 @@ import * as React from "react";
 import Editor, { Monaco, loader } from "@monaco-editor/react";
 import Monokai from "monaco-themes/themes/Monokai.json";
 import * as monaco from "monaco-editor";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export interface IReadOnlyEditorProps {
   value: string;
+  caretPosition?: {
+    row: number;
+    col: number;
+  }
 }
 
 // use local static files
 loader.config({ paths: { vs: "/vs" } });
 export function ReadOnlyEditor(props: IReadOnlyEditorProps) {
-  const { value } = props;
+  const { value, caretPosition } = props;
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>();
 
   const handleOnMount = (
@@ -36,6 +40,17 @@ export function ReadOnlyEditor(props: IReadOnlyEditorProps) {
       }, 1000);
     }
   };
+
+  // every time caretPosition changes, focus the editor and update the editor's cursor position
+  useEffect(() => {
+    if (editorRef.current && caretPosition) {
+      editorRef.current.focus();
+      editorRef.current.setPosition({
+        lineNumber: caretPosition.row,
+        column: caretPosition.col,
+      });
+    }
+  }, [caretPosition]);
 
   return (
       <Editor
