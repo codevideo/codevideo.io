@@ -20,6 +20,11 @@ import {
   pythonExampleSteps,
 } from "../examples";
 import { CodeCheckDialog } from "./CodeCheckDialog";
+import {
+  actionsToVideo,
+  MimicTypos,
+} from "@fullstackcraftllc/codevideo-frontend";
+import { HiddenCanvas } from "../../../shared/HiddenCanvas";
 
 const tokenizerCode = `[
     {
@@ -44,11 +49,13 @@ export function SideBySideEditors() {
   const [editorMode, setEditorMode] = useState(true);
   const [interactiveMode, setInteractiveMode] = useState(false);
   const [focusOnResultEditor, setFocusOnResultEditor] = useState(false);
+  const [videoGenerating, setVideoGenerating] = useState(false);
+  const [videoUrl, setVideoUrl] = useState("");
 
   // every time actions change, update the JSON string
   useEffect(() => {
-    console.log('updating json')
-    console.log(actions)
+    console.log("updating json");
+    console.log(actions);
     setStepsJson(JSON.stringify(actions, null, 2));
   }, [actions]);
 
@@ -56,7 +63,6 @@ export function SideBySideEditors() {
   useEffect(() => {
     setActions(JSON.parse(stepsJson));
   }, [stepsJson]);
-
 
   // const stop = () => {
   //   setIsRunning(false);
@@ -73,6 +79,59 @@ export function SideBySideEditors() {
 
   const exportCaptionedFrames = () => {
     // TBD
+  };
+
+  const generateVideo = async () => {
+    // clear videoUrl
+    setVideoUrl("");
+    setVideoGenerating(true);
+    // define video parameters
+    const fps = 60;
+    const mimeType = "video/webm";
+    const codec = "codecs=vp9";
+
+    // get canvas and setup media recorder
+    const canvas = document.getElementById("code-canvas") as HTMLCanvasElement;
+
+    const { videoUrl, error } = await actionsToVideo(
+      canvas,
+      fps,
+      mimeType,
+      codec,
+      1920,
+      1080,
+      actions,
+      language as any,
+      ["#013E3B", "#57D5BA"],
+      MimicTypos.NEVER
+    );
+    if (error) {
+      // handle error
+      console.error(error);
+    }
+    // No error, so we can do something with videoUrl.
+
+    // In this example, create a video element, set its source, and append it to a container
+
+    // Create the video element
+    const video = document.createElement("video");
+
+    // Set the video's src attribute to the URL of a video file
+    video.src = videoUrl;
+
+    // Set other useful attributes
+    video.id = "video";
+    video.height = 960;
+    video.width = 540;
+    video.controls = true;
+
+    // Append the video element to the container div
+    const container = document.getElementById("container");
+    if (container) {
+      container.appendChild(video);
+    }
+    setVideoGenerating(false);
+    setVideoUrl(videoUrl);
   };
 
   const handleExampleSelectChange = (e: string) => {
@@ -104,8 +163,7 @@ export function SideBySideEditors() {
     clearResultCode();
     setEditorActions(actions);
     setIsRunning(true);
-
-  }
+  };
 
   return (
     <Flex gap="5" direction="row" justify="center" align="start">
@@ -156,12 +214,12 @@ export function SideBySideEditors() {
           <Text>{editorMode ? "Editor" : "JSON"} Mode</Text>
         </Flex>
         <Flex gap="5" direction="row" justify="center" align="center">
-        <Button onClick={() => setEditorActions(actions)}>Run Steps</Button>
-        <Button disabled={!isRunning} onClick={reset} color="red">
-          Stop / Reset
-        </Button>
-        <CodeCheckDialog actions={actions} />
-      </Flex>
+          <Button onClick={() => setEditorActions(actions)}>Preview Video</Button>
+          <Button disabled={!isRunning} onClick={reset} color="red">
+            Stop / Reset
+          </Button>
+          <CodeCheckDialog actions={actions} />
+        </Flex>
         {editorMode ? (
           <ActionEditor actions={actions} setActions={setActions} />
         ) : (
@@ -180,7 +238,7 @@ export function SideBySideEditors() {
           />
         )}
         <Flex gap="5" direction="row" justify="center" align="center">
-          <Button onClick={() => setEditorActions(actions)}>Run Steps</Button>
+          <Button onClick={() => setEditorActions(actions)}>Preview Video</Button>
           <Button disabled={!isRunning} onClick={reset} color="red">
             Stop / Reset
           </Button>
@@ -188,7 +246,7 @@ export function SideBySideEditors() {
         </Flex>
       </Flex>
       <Flex gap="5" direction="column" justify="center" align="center">
-        <Heading color="mint">2. Your Resulting Video!</Heading>
+        <Heading color="mint">2. Preview Your Video</Heading>
         <SimpleEditor
           path="result/"
           actions={editorActions}
@@ -197,11 +255,38 @@ export function SideBySideEditors() {
           focus={focusOnResultEditor}
         />
         <Flex gap="5" direction="row" justify="center" align="center">
+        <Heading color="mint">3. Get Your Resulting Video!</Heading>
+        </Flex>
+        <Flex gap="5" direction="row" justify="center" align="center">
+          <Button onClick={generateVideo} disabled={videoGenerating}>
+            {videoGenerating ? "Generating..." : "Generate Video*"}
+          </Button>
           <Button onClick={exportCaptionedFrames} disabled={true}>
             Export Frames (Coming Soon)
           </Button>
         </Flex>
+        <Flex gap="5" direction="row" justify="center" align="center">
+          <Text>
+            *Unfortunately, the video won't have sound until we get our act
+            together and finish the backend endpoint!
+          </Text>
+        </Flex>
+        <Flex gap="5" direction="column" justify="center" align="center">
+          <Text>{videoGenerating ?  "Generating..." : "Satisfied with your steps? Click 'Generate Video' to generate your video!"}</Text>
+          {videoUrl !== "" && (
+            <video
+              crossOrigin="anonymous"
+              src={videoUrl}
+              controls
+              style={{
+                width: 960,
+                height: 540,
+              }}
+            />
+          )}
+        </Flex>
       </Flex>
+      <HiddenCanvas />
     </Flex>
   );
 }

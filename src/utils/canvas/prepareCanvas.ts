@@ -1,5 +1,5 @@
 import { ArrayOfTwoOrMore } from './../../types/ArrayOfTwoOrMore';
-import { drawCircle } from "./drawCircle";
+import { drawCircle, drawWatermark } from "./drawCircle";
 
 export const prepareCanvas = async (
     canvas: HTMLCanvasElement,
@@ -46,5 +46,8 @@ export const prepareCanvas = async (
 
         // close button
         drawCircle(ctx, paddingAmount + buttonPaddingAmount*3, paddingAmount + buttonPaddingAmount, 10, "#27C940")
+
+        // draw watermark at bottom right
+        drawWatermark(ctx, "/> CodeVideo", rectWidth - 350, rectHeight+20);
     }
 }

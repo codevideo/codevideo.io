@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "@ffmpeg/core": "^0.11.0",
-    "@ffmpeg/ffmpeg": "^0.11.6",
+    "@ffmpeg/ffmpeg": "^0.12.10",
+    "@fullstackcraftllc/codevideo-frontend": "^1.1.7",
     "@fullstackcraftllc/codevideo-types": "^1.2.1",
     "@fullstackcraftllc/virtual-code-block": "^1.3.0",
     "@monaco-editor/react": "^4.4.6",
@@ -42,7 +43,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
-    "react-redux": "^8.0.5"
+    "react-redux": "^8.0.5",
+    "speech-synthesis-recorder": "^1.2.1"
   },
   "repository": {
     "type": "git",

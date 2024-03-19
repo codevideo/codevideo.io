@@ -208,7 +208,7 @@ export function EditorWidget() {
   useEffect(() => {
     if (editorRef.current) {
       editorRef.current.layout({ width, height });
-      editorRef.current.getAction("editor.action.formatDocument").run();
+      editorRef.current.getAction("editor.action.formatDocument")?.run();
     }
   }, [width, height]);
 

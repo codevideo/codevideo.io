@@ -1,8 +1,5 @@
-import { createFFmpeg } from "@ffmpeg/ffmpeg";
-
-const ffmpeg = createFFmpeg({
-  log: true,
-});
+import { FFmpeg } from "@ffmpeg/ffmpeg";
+import { toBlobURL } from "@ffmpeg/util";
 
 export const transcode = async (
   recording: Uint8Array,
@@ -10,13 +7,21 @@ export const transcode = async (
   height: number,
   setVideoUrl: (videoUrl: string) => void
 ) => {
-  if (!ffmpeg.isLoaded()) {
-    await ffmpeg.load();
+  const ffmpeg = new FFmpeg();
+  const baseURL = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
+  if (!ffmpeg.loaded) {
+    await ffmpeg.load({
+      coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, "text/javascript"),
+      wasmURL: await toBlobURL(
+        `${baseURL}/ffmpeg-core.wasm`,
+        "application/wasm"
+      ),
+    });
   }
   const name = "record.webm";
   console.log("start transcoding");
-  ffmpeg.FS("writeFile", name, recording);
-  await ffmpeg.run(
+  ffmpeg.writeFile(name, recording);
+  await ffmpeg.exec([
     "-i",
     name,
     "-c:v",
@@ -24,10 +29,10 @@ export const transcode = async (
     "-s",
     `${width}x${height}`,
     "output.mp4"
-  );
+  ]);
   console.log("Complete transcoding");
-  const data = ffmpeg.FS("readFile", "output.mp4");
+  const data = await ffmpeg.readFile("output.mp4");
   setVideoUrl(
-    URL.createObjectURL(new Blob([data.buffer], { type: "video/mp4" }))
+    URL.createObjectURL(new Blob([data], { type: "video/mp4" }))
   );
 };
