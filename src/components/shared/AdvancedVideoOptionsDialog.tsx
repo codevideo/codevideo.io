@@ -1,5 +1,4 @@
 import * as React from "react";
-import MimicTypos from "../../enums/MimicTypos";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import {
@@ -20,6 +19,7 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
+// import { MimicTypos } from "@fullstackcraftllc/codevideo-frontend";
 
 export interface IAdvancedVideoOptionsDialogProps {
   onClicked: () => void;
@@ -40,7 +40,7 @@ export function AdvancedVideoOptionsDialog(
   };
 
   const onChangeTypos = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value as MimicTypos;
+    const value = event.target.value as any;
     dispatch(setMimicTypos(value));
   };
 
@@ -325,23 +325,23 @@ export function AdvancedVideoOptionsDialog(
           </Inset>
           <Text size="4">Mimic Typos:</Text>
           <RadioGroup.Root
-            defaultValue={MimicTypos.NEVER}
+            defaultValue={'NEVER'}
             onChange={onChangeTypos}
           >
             <Flex gap="3" direction="row">
               <Text as="label" size="2">
                 <Flex gap="1">
-                  <RadioGroup.Item value={MimicTypos.NEVER} /> Never
+                  <RadioGroup.Item value={'NEVER'} /> Never
                 </Flex>
               </Text>
               <Text as="label" size="2">
                 <Flex gap="1">
-                  <RadioGroup.Item value={MimicTypos.SOMETIMES} /> Sometimes
+                  <RadioGroup.Item value={'SOMETIMES'} /> Sometimes
                 </Flex>
               </Text>
               <Text as="label" size="2">
                 <Flex gap="1">
-                  <RadioGroup.Item value={MimicTypos.OFTEN} /> Often
+                  <RadioGroup.Item value={'OFTEN'} /> Often
                 </Flex>
               </Text>
             </Flex>

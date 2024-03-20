@@ -59,63 +59,68 @@ export function ActionEditor(props: IActionEditorProps) {
   ));
 
   return (
-    <div style={{ height: "500px", overflowY: 'auto' }}>
+    <div style={{ height: "500px", overflowY: "auto" }}>
       <Flex direction="column" gap="1" style={{ width: "900px" }}>
         {actions.map((action, index) => (
           <>
             <Card color="mint">
-              <Flex key={index} direction="column" gap="1">
-                <Flex direction="row" align="center" gap="1">
-                  <Text>Name:</Text>
-                  <Select.Root
-                    defaultValue={action.name}
-                    onValueChange={(e) => handleSelectChange(index, e)}
-                  >
-                    <Select.Trigger />
-                    <Select.Content>
-                      <Select.Group>{dropdownOptions}</Select.Group>
-                    </Select.Content>
-                  </Select.Root>
-                  <Button
-                    ml="auto"
-                    color="red"
-                    onClick={() =>
-                      setActions(actions.filter((action, i) => i !== index))
-                    }
-                  >
-                    Remove
-                  </Button>
-                </Flex>
-                <Flex direction="row" align="center" gap="1">
-                  <Text>Value:</Text>
-                  <TextField.Root>
-                    <TextField.Input
-                      style={{
-                        width: "700px",
-                        fontFamily: isCodeAction(action)
-                          ? "monospace"
-                          : "inherit",
-                      }}
-                      width="700px"
-                      type={isRepeatableAction(action.name) ? "number" : "text"}
-                      value={action.value}
-                      onChange={(e) => handleInputChange(index, e)}
-                    />
-                  </TextField.Root>
-                  {/* duplicate button */}
-                  <Button
-                    ml="auto"
-                    color="mint"
-                    onClick={() =>
-                      setActions(
-                        actions
-                          .slice(0, index + 1)
-                          .concat([action, ...actions.slice(index + 1)])
-                      )
-                    }
-                  >
-                    Duplicate
-                  </Button>
+              <Flex direction="row" align="center" gap="1">
+                <Text color="mint" mr="1">#{index + 1}</Text>
+                <Flex key={index} direction="column" gap="1">
+                  <Flex direction="row" align="center" gap="1">
+                    <Text>Name:</Text>
+                    <Select.Root
+                      defaultValue={action.name}
+                      onValueChange={(e) => handleSelectChange(index, e)}
+                    >
+                      <Select.Trigger />
+                      <Select.Content>
+                        <Select.Group>{dropdownOptions}</Select.Group>
+                      </Select.Content>
+                    </Select.Root>
+                    <Button
+                      ml="auto"
+                      color="red"
+                      onClick={() =>
+                        setActions(actions.filter((action, i) => i !== index))
+                      }
+                    >
+                      Remove
+                    </Button>
+                  </Flex>
+                  <Flex direction="row" align="center" gap="1">
+                    <Text>Value:</Text>
+                    <TextField.Root>
+                      <TextField.Input
+                        style={{
+                          width: "700px",
+                          fontFamily: isCodeAction(action)
+                            ? "monospace"
+                            : "inherit",
+                        }}
+                        width="700px"
+                        type={
+                          isRepeatableAction(action.name) ? "number" : "text"
+                        }
+                        value={action.value}
+                        onChange={(e) => handleInputChange(index, e)}
+                      />
+                    </TextField.Root>
+                    {/* duplicate button */}
+                    <Button
+                      ml="auto"
+                      color="mint"
+                      onClick={() =>
+                        setActions(
+                          actions
+                            .slice(0, index + 1)
+                            .concat([action, ...actions.slice(index + 1)])
+                        )
+                      }
+                    >
+                      Duplicate
+                    </Button>
+                  </Flex>
                 </Flex>
               </Flex>
             </Card>
@@ -142,6 +147,6 @@ export function ActionEditor(props: IActionEditorProps) {
           </>
         ))}
       </Flex>
-      </div>
+    </div>
   );
 }

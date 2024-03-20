@@ -17,45 +17,46 @@ export const areEqual = (a: number, b: number): boolean => {
   },
 };
 
-const extractLanguageFromFileLabel = (fileLabel: string): string => {
+const extractLanguageFromFileLabel = (fileLabel: string): "javascript" | "typescript" | "python" | "css" | "html" => {
   const fileLabelSplit = fileLabel.split(".");
   const fileExtension = fileLabelSplit[fileLabelSplit.length - 1];
   switch (fileExtension) {
-    case "sh":
-      return "bash";
+    // case "sh":
+    //   return "bash";
     case "ts":
       return "typescript";
     case "js":
       return "javascript";
     case "py":
       return "python";
-    case "rb":
-      return "ruby";
-    case "go":
-      return "go";
-    case "java":
-      return "java";
-    case "c":
-      return "c";
-    case "cpp":
-      return "cpp";
-    case "cs":
-      return "csharp";
-    case "swift":
-      return "swift";
-    case "php":
-      return "php";
+    // case "rb":
+    //   return "ruby";
+    // case "go":
+    //   return "go";
+    // case "java":
+    //   return "java";
+    // case "c":
+    //   return "c";
+    // case "cpp":
+    //   return "cpp";
+    // case "cs":
+    //   return "csharp";
+    // case "swift":
+    //   return "swift";
+    // case "php":
+    //   return "php";
     case "html":
       return "html";
     case "css":
       return "css";
-    case "json":
-      return "json";
-    case "md":
-      return "markdown";
-    default:
-      return ""
+    // case "json":
+    //   return "json";
+    // case "md":
+    //   return "markdown";
+    // default:
+    //   return ""
   }
+  return "javascript";
 }
 
 export const editorSlice = createSlice({
@@ -78,7 +79,7 @@ export const editorSlice = createSlice({
         code,
       };
     },
-    setLanguage: (state, action: PayloadAction<{ language: string }>) => {
+    setLanguage: (state, action: PayloadAction<{ language: "javascript" | "typescript" | "python" | "css" | "html" }>) => {
       const { language } = action.payload;
       state.editorSetting = {
         ...state.editorSetting,

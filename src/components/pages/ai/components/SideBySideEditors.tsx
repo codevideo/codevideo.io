@@ -20,11 +20,14 @@ import {
   pythonExampleSteps,
 } from "../examples";
 import { CodeCheckDialog } from "./CodeCheckDialog";
-import {
-  actionsToVideo,
-  MimicTypos,
-} from "@fullstackcraftllc/codevideo-frontend";
+// import {
+//   MimicTypos,
+// } from "@fullstackcraftllc/codevideo-frontend";
 import { HiddenCanvas } from "../../../shared/HiddenCanvas";
+import { codeToVideo } from "../../../../utils/video/codeToVideo";
+import MimicTypos from "../../../../enums/MimicTypos";
+import Engine from "../../../../enums/Engine";
+import { VirtualCodeBlock } from "@fullstackcraftllc/virtual-code-block";
 
 const tokenizerCode = `[
     {
@@ -86,52 +89,68 @@ export function SideBySideEditors() {
     setVideoUrl("");
     setVideoGenerating(true);
     // define video parameters
-    const fps = 60;
-    const mimeType = "video/webm";
-    const codec = "codecs=vp9";
+    // const fps = 60;
+    // const mimeType = "video/webm";
+    // const codec = "codecs=vp9";
 
-    // get canvas and setup media recorder
-    const canvas = document.getElementById("code-canvas") as HTMLCanvasElement;
+    // // get canvas and setup media recorder
+    // const canvas = document.getElementById("code-canvas") as HTMLCanvasElement;
 
-    const { videoUrl, error } = await actionsToVideo(
-      canvas,
-      fps,
-      mimeType,
-      codec,
+    // hacky way to determine file extension from language
+    let fileExtension = "js";
+    switch (language) {
+      case "javascript":
+        fileExtension = "js";
+        break;
+      case "python":
+        fileExtension = "py";
+        break;
+      case "csharp":
+        fileExtension = "cs";
+        break;
+      case "go":
+        fileExtension = "go";
+        break;
+    }
+
+
+    const virtualCodeBlock = new VirtualCodeBlock([])
+    virtualCodeBlock.applyActions(actions)
+    const code = virtualCodeBlock.getCode()
+    await codeToVideo(
       1920,
       1080,
-      actions,
-      language as any,
+      `example.${fileExtension}`,
+      code,
       ["#013E3B", "#57D5BA"],
-      MimicTypos.NEVER
+      MimicTypos.NEVER,
+      setVideoUrl,
+      Engine.FRONTEND
     );
-    if (error) {
-      // handle error
-      console.error(error);
-    }
-    // No error, so we can do something with videoUrl.
-
-    // In this example, create a video element, set its source, and append it to a container
-
-    // Create the video element
-    const video = document.createElement("video");
-
-    // Set the video's src attribute to the URL of a video file
-    video.src = videoUrl;
-
-    // Set other useful attributes
-    video.id = "video";
-    video.height = 960;
-    video.width = 540;
-    video.controls = true;
-
-    // Append the video element to the container div
-    const container = document.getElementById("container");
-    if (container) {
-      container.appendChild(video);
-    }
     setVideoGenerating(false);
-    setVideoUrl(videoUrl);
+
+    // // No error, so we can do something with videoUrl.
+
+    // // In this example, create a video element, set its source, and append it to a container
+
+    // // Create the video element
+    // const video = document.createElement("video");
+
+    // // Set the video's src attribute to the URL of a video file
+    // video.src = videoUrl;
+
+    // // Set other useful attributes
+    // video.id = "video";
+    // video.height = 960;
+    // video.width = 540;
+    // video.controls = true;
+
+    // // Append the video element to the container div
+    // const container = document.getElementById("container");
+    // if (container) {
+    //   container.appendChild(video);
+    // }
+    // setVideoUrl(videoUrl);
   };
 
   const handleExampleSelectChange = (e: string) => {
