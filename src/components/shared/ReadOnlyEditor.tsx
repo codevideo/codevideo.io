@@ -9,7 +9,7 @@ export interface IReadOnlyEditorProps {
   caretPosition?: {
     row: number;
     col: number;
-  }
+  };
 }
 
 // use local static files
@@ -36,41 +36,50 @@ export function ReadOnlyEditor(props: IReadOnlyEditorProps) {
     // IN OTHER WORDS DO NOT DELETE THIS BLOCK:
     if (typeof window !== "undefined") {
       setTimeout(() => {
-        (window as any).monaco.editor.tokenize("console.log('hello world');", "javascript");
+        (window as any).monaco.editor.tokenize(
+          "console.log('hello world');",
+          "javascript"
+        );
       }, 1000);
     }
   };
 
+  // TODO, doesn't work, the newlines are not carried in from the 'value' data
   // every time caretPosition changes, focus the editor and update the editor's cursor position
-  useEffect(() => {
-    if (editorRef.current && caretPosition) {
-      editorRef.current.focus();
-      editorRef.current.setPosition({
-        lineNumber: caretPosition.row,
-        column: caretPosition.col,
-      });
-    }
-  }, [caretPosition]);
+  // useEffect(() => {
+  //   // TODO, bad pattern, but we need time for value in the editor to be set
+  //   setTimeout(() => {
+  //     if (editorRef.current && caretPosition) {
+  //       editorRef.current.focus();
+  //       editorRef.current.setPosition({
+  //         lineNumber: caretPosition.row,
+  //         column: caretPosition.col,
+  //       });
+  //       console.log("setting position", caretPosition);
+  //     }
+  //   }, 250);
+  // }, [caretPosition]);
+  // console.log("value", value)
 
   return (
-      <Editor
-        width="700px"
-        height="500px"
-        defaultLanguage="javascript"
-        value={value}
-        options={{
-          minimap: { enabled: false },
-          scrollBeyondLastLine: false,
-          fontFamily: "Fira Code",
-          fontSize: 13,
-          fontLigatures: true,
-          lineNumbers: "off",
-          folding: true,
-          automaticLayout: true,
-          autoIndent: "full",
-          readOnly: true,
-        }}
-        onMount={handleOnMount}
-      />
+    <Editor
+      width="700px"
+      height="250px"
+      defaultLanguage="javascript"
+      value={value}
+      options={{
+        minimap: { enabled: false },
+        scrollBeyondLastLine: false,
+        fontFamily: "Fira Code",
+        fontSize: 13,
+        fontLigatures: true,
+        lineNumbers: "off",
+        folding: true,
+        automaticLayout: true,
+        autoIndent: "full",
+        readOnly: true,
+      }}
+      onMount={handleOnMount}
+    />
   );
 }

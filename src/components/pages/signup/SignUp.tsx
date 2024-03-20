@@ -90,6 +90,7 @@ export function SignUp() {
       <Flex gap="3" direction="column" justify="center" align="center">
         <Heading>Sign Up</Heading>
         <Text>Get early access by confirming your email via magic link.</Text>
+        
         <form onSubmit={handleLogin}>
           <Flex gap="3" direction="column" justify="center" align="center">
             <Text htmlFor="email">Email</Text>
@@ -112,6 +113,7 @@ export function SignUp() {
           </Flex>
         </form>
         {renderInfo()}
+        <Text color="mint">We'll never spam you. We're just not that kind of company.</Text>
       </Flex>
     </Container>
   );
