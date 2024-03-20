@@ -16,12 +16,12 @@ export function CodeCheckDialog(props: ICodeCheckDialogProps) {
   virtualCodeBlock.applyActions(actions);
   const dataAtEachFrame = virtualCodeBlock.getDataForAnnotatedFrames();
   return (
-    <Dialog.Root>
+    <Dialog.Root >
       <Dialog.Trigger>
-        <Button>Code Frames</Button>
+        <Button>View Step Snapshots</Button>
       </Dialog.Trigger>
-      <Dialog.Content>
-        <Dialog.Title>Code Frames</Dialog.Title>
+      <Dialog.Content style={{minHeight: "600px"}}>
+        <Dialog.Title>View Step Snapshots</Dialog.Title>
         <Dialog.Description size="2" mb="4">
           View your code and speech captions every step of the way.
         </Dialog.Description>
@@ -29,11 +29,11 @@ export function CodeCheckDialog(props: ICodeCheckDialogProps) {
           <Text>
             Step {codeIndex + 1} of {dataAtEachFrame.length}:
           </Text>
-          {dataAtEachFrame[codeIndex].speechCaptions.length > 0 && (
-            <Text m="4">
+          {dataAtEachFrame[codeIndex].speechCaptions.length > 0 ? (
+            <Text m="4" align="center" style={{minHeight: "50px"}}>
               "<i>{dataAtEachFrame[codeIndex].speechCaptions[0].speechValue}</i>"
             </Text>
-          )}
+          ) : <Text m="4" align="center" style={{minHeight: "50px"}}></Text>}
           <Code>
             <ReadOnlyEditor
               value={dataAtEachFrame[codeIndex].code}

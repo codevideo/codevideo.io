@@ -176,11 +176,12 @@ export function AI() {
           title="Beginner's Lesson: Introduction to the console.log() Function in JavaScript"
           videoPath="/videos/consolelog.mov"
         />
-        <Text>As a comparison to a real video with Chris, here's Chris on Full Stack Craft's YouTube talking about building cron jobs with Go:</Text>
-        <ExampleVideo
+        <Text>As a comparison to a real video with Chris, here's <Link href="https://www.youtube.com/watch?v=yUFotBOL52M">Chris on Full Stack Craft's YouTube talking about building cron jobs with Go.</Link></Text>
+        {/* STILL after WEEKS doesnt work because of mounds of idiotic SSR pain and so on, just link it */}
+        {/* <ExampleVideo
           title="Go Applications - Lesson 7: Building the Cron Job"
           videoPath="https://www.youtube.com/embed/yUFotBOL52M?si=EMctAua5UUeRqSdf"
-        />
+        /> */}
         <Text>Those AI versions are <i>eerily close</i> to the real thing, eh? 😄</Text>
         <Heading size="7" color="mint">
           Coming Q1 2024.
