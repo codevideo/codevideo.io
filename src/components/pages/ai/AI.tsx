@@ -165,26 +165,8 @@ export function AI() {
           posts, or a prompt. 
         </Heading>
         <SideBySideEditors/>
-        <Text>The following examples below are from <Link href="https://github.com/codevideo/codevideo-ai"><Code>codevideo-ai</Code></Link> which currently only words as a CLI tool. Regardless, the examples you see below are 100% declarative - the video is 100% produced by a combination of automation tools, including a cloned AI voice, screen capture, and GUI automation tools.</Text>
-        <ExampleVideo
-          jsonCode={fibonacciCode}
-          title="Intermediate / Advanced Lesson: Fibonacci Function in TypeScript"
-          videoPath="/videos/fibonacci.mp4"
-        />
-        <ExampleVideo
-          jsonCode={consoleLogCode}
-          title="Beginner's Lesson: Introduction to the console.log() Function in JavaScript"
-          videoPath="/videos/consolelog.mov"
-        />
-        <Text>As a comparison to a real video with Chris, here's <Link href="https://www.youtube.com/watch?v=yUFotBOL52M">Chris on Full Stack Craft's YouTube talking about building cron jobs with Go.</Link></Text>
-        {/* STILL after WEEKS doesnt work because of mounds of idiotic SSR pain and so on, just link it */}
-        {/* <ExampleVideo
-          title="Go Applications - Lesson 7: Building the Cron Job"
-          videoPath="https://www.youtube.com/embed/yUFotBOL52M?si=EMctAua5UUeRqSdf"
-        /> */}
-        <Text>Those AI versions are <i>eerily close</i> to the real thing, eh? 😄</Text>
         <Heading size="7" color="mint">
-          Coming Q1 2024.
+          Coming Q1 2025.
         </Heading>
         <Link underline="always" href="/signup">
           Join the wait list.

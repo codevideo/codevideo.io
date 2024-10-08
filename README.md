@@ -15,5 +15,5 @@ npm install --legacy-peer-deps
 Then start the development server:
 
 ```shell
-gatsby develop
+npm run develop
 ```

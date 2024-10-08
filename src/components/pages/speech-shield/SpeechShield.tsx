@@ -21,7 +21,7 @@ export function SpeechShield() {
           accuracy of text to speech snippets created.
         </Text>
         <Heading size="7" color="mint">
-          Coming Q1 2024.
+          Coming Q1 2025.
         </Heading>
         <Link underline="always" href="/signup">
           Join the CodeVideo Community.
