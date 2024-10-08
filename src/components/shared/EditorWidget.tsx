@@ -49,12 +49,7 @@ export function EditorWidget() {
     setShowFileLabelHint(false);
 
     // activate edit mode
-    setIsTabInEditMode(!isTabInEditMode);
-
-    // focus on input
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
+    setIsTabInEditMode(!isTabInEditMode);    
   };
 
   const onChangeFileLabel = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -212,6 +207,15 @@ export function EditorWidget() {
     }
   }, [width, height]);
 
+  // when focus goes to true, focus on the input
+  useEffect(() => {
+    if (isTabInEditMode) {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }
+  }, [isTabInEditMode]);
+
   return (
     <Flex gap="1" direction="column">
       <Card>
@@ -223,12 +227,6 @@ export function EditorWidget() {
               value={fileLabel}
               onChange={onChangeFileLabel}
               onBlur={() => setIsTabInEditMode(false)}
-              onFocus={(e) => {
-                if (inputRef.current) {
-                  inputRef.current.focus();
-                }
-                e.target.select();
-              }}
               onKeyDown={(e) => {
                 if (e.key === "Escape") {
                   setIsTabInEditMode(false);
