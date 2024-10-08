@@ -24,17 +24,11 @@ export function SignUp() {
 
     if (!email) {
       setInfo("no-email");
-      // toast("Please enter your email!", {
-      //   position: "top-center",
-      // });
       return;
     }
 
     if (!EmailValidator.validate(email)) {
       setInfo("invalid-email");
-      // toast("Please enter a valid email!", {
-      //   position: "top-center",
-      // });
       return;
     }
 
@@ -43,14 +37,11 @@ export function SignUp() {
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: "/signup/success",
+          emailRedirectTo: "https://codevideo.io/signup/success",
         },
       });
       if (error) throw error;
       setInfo("success");
-      // toast("Successfully sent! Check your email for the magic link!", {
-      //   position: "top-center",
-      // });
     } catch (error: any) {
       setInfo("unknown-error");
     } finally {
@@ -90,7 +81,6 @@ export function SignUp() {
       <Flex gap="3" direction="column" justify="center" align="center">
         <Heading>Sign Up</Heading>
         <Text>Get early access by confirming your email via magic link.</Text>
-        
         <form onSubmit={handleLogin}>
           <Flex gap="3" direction="column" justify="center" align="center">
             <Text htmlFor="email">Email</Text>
@@ -113,7 +103,7 @@ export function SignUp() {
           </Flex>
         </form>
         {renderInfo()}
-        <Text color="mint">We'll never spam you. We're just not that kind of company.</Text>
+        <Text color="mint">We'll never spam you.</Text>
       </Flex>
     </Container>
   );
