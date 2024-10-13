@@ -28,6 +28,7 @@ import { codeToVideo } from "../../../../utils/video/codeToVideo";
 import MimicTypos from "../../../../enums/MimicTypos";
 import Engine from "../../../../enums/Engine";
 import { VirtualCodeBlock } from "@fullstackcraftllc/virtual-code-block";
+import mixpanel from "mixpanel-browser";
 
 const tokenizerCode = `[
     {
@@ -85,6 +86,7 @@ export function SideBySideEditors() {
   };
 
   const generateVideo = async () => {
+    mixpanel.track("Generate Video AI Page");
     // clear videoUrl
     setVideoUrl("");
     setVideoGenerating(true);

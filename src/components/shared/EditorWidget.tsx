@@ -2,6 +2,7 @@ import * as React from "react";
 import Editor, { Monaco, loader } from "@monaco-editor/react";
 import Monokai from "monaco-themes/themes/Monokai.json";
 import * as monaco from "monaco-editor";
+import mixpanel from "mixpanel-browser";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { codeEdited, fileLabelEdited } from "../../store/editorSlice";
@@ -10,7 +11,7 @@ import { editorLoaderSlidesConfig } from "../../config/editorOverlaySlidesConfig
 import { useEffect, useRef, useState } from "react";
 import { codeToVideo } from "../../utils/video/codeToVideo";
 import { AdvancedVideoOptionsDialog } from "./AdvancedVideoOptionsDialog";
-import { Box, Button, Card, Code, Flex, TextField } from "@radix-ui/themes";
+import { Button, Card, Code, Flex, TextField } from "@radix-ui/themes";
 
 // use local static files
 loader.config({ paths: { vs: "/vs" } });
@@ -99,6 +100,7 @@ export function EditorWidget() {
   };
 
   const onClickGenerate = async () => {
+    mixpanel.track("Generate Video Homepage");
     // hide hints
     setShowGenerateButtonHint(false);
 
