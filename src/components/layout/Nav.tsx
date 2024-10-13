@@ -1,5 +1,5 @@
 import { GitHubLogoIcon, HomeIcon } from "@radix-ui/react-icons";
-import { Card, Code, Flex, Link } from "@radix-ui/themes";
+import { Box, Card, Code, Flex, Link } from "@radix-ui/themes";
 import * as React from "react";
 import { Logo } from "../shared/Logo";
 
@@ -9,42 +9,33 @@ export function Nav() {
       <Flex gap="5" p="3" justify="start">
         <Link href="/">
           <Flex gap="3" justify="center" align="center">
-            <HomeIcon />
-            <Code>{"<"}- home</Code>
+            <Box mt="1">
+              <HomeIcon />
+            </Box>
           </Flex>
         </Link>
-        <Link mr="auto" href="/ai">
+        <Link href="/ai">
           <Code>
             <Logo />
             codevideo-ai
           </Code>
         </Link>
-        <Link mr="auto" href="/pontificator">
+        <Link href="/pontificator">
           <Code>
             <Logo />
             pontificator
           </Code>
         </Link>
-        <Link mr="auto" href="/speech-shield">
+        <Link href="/speech-shield">
           <Code>
             <Logo />
             speech-shield
           </Code>
         </Link>
-        <Link mr="auto" href="/robotts">
-          <Code>
-            <Logo />
-            robotts
-          </Code>
-        </Link>
-        <Link href="https://github.com/orgs/codevideo/repositories">
-          <Flex gap="3" justify="center" align="center">
-            <Code>
-              <Logo />
-              check out all our repos on GitHub! -{">"}
-            </Code>
+        <Link ml="auto" href="https://github.com/orgs/codevideo/repositories">
+          <Box mt="1">
             <GitHubLogoIcon />
-          </Flex>
+          </Box>
         </Link>
       </Flex>
     </Card>

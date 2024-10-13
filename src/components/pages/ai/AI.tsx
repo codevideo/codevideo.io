@@ -7,7 +7,6 @@ import {
   Text,
 } from "@radix-ui/themes";
 import * as React from "react";
-import { ExampleVideo } from "./components/ExampleVideo";
 import { Logo } from "../../shared/Logo";
 import { SideBySideEditors } from "./components/SideBySideEditors";
 
