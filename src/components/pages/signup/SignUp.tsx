@@ -11,6 +11,7 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import { CalloutHint } from "../../shared/CalloutHint";
+import mixpanel from "mixpanel-browser";
 
 export function SignUp() {
   const [loading, setLoading] = useState(false);
@@ -20,6 +21,7 @@ export function SignUp() {
   >("none");
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    mixpanel.track("Sign Up", { email });
     e.preventDefault();
 
     if (!email) {
