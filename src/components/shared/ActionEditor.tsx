@@ -1,8 +1,8 @@
 import * as React from "react";
 import {
+  AllActionStrings,
   IAction,
-  allActionStrings,
-  isCodeAction,
+  isEditorAction
 } from "@fullstackcraftllc/codevideo-types";
 import { Card, Flex, Select, TextField, Text, Button } from "@radix-ui/themes";
 
@@ -52,7 +52,7 @@ export function ActionEditor(props: IActionEditorProps) {
   };
 
   // Generate dropdown options dynamically from the AllActions type
-  const dropdownOptions = allActionStrings.map((actionType: string) => (
+  const dropdownOptions = AllActionStrings.map((actionType: string) => (
     <Select.Item key={actionType} value={actionType}>
       {actionType}
     </Select.Item>
@@ -94,7 +94,7 @@ export function ActionEditor(props: IActionEditorProps) {
                       <TextField.Input
                         style={{
                           width: "700px",
-                          fontFamily: isCodeAction(action)
+                          fontFamily: isEditorAction(action)
                             ? "monospace"
                             : "inherit",
                         }}
@@ -134,7 +134,7 @@ export function ActionEditor(props: IActionEditorProps) {
                       actions
                         .slice(0, index + 1)
                         .concat([
-                          { name: "speak-before", value: "My new action" },
+                          { name: "author-speak-before", value: "My new action" },
                           ...actions.slice(index + 1),
                         ])
                     )

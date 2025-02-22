@@ -2,7 +2,7 @@ import * as React from "react";
 import Editor, { Monaco, loader } from "@monaco-editor/react";
 import Monokai from "monaco-themes/themes/Monokai.json";
 import * as monaco from "monaco-editor";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 export interface IReadOnlyEditorProps {
   value: string;
