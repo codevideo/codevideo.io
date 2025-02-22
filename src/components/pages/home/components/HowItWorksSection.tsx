@@ -49,8 +49,8 @@ export function HowItWorksSection(props: IHowItWorksSectionProps) {
         </Card>
         <Card>
           <Flex direction="column">
-            {howItWorksConfig.map((item) => {
-              return <Text size="5" my="3">{item.description}</Text>;
+            {howItWorksConfig.map((item, index) => {
+              return <Text key={index} size="5" my="3">{item.description}</Text>;
             })}
           </Flex>
         </Card>

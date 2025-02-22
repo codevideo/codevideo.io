@@ -49,9 +49,18 @@ export const colorCodeCharacter = (
     token.type.substring(0, token.type.lastIndexOf(".")) || token.type;
   // console.log("token.type", `"${token.type}"`);
   // console.log("tokenType", `"${tokenType}"`);
-  const foreground = tokenType === 'identifier' ? 'f8f8f2' : theme.rules.find(
-    (rule) => rule.token === tokenType
-  )?.foreground || "272822";
+  // const foreground = tokenType === 'identifier' ? 'f8f8f2' : theme.rules.find(
+  //   (rule) => rule.token === tokenType
+  // )?.foreground || "272822";
+  const foreground = theme.rules.find(
+    (rule) => {
+      // Handle function identifiers specially
+      if (tokenType === 'identifier' && character.match(/^[a-zA-Z_][a-zA-Z0-9_]*$/)) {
+        return rule.token === 'function';
+      }
+      return rule.token === tokenType;
+    }
+  )?.foreground || "f8f8f2";
   const background = theme.rules.find(
     (rule) => rule.token === tokenType
   )?.background;

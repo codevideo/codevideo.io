@@ -75,7 +75,9 @@ export function AdvancedVideoOptionsDialog(
         </AlertDialog.Description>
         <Flex gap="5" mt="5" direction="column">
           <Text size="4">Background color around editor:</Text>
-          <RadioGroup.Root defaultValue="1">
+          <RadioGroup.Root defaultValue="1" value={gradientColors[0] === "#91ffd9" ? "1" : 
+         gradientColors[0] === "#9900ff" ? "2" :
+         gradientColors[0] === "#00ffa6" ? "3" : "4"}>
             <Flex gap="3" direction="row">
               <Text as="label" size="2">
                 <Flex
@@ -216,6 +218,7 @@ export function AdvancedVideoOptionsDialog(
                   <Table.Cell>
                     <RadioGroup.Root
                       defaultValue="1"
+                      value={`${width}x${height}`}
                       onChange={onChangeVideoSize}
                     >
                       <Flex gap="3" direction="row">
@@ -326,6 +329,7 @@ export function AdvancedVideoOptionsDialog(
           <Text size="4">Mimic Typos:</Text>
           <RadioGroup.Root
             defaultValue={'NEVER'}
+            value={mimicTypos}
             onChange={onChangeTypos}
           >
             <Flex gap="3" direction="row">
@@ -352,7 +356,7 @@ export function AdvancedVideoOptionsDialog(
             <Button
               variant="soft"
               color="mint"
-              onClick={() => dispatch(resetVideoSettings)}
+              onClick={() => dispatch(resetVideoSettings())}
             >
               Cancel
             </Button>

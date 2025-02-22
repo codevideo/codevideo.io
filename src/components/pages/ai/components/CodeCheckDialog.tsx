@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IAction } from "@fullstackcraftllc/codevideo-types";
-import { VirtualCodeBlock } from "@fullstackcraftllc/virtual-code-block";
+import { VirtualEditor } from "@fullstackcraftllc/codevideo-virtual-editor";
 import { Button, Code, Dialog, Flex, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import { ReadOnlyEditor } from "../../../shared/ReadOnlyEditor";
@@ -12,7 +12,7 @@ export interface ICodeCheckDialogProps {
 export function CodeCheckDialog(props: ICodeCheckDialogProps) {
   const { actions } = props;
   const [codeIndex, setCodeIndex] = useState(0);
-  const virtualCodeBlock = new VirtualCodeBlock([]);
+  const virtualCodeBlock = new VirtualEditor([]);
   virtualCodeBlock.applyActions(actions);
   const dataAtEachFrame = virtualCodeBlock.getDataForAnnotatedFrames();
   return (
