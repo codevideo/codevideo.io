@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IEditorOverlaySlide } from "../../interfaces/IEditorOverlaySlide";
+import { Flex } from "@radix-ui/themes";
 
 export const EditorOverlay: React.FC<{
   isActive: boolean;
@@ -19,7 +20,7 @@ export const EditorOverlay: React.FC<{
 
     const interval = setInterval(() => {
       setCurrentIndex(currentIndex + 1);
-    }, 5000);
+    }, 7500);
     return () => {
       clearInterval(interval);
     };
@@ -34,8 +35,7 @@ export const EditorOverlay: React.FC<{
           <div
             style={{
               position: "absolute",
-              top: 42,
-              
+              top: 0,
               bottom: 0,
               width: editorWidth,
               // set horzontal margin using transform so it is always centered
@@ -50,11 +50,11 @@ export const EditorOverlay: React.FC<{
               opacity: index === currentIndex % slides.length ? 1 : 0,
             }}
           >
-            <div className="col-8">
-            <p className="text-light">Generating your video...</p>
-              <p className="display-4 infinite-rotate">{slide.emoji}</p>
+            <Flex direction="column" justify="center" align="center">
+              <p className="text-light">Generating video (takes a while since everything is done directly here in the browser)...</p>
+              <p className="display-4 rotate-infinite">{slide.emoji}</p>
               <p className="text-light">{slide.message}</p>
-            </div>
+            </Flex>
           </div>
         );
       })}

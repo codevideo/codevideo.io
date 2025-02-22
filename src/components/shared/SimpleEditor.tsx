@@ -24,7 +24,7 @@ export const executeActionsWithMonacoEditor = async (
   for (let i = 0; i < actions.length; i++) {
     const action = actions[i];
     switch (action.name) {
-      case "type-editor":
+      case "editor-type":
         // for typing, add 100ms delay between each character
         const text = action.value;
         for (let i = 0; i < text.length; i++) {
@@ -33,7 +33,7 @@ export const executeActionsWithMonacoEditor = async (
           await new Promise((resolve) => setTimeout(resolve, 100));
         }
         break;
-      case "backspace":
+      case "editor-backspace":
         // for backspace, add 100ms delay between each backspace
         const count = parseInt(action.value);
         for (let i = 0; i < count; i++) {
@@ -43,36 +43,36 @@ export const executeActionsWithMonacoEditor = async (
           await new Promise((resolve) => setTimeout(resolve, 100));
         }
         break;
-      case "speak-before":
+      case "author-speak-before":
         await speakText(action.value);
         break;
-      case "speak-after":
+      case "author-speak-after":
         await speakText(action.value);
         break;
-      case "speak-during":
+      case "author-speak-during":
         await speakText(action.value);
         break;
-      case "arrow-up":
+      case "editor-arrow-up":
         editorInstance.trigger("keyboard", "type", {
           text: String.fromCharCode(38),
         });
         break;
-      case "arrow-down":
+      case "editor-arrow-down":
         editorInstance.trigger("keyboard", "type", {
           text: String.fromCharCode(40),
         });
         break;
-      case "arrow-left":
+      case "editor-arrow-left":
         editorInstance.trigger("keyboard", "type", {
           text: String.fromCharCode(37),
         });
         break;
-      case "arrow-right":
+      case "editor-arrow-right":
         editorInstance.trigger("keyboard", "type", {
           text: String.fromCharCode(39),
         });
         break;
-      case "enter":
+      case "editor-enter":
         editorInstance.trigger("keyboard", "type", {
           text: String.fromCharCode(13),
         });
@@ -93,12 +93,13 @@ export interface ISimpleEditorProps {
   focus: boolean;
   onChangeCode?: (code: string | undefined) => void;
   value?: string;
+  withCard?: boolean;
 }
 
 // use local static files
 loader.config({ paths: { vs: "/vs" } });
 export function SimpleEditor(props: ISimpleEditorProps) {
-  const { path, language, actions, value, tokenizerCode, focus, onChangeCode } =
+  const { path, language, actions, value, tokenizerCode, focus, onChangeCode, withCard } =
     props;
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>();
 
@@ -141,29 +142,37 @@ export function SimpleEditor(props: ISimpleEditorProps) {
     }
   };
 
-  return (
-    <Card>
-      <Editor
-        path={path}
-        width="700px"
-        height="500px"
-        defaultLanguage={language}
-        language={language}
-        value={value}
-        options={{
-          minimap: { enabled: false },
-          scrollBeyondLastLine: false,
-          fontFamily: "Fira Code",
-          fontSize: 13,
-          fontLigatures: true,
-          lineNumbers: "off",
-          folding: true,
-          automaticLayout: true,
-          autoIndent: "full",
-        }}
-        onMount={handleOnMount}
-        onChange={onChangeCode}
-      />
-    </Card>
+  const editor = (
+    <Editor
+      path={path}
+      width="700px"
+      height="500px"
+      defaultLanguage={language}
+      language={language}
+      value={value}
+      options={{
+        minimap: { enabled: false },
+        scrollBeyondLastLine: false,
+        fontFamily: "Fira Code",
+        fontSize: 13,
+        fontLigatures: true,
+        lineNumbers: "off",
+        folding: true,
+        automaticLayout: true,
+        autoIndent: "full",
+      }}
+      onMount={handleOnMount}
+      onChange={onChangeCode}
+    />
   );
+
+  if (withCard) {
+    return (
+      <Card>
+        {editor}
+      </Card>
+    );
+  }
+
+  return editor;
 }

@@ -1,5 +1,6 @@
 import {
   Button,
+  Card,
   Code,
   Flex,
   Heading,
@@ -27,8 +28,9 @@ import { HiddenCanvas } from "../../../shared/HiddenCanvas";
 import { codeToVideo } from "../../../../utils/video/codeToVideo";
 import MimicTypos from "../../../../enums/MimicTypos";
 import Engine from "../../../../enums/Engine";
-import { VirtualCodeBlock } from "@fullstackcraftllc/virtual-code-block";
+import { VirtualEditor } from "@fullstackcraftllc/codevideo-virtual-editor";
 import mixpanel from "mixpanel-browser";
+import { ToggleEditor } from "../../../shared/ToggleEditor";
 
 const tokenizerCode = `[
     {
@@ -50,7 +52,6 @@ export function SideBySideEditors() {
   const [language, setLanguage] = useState("javascript");
   const [resultCode, setResultCode] = useState("");
   const [isRunning, setIsRunning] = useState(false);
-  const [editorMode, setEditorMode] = useState(true);
   const [interactiveMode, setInteractiveMode] = useState(false);
   const [focusOnResultEditor, setFocusOnResultEditor] = useState(false);
   const [videoGenerating, setVideoGenerating] = useState(false);
@@ -65,7 +66,16 @@ export function SideBySideEditors() {
 
   // every time stepsJson changes, update the actions
   useEffect(() => {
-    setActions(JSON.parse(stepsJson));
+    // first try to JSON parse - if we get a "bad escape character" error, try to fix it, then try to parse again
+    try {
+      setActions(JSON.parse(stepsJson));
+    } catch (e) {
+      console.log("Error parsing JSON: " + e);
+      // try to fix the error
+      const fixedJson = stepsJson.replace(/\\/g, "\\\\");
+      setStepsJson(fixedJson);
+      setActions(JSON.parse(fixedJson));
+    }
   }, [stepsJson]);
 
   // const stop = () => {
@@ -116,7 +126,7 @@ export function SideBySideEditors() {
     }
 
 
-    const virtualCodeBlock = new VirtualCodeBlock([])
+    const virtualCodeBlock = new VirtualEditor([])
     virtualCodeBlock.applyActions(actions)
     const code = virtualCodeBlock.getCode()
     await codeToVideo(
@@ -228,36 +238,13 @@ export function SideBySideEditors() {
           </Flex>
         </RadioGroup.Root>
         <Flex gap="5" direction="row" justify="center" align="center">
-          <Switch
-            defaultChecked
-            onCheckedChange={() => setEditorMode(!editorMode)}
-          />
-          <Text>{editorMode ? "Editor" : "JSON"} Mode</Text>
-        </Flex>
-        <Flex gap="5" direction="row" justify="center" align="center">
           <Button onClick={() => setEditorActions(actions)}>Preview Video</Button>
           <Button disabled={!isRunning} onClick={reset} color="red">
             Stop / Reset
           </Button>
           <CodeCheckDialog actions={actions} />
         </Flex>
-        {editorMode ? (
-          <ActionEditor actions={actions} setActions={setActions} />
-        ) : (
-          <SimpleEditor
-            path="json/"
-            value={stepsJson}
-            actions={[]}
-            language="json"
-            tokenizerCode={tokenizerCode}
-            onChangeCode={(code) => {
-              if (code) {
-                setStepsJson(code);
-              }
-            }}
-            focus={false}
-          />
-        )}
+        <ToggleEditor actions={actions} setActions={setActions} stepsJson={stepsJson} setStepsJson={setStepsJson} tokenizerCode={tokenizerCode} />
         <Flex gap="5" direction="row" justify="center" align="center">
           <Button onClick={() => setEditorActions(actions)}>Preview Video</Button>
           <Button disabled={!isRunning} onClick={reset} color="red">
@@ -274,9 +261,10 @@ export function SideBySideEditors() {
           language={language}
           tokenizerCode='console.log("hello world!");'
           focus={focusOnResultEditor}
+          withCard={true}
         />
         <Flex gap="5" direction="row" justify="center" align="center">
-        <Heading color="mint">3. Get Your Resulting Video!</Heading>
+          <Heading color="mint">3. Get Your Resulting Video!</Heading>
         </Flex>
         <Flex gap="5" direction="row" justify="center" align="center">
           <Button onClick={generateVideo} disabled={videoGenerating}>
@@ -293,7 +281,7 @@ export function SideBySideEditors() {
           </Text>
         </Flex>
         <Flex gap="5" direction="column" justify="center" align="center">
-          <Text>{videoGenerating ?  "Generating..." : "Satisfied with your steps? Click 'Generate Video' to generate your video!"}</Text>
+          <Text>{videoGenerating ? "Generating..." : "Satisfied with your steps? Click 'Generate Video' to generate your video!"}</Text>
           {videoUrl !== "" && (
             <video
               crossOrigin="anonymous"
