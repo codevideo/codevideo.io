@@ -437,11 +437,9 @@ export const areEqual = (a: number, b: number): boolean => {
       <Card>
         <Flex direction="row" justify="between" align="center">
           <Flex gap="3" direction="row" align="center">
-            {videoUrl === "" && (
-              <Button onClick={onClickGenerate} disabled={isGeneratingVideo || videoGenerated}>
-                {isGeneratingVideo ? "Generating..." : videoGenerated ? "Generated!" : "Generate Video"}
-              </Button>
-            )}
+            <Button onClick={onClickGenerate} disabled={isGeneratingVideo || videoGenerated}>
+              {isGeneratingVideo ? "Generating..." : videoGenerated ? "Generated!" : "Generate Video"}
+            </Button>
             <Code>{"<"}- get your video!</Code>
             {videoUrl === "" && isGeneratingVideo && (
               <Button color="crimson" variant="soft" onClick={onClickCancel}>
@@ -459,11 +457,9 @@ export const areEqual = (a: number, b: number): boolean => {
         </Flex>
         <Flex direction="row" justify="between" align="center">
           <Flex gap="3" direction="row" align="center" mt="3">
-            {videoUrl === "" && (
-              <Button onClick={onClickGenerateMarkdown} disabled={isGeneratingMarkdown || markdownGenerated}>
-                {isGeneratingMarkdown ? "Generating..." : markdownGenerated ? "Generated!" : "Generate Markdown"}
-              </Button>
-            )}
+            <Button onClick={onClickGenerateMarkdown} disabled={isGeneratingMarkdown || markdownGenerated}>
+              {isGeneratingMarkdown ? "Generating..." : markdownGenerated ? "Generated!" : "Generate Markdown"}
+            </Button>
             <Code>{"<"}- get markdown!</Code>
             {!markdownGenerated && isGeneratingMarkdown && (
               <Button color="crimson" variant="soft" onClick={onClickCancel}>
@@ -474,11 +470,9 @@ export const areEqual = (a: number, b: number): boolean => {
         </Flex>
         <Flex direction="row" justify="between" align="center">
           <Flex gap="3" direction="row" align="center" mt="3">
-            {videoUrl === "" && (
-              <Button onClick={onClickGeneratePDF} disabled={isGeneratingPDF || pdfGenerated}>
-                {isGeneratingPDF ? "Generating..." : pdfGenerated ? "Generated!" : "Generate PDF"}
-              </Button>
-            )}
+            <Button onClick={onClickGeneratePDF} disabled={isGeneratingPDF || pdfGenerated}>
+              {isGeneratingPDF ? "Generating..." : pdfGenerated ? "Generated!" : "Generate PDF"}
+            </Button>
             <Code>{"<"}- get a PDF!</Code>
             {!pdfGenerated && isGeneratingPDF && (
               <Button color="crimson" variant="soft" onClick={onClickCancel}>
@@ -489,11 +483,9 @@ export const areEqual = (a: number, b: number): boolean => {
         </Flex>
         <Flex direction="row" justify="between" align="center">
           <Flex gap="3" direction="row" align="center" mt="3">
-            {videoUrl === "" && (
-              <Button onClick={onClickGenerateHTML} disabled={isGeneratingHTML || htmlGenerated}>
-                {isGeneratingHTML ? "Generating..." : htmlGenerated ? "Generated!" : "Generate Webpage"}
-              </Button>
-            )}
+            <Button onClick={onClickGenerateHTML} disabled={isGeneratingHTML || htmlGenerated}>
+              {isGeneratingHTML ? "Generating..." : htmlGenerated ? "Generated!" : "Generate Webpage"}
+            </Button>
             <Code>{"<"}- get a webpage!</Code>
             {!htmlGenerated && isGeneratingHTML && (
               <Button color="crimson" variant="soft" onClick={onClickCancel}>
