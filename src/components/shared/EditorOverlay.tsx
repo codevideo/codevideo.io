@@ -5,8 +5,7 @@ import { Flex } from "@radix-ui/themes";
 export const EditorOverlay: React.FC<{
   isActive: boolean;
   slides: IEditorOverlaySlide[];
-  editorWidth: number;
-}> = ({ isActive, slides, editorWidth }) => {
+}> = ({ isActive, slides }) => {
   // Use the useState hook to manage the current slide index
   // and the show property of each slide
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -33,12 +32,14 @@ export const EditorOverlay: React.FC<{
       {slides.map((slide, index) => {
         return (
           <div
+            key={index}
             style={{
+              zIndex: 10000000,
               position: "absolute",
               top: 0,
               bottom: 0,
-              width: editorWidth,
-              // set horzontal margin using transform so it is always centered
+              width: "100%",
+              // set horizontal margin using transform so it is always centered
               left: "50%",
               transform: "translateX(-50%)",
               display: "flex",

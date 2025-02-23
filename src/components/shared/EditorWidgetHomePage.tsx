@@ -1,11 +1,8 @@
 import * as React from "react";
 import Editor, { Monaco, loader } from "@monaco-editor/react";
-import Monokai from "monaco-themes/themes/Monokai.json";
 import * as monaco from "monaco-editor";
 import mixpanel from "mixpanel-browser";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { codeEdited, fileLabelEdited } from "../../store/editorSlice";
 import { EditorOverlay } from "./EditorOverlay";
 import { editorLoaderSlidesConfig } from "../../config/editorOverlaySlidesConfig";
 import { useEffect, useRef, useState } from "react";
@@ -13,25 +10,40 @@ import { codeToVideo } from "../../utils/video/codeToVideo";
 import { AdvancedVideoOptionsDialog } from "./AdvancedVideoOptionsDialog";
 import { Box, Button, Card, Code, Em, Flex, Heading, Text } from "@radix-ui/themes";
 import { IAction, isAuthorAction, isEditorAction } from "@fullstackcraftllc/codevideo-types";
-import { generateMarkdownFromActions } from '@fullstackcraftllc/codevideo-doc-gen';
-import { convertToPdf } from "../../utils/generation/convertToPdf";
-import { convertToHtml } from "../../utils/generation/convertToHtml";
+import { generateMarkdownFromActions, generateHtmlFromActions, generatePdfFromActions } from '@fullstackcraftllc/codevideo-doc-gen';
+import { VirtualEditor } from "@fullstackcraftllc/codevideo-virtual-editor";
 
-// use local static files
+// use local static files for vscode monaco editor
 loader.config({ paths: { vs: "/vs" } });
+
 export function EditorWidgetHomePage() {
-  const { fileLabel, code, language } = useAppSelector(
-    (state) => state.editor.editorSetting
-  );
   const { width, height, gradientColors, mimicTypos, engine } = useAppSelector(
     (state) => state.video
   );
-  const dispatch = useAppDispatch();
   const [currentActionIndex, setCurrentActionIndex] = useState(0);
-  const [actions, setActions] = useState<Array<IAction>>([
+  // actions just a const since the homepage example is a readonly example
+  const actions: IAction[] = [
     {
       name: "author-speak-before",
-      value: "We're going to create a sort of toy function, just for the example of CodeVideo of an 'areEqual' function, which strictly compares two numbers."
+      value: "Right now, we're just looking at a blank editor. We don't even have a file open! Let's begin by creating a TypeScript file for our 'areEqual' function."
+    },
+    {
+      name: "file-explorer-create-file",
+      value: "areEqual.ts"
+    },
+    {
+      name: "file-explorer-open-file",
+      value: "areEqual.ts"
+    },
+    // shim to get the editor to "activate" - but just an empty string
+    {
+      name: "editor-type",
+      value: `// areEqual.ts
+`
+    },
+    {
+      name: "author-speak-before",
+      value: "Let's first write a JS doc comment for our function:"
     },
     {
       name: "editor-type",
@@ -41,69 +53,36 @@ export function EditorWidgetHomePage() {
 * @param a - The first number to compare
 * @param b - The second number to compare
 * @returns True if the numbers are strictly equal, false otherwise
-*/
+*/`
+    },
+    {
+      name: "author-speak-before",
+      value: "Now let's implement the actual function:"
+    },
+    {
+      name: "editor-type",
+      value: `
 export const areEqual = (a: number, b: number): boolean => {
     return a === b;
 }`
     },
     {
       name: "author-speak-before",
-      value: "That should be all we need to do for this 'isEqual' function. I hope you enjoyed!"
+      value: "That should be all we need to do for this 'isEqual' function. I hope you enjoyed the lesson!"
     }
-  ]);
-  const [isTabInEditMode, setIsTabInEditMode] = useState(false);
+  ];
   const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
-  const [isGeneratingMarkdown, setIsGeneratingMarkdown] = useState(false);
-  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
-  const [isGeneratingHTML, setIsGeneratingHTML] = useState(false);
-  const [showFileLabelHint, setShowFileLabelHint] = useState(true);
-  const [showGenerateButtonHint, setShowGenerateButtonHint] = useState(true);
-  const [showAdvancedOptionsHint, setShowAdvancedOptionsHint] = useState(true);
   const [videoUrl, setVideoUrl] = useState("");
-  const [markdownUrl, setMarkdownUrls] = useState("");
-  const [pdfUrl, setPdfUrls] = useState("");
-  const [htmlUrl, setHtmlUrls] = useState("");
+  const [videoGenerated, setVideoGenerated] = useState(false);
+  const [isGeneratingMarkdown, setIsGeneratingMarkdown] = useState(false);
+  const [markdownGenerated, setMarkdownGenerated] = useState(false);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const [pdfGenerated, setPdfGenerated] = useState(false);
+  const [isGeneratingHTML, setIsGeneratingHTML] = useState(false);
+  const [htmlGenerated, setHtmlGenerated] = useState(false);
+  const [showAdvancedOptionsHint, setShowAdvancedOptionsHint] = useState(true);
   const abortController = new AbortController();
-  const [editorWidth, setEditorWidth] = useState(0);
-  const [isOpening, setIsOpening] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>();
-
-  const onChangeCode = (code: string | undefined) => {
-    if (code) {
-      dispatch(
-        codeEdited({
-          code,
-        })
-      );
-    }
-  };
-
-  const onClickFileLabel = () => {
-    // remove hint
-    setShowFileLabelHint(false);
-
-    // activate edit mode
-    setIsTabInEditMode(!isTabInEditMode);
-  };
-
-  const onChangeFileLabel = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
-    const key = (e as any).key;
-    const { value } = e.target;
-
-    // if enter, then blur
-    if (key === "Enter") {
-      setIsTabInEditMode(false);
-      return;
-    }
-
-    dispatch(
-      fileLabelEdited({
-        fileLabel: value,
-      })
-    );
-  };
 
   const handleOnMount = (
     _editor: monaco.editor.IStandaloneCodeEditor,
@@ -182,50 +161,30 @@ export const areEqual = (a: number, b: number): boolean => {
   };
 
   const onClickGenerate = async () => {
+    setVideoGenerated(false);
+    const virtualEditor = new VirtualEditor([])
+    virtualEditor.applyActions(actions)
+    const finalCodeForVideo = virtualEditor.getCode()
     mixpanel.track("Generate Video Homepage");
-    // hide hints
-    setShowGenerateButtonHint(false);
-
-    // get width of editor so loader looks nice
-    const editor = document.querySelector(".monaco-editor");
-    if (editor) {
-      setEditorWidth(editor.clientWidth);
-    }
     setIsGeneratingVideo(true);
-    const calculatedTimeBasedOnCodeLength = Math.floor(code.length * 0.2);
-    // toast(
-    //   <div className="text-center">
-    //     🕒🕒🕒
-    //     <br />
-    //     You've got <b>{code.length} characters</b> in your snippet. Using our
-    //     extremely powerful ML assisted prediction model, it can take up to{" "}
-    //     <b>{calculatedTimeBasedOnCodeLength} seconds</b> to generate your video.
-    //     <br />
-    //     <br />
-    //     <b>Please be patient!</b>
-    //   </div>,
-    //   {
-    //     position: "top-center",
-    //   }
-    // );
 
-    // good for testing loader
-    // await sleep(20000);
-    // await codeToVideo(fileLabel, code, setVideoUrl);
     await codeToVideo(
       width,
       height,
-      fileLabel,
-      code,
+      "areEqual.ts",
+      finalCodeForVideo,
       gradientColors,
       mimicTypos,
       setVideoUrl,
       engine
     );
     setIsGeneratingVideo(false);
+    setVideoGenerated(true);
   };
 
   const onClickGenerateMarkdown = () => {
+    setMarkdownGenerated(false);
+    setIsGeneratingMarkdown(true);
     // generate markdown using codevideo-doc-gen
     const markdown = generateMarkdownFromActions(actions);
 
@@ -236,23 +195,31 @@ export const areEqual = (a: number, b: number): boolean => {
     element.download = "codevideo-markdown-export.md";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
+
+    setIsGeneratingMarkdown(false);
+    setMarkdownGenerated(true);
   }
 
   const onClickGeneratePDF = async () => {
-    // generate markdown using codevideo-doc-gen
-    const markdown = generateMarkdownFromActions(actions);
+    setPdfGenerated(false);
+    setIsGeneratingPDF(true);
 
-    // generate pdf
-    await convertToPdf(markdown);
+    // generate pdf using codevideo-doc-gen
+    await generatePdfFromActions(actions);
 
+    setIsGeneratingPDF(false);
+    setPdfGenerated(true);
   }
 
   const onClickGenerateHTML = async () => {
-    // generate markdown using codevideo-doc-gen
-    const markdown = generateMarkdownFromActions(actions);
+    setHtmlGenerated(false);
+    setIsGeneratingHTML(true);
 
-    // generate html
-    await convertToHtml(markdown);
+    // generate html using codevideo-doc-gen
+    await generateHtmlFromActions(actions);
+
+    setIsGeneratingHTML(false);
+    setHtmlGenerated(true);
   }
 
   const onClickAdvanced = () => {
@@ -268,12 +235,6 @@ export const areEqual = (a: number, b: number): boolean => {
   const onClickMakeAnother = () => {
     setVideoUrl("");
   };
-
-  const className = isTabInEditMode
-    ? "nav-link active font-monospace"
-    : "nav-link font-monospace";
-
-  const rotate = isOpening ? "rotate(90deg)" : "rotate(0deg)";
 
   const getOrientation = () => {
     if (width === height) {
@@ -308,10 +269,6 @@ export const areEqual = (a: number, b: number): boolean => {
 
   const editorElementWidth = getWidth();
   const editorElementHeight = getHeight();
-  const wrapperClass =
-    orientation === "square" || orientation === "portrait"
-      ? "d-flex flex-column justify-content-center align-items-center col-12 col-md-8"
-      : "col-12 col-md-8";
 
   // useEffect - every time height or width changes, call editor.layout()
   useEffect(() => {
@@ -321,14 +278,10 @@ export const areEqual = (a: number, b: number): boolean => {
     }
   }, [width, height]);
 
-  // when focus goes to true, focus on the input
-  useEffect(() => {
-    if (isTabInEditMode) {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    }
-  }, [isTabInEditMode]);
+  const virtualEditor = new VirtualEditor([])
+  const actionsToApply = actions.slice(0, currentActionIndex + 1)
+  virtualEditor.applyActions(actionsToApply)
+  const code = virtualEditor.getCode()
 
   return (
     <Flex gap="1" direction="column">
@@ -397,63 +350,72 @@ export const areEqual = (a: number, b: number): boolean => {
           </Flex>
         </Flex>
       </Card>
-      <Card>
-        <Flex gap="3" direction="row" align="center">
-          <Box
-            style={{
-              backgroundColor: "mint",
-              fontFamily: "Fira Code"
-            }}
-          >
-            {fileLabel}
-          </Box>
+      <Card my="3">
+        <Flex gap="3" direction="row" align="center" justify="center">
+          <Text size="1" style={{
+            backgroundColor: "mint",
+            fontFamily: "Fira Code"
+          }} align="center">
+            <Em>{'<'}Editor Preview{'>'}</Em>
+          </Text>
         </Flex>
-      </Card>
-      <Card>
-        {/* Add YouTube style comment overlay */}
-        {isAuthorAction(actions[currentActionIndex]) && (
-          <Box
-            style={{
-              position: 'absolute',
-              bottom: '24px',
-              left: '24px',
-              right: '24px',
-              backgroundColor: 'rgba(0, 0, 0, 0.7)',
-              padding: '12px 16px',
-              borderRadius: '8px',
-              color: 'white',
-              fontFamily: 'system-ui',
-              fontSize: '14px',
-              zIndex: 10,
+        <Card mb="1">
+          <Flex gap="3" direction="row" align="center">
+            <Box
+              style={{
+                backgroundColor: "mint",
+                fontFamily: "Fira Code"
+              }}
+            >
+              {currentActionIndex === 0 ? '<editor tab>' : "areEqual.ts"}
+            </Box>
+          </Flex>
+        </Card>
+        <Card>
+          {/* Add YouTube style comment overlay */}
+          {isAuthorAction(actions[currentActionIndex]) && (
+            <Box
+              style={{
+                position: 'absolute',
+                bottom: '24px',
+                left: '24px',
+                right: '24px',
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                padding: '12px 16px',
+                borderRadius: '8px',
+                color: 'white',
+                fontFamily: 'system-ui',
+                fontSize: '14px',
+                zIndex: 10,
+              }}
+            >
+              <Text style={{ margin: 0 }}>
+                {actions[currentActionIndex].value}
+              </Text>
+            </Box>
+          )}
+          <Editor
+            path="areEqual.ts"
+            width={videoUrl !== "" ? 0 : editorElementWidth}
+            height={videoUrl !== "" ? 0 : editorElementHeight}
+            defaultLanguage="typescript"
+            language="typescript"
+            value={code}
+            options={{
+              minimap: { enabled: false },
+              scrollBeyondLastLine: false,
+              fontFamily: "Fira Code",
+              fontSize: 13,
+              fontLigatures: true,
+              lineNumbers: "off",
+              folding: true,
+              automaticLayout: true,
+              autoIndent: "full",
+              readOnly: true
             }}
-          >
-            <Text style={{ margin: 0 }}>
-              {actions[currentActionIndex].value}
-            </Text>
-          </Box>
-        )}
-        <Editor
-          path={fileLabel}
-          width={videoUrl !== "" ? 0 : editorElementWidth}
-          height={videoUrl !== "" ? 0 : editorElementHeight}
-          defaultLanguage="typescript"
-          language={language}
-          value={code}
-          options={{
-            minimap: { enabled: false },
-            scrollBeyondLastLine: false,
-            fontFamily: "Fira Code",
-            fontSize: 13,
-            fontLigatures: true,
-            lineNumbers: "off",
-            folding: true,
-            automaticLayout: true,
-            autoIndent: "full",
-            readOnly: true
-          }}
-          onMount={handleOnMount}
-          onChange={onChangeCode}
-        />
+            onMount={handleOnMount}
+          />
+        </Card>
         {videoUrl !== "" && (
           <video
             crossOrigin="anonymous"
@@ -468,30 +430,23 @@ export const areEqual = (a: number, b: number): boolean => {
         <EditorOverlay
           isActive={isGeneratingVideo}
           slides={editorLoaderSlidesConfig}
-          editorWidth={editorWidth}
         />
-        
+
       </Card>
 
       <Card>
         <Flex direction="row" justify="between" align="center">
           <Flex gap="3" direction="row" align="center">
             {videoUrl === "" && (
-              <Button onClick={onClickGenerate} disabled={isGeneratingVideo}>
-                {isGeneratingVideo ? "Generating..." : "Generate Video"}
+              <Button onClick={onClickGenerate} disabled={isGeneratingVideo || videoGenerated}>
+                {isGeneratingVideo ? "Generating..." : videoGenerated ? "Generated!" : "Generate Video"}
               </Button>
             )}
-            {showGenerateButtonHint && (
-              <Code>{"<"}- get your video!</Code>
-            )}
-            {/* cancel button when isbuildingvideo is true */}
+            <Code>{"<"}- get your video!</Code>
             {videoUrl === "" && isGeneratingVideo && (
               <Button color="crimson" variant="soft" onClick={onClickCancel}>
                 Cancel
               </Button>
-            )}
-            {videoUrl !== "" && (
-              <Button onClick={onClickMakeAnother}>Make another!</Button>
             )}
           </Flex>
           {/* right side is always the advanced options button, doesn't show on mobile */}
@@ -505,63 +460,45 @@ export const areEqual = (a: number, b: number): boolean => {
         <Flex direction="row" justify="between" align="center">
           <Flex gap="3" direction="row" align="center" mt="3">
             {videoUrl === "" && (
-              <Button onClick={onClickGenerateMarkdown} disabled={isGeneratingMarkdown}>
-                {isGeneratingMarkdown ? "Generating..." : "Generate Markdown"}
+              <Button onClick={onClickGenerateMarkdown} disabled={isGeneratingMarkdown || markdownGenerated}>
+                {isGeneratingMarkdown ? "Generating..." : markdownGenerated ? "Generated!" : "Generate Markdown"}
               </Button>
             )}
-            {showGenerateButtonHint && (
-              <Code>{"<"}- get markdown!</Code>
-            )}
-            {/* cancel button when isbuildingvideo is true */}
-            {markdownUrl === "" && isGeneratingMarkdown && (
+            <Code>{"<"}- get markdown!</Code>
+            {!markdownGenerated && isGeneratingMarkdown && (
               <Button color="crimson" variant="soft" onClick={onClickCancel}>
                 Cancel
               </Button>
-            )}
-            {markdownUrl !== "" && (
-              <Button onClick={onClickMakeAnother}>Make another!</Button>
             )}
           </Flex>
         </Flex>
         <Flex direction="row" justify="between" align="center">
           <Flex gap="3" direction="row" align="center" mt="3">
             {videoUrl === "" && (
-              <Button onClick={onClickGeneratePDF} disabled={isGeneratingPDF}>
-                {isGeneratingPDF ? "Generating..." : "Generate PDF"}
+              <Button onClick={onClickGeneratePDF} disabled={isGeneratingPDF || pdfGenerated}>
+                {isGeneratingPDF ? "Generating..." : pdfGenerated ? "Generated!" : "Generate PDF"}
               </Button>
             )}
-            {showGenerateButtonHint && (
-              <Code>{"<"}- get a PDF!</Code>
-            )}
-            {/* cancel button when isbuildingvideo is true */}
-            {pdfUrl === "" && isGeneratingPDF && (
+            <Code>{"<"}- get a PDF!</Code>
+            {!pdfGenerated && isGeneratingPDF && (
               <Button color="crimson" variant="soft" onClick={onClickCancel}>
                 Cancel
               </Button>
-            )}
-            {pdfUrl !== "" && (
-              <Button onClick={onClickMakeAnother}>Make another!</Button>
             )}
           </Flex>
         </Flex>
         <Flex direction="row" justify="between" align="center">
           <Flex gap="3" direction="row" align="center" mt="3">
             {videoUrl === "" && (
-              <Button onClick={onClickGenerateHTML} disabled={isGeneratingHTML}>
-                {isGeneratingHTML ? "Generating..." : "Generate Webpage"}
+              <Button onClick={onClickGenerateHTML} disabled={isGeneratingHTML || htmlGenerated}>
+                {isGeneratingHTML ? "Generating..." : htmlGenerated ? "Generated!" : "Generate Webpage"}
               </Button>
             )}
-            {showGenerateButtonHint && (
-              <Code>{"<"}- get a webpage!</Code>
-            )}
-            {/* cancel button when isbuildingvideo is true */}
-            {htmlUrl === "" && isGeneratingHTML && (
+            <Code>{"<"}- get a webpage!</Code>
+            {!htmlGenerated && isGeneratingHTML && (
               <Button color="crimson" variant="soft" onClick={onClickCancel}>
                 Cancel
               </Button>
-            )}
-            {htmlUrl !== "" && (
-              <Button onClick={onClickMakeAnother}>Make another!</Button>
             )}
           </Flex>
         </Flex>
