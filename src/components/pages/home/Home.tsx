@@ -74,7 +74,7 @@ export function Home() {
                 borderRadius: 'var(--radius-4)',
                 padding: 'var(--space-2) var(--space-4)'
               }}>
-              <Text size="2" weight="bold">👆 <Link href="https://studio.codevideo.io">CodeVideo Studio</Link> is far more complex than this example and will soon support file explorer, terminal, and mouse actions.</Text>
+              <Text size="2" weight="bold">👆 The editor in <Link href="https://studio.codevideo.io">CodeVideo Studio</Link> is far more complex than this example and supports file explorer, terminal, and even mouse actions.</Text>
             </Box>
             </Flex>
         </Container>
@@ -89,7 +89,7 @@ export function Home() {
               <Text color="gray" align="center">Faster Content Creation</Text>
             </Flex>
             <Flex direction="column" align="center">
-              <Heading size="8" color="mint" mb="2">99%</Heading>
+              <Heading size="8" color="mint" mb="2">100%</Heading>
               <Text color="gray" align="center">Reduction in Retakes</Text>
             </Flex>
             <Flex direction="column" align="center">

@@ -30,8 +30,8 @@ const pricingTiers = [
         tokens: "3,000",
         features: [
             "All export formats",
-            "Custom integrations",
-            "Priority support"
+            "Custom integrations by request",
+            "Email support"
         ]
     },
     {
@@ -41,7 +41,7 @@ const pricingTiers = [
         tokens: "10,000",
         features: [
             "All export formats",
-            "Custom solutions",
+            "Custom solutions by request",
             "Priority support"
         ]
     }
