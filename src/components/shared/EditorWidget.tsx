@@ -290,7 +290,6 @@ export function EditorWidget() {
         <EditorOverlay
           isActive={isGeneratingVideo}
           slides={editorLoaderSlidesConfig}
-          editorWidth={editorWidth}
         />
       </Card>
       <Card>
