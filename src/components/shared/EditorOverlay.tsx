@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IEditorOverlaySlide } from "../../interfaces/IEditorOverlaySlide";
-import { Flex } from "@radix-ui/themes";
+import { Flex, Text } from "@radix-ui/themes";
 
 export const EditorOverlay: React.FC<{
   isActive: boolean;
@@ -52,9 +52,9 @@ export const EditorOverlay: React.FC<{
             }}
           >
             <Flex direction="column" justify="center" align="center">
-              <p className="text-light">Generating video (takes a while since everything is done directly here in the browser)...</p>
-              <p className="display-4 rotate-infinite">{slide.emoji}</p>
-              <p className="text-light">{slide.message}</p>
+              <Text>Generating video (takes a while since everything is done directly here in the browser)...</Text>
+              <Text className="display-4 rotate-infinite">{slide.emoji}</Text>
+              <Text>{slide.message}</Text>
             </Flex>
           </div>
         );

@@ -6,10 +6,13 @@ import { useAppSelector } from "../../hooks/useAppSelector";
 import { useEffect, useRef, useState } from "react";
 import { codeToVideo } from "../../utils/video/codeToVideo";
 import { AdvancedVideoOptionsDialog } from "./AdvancedVideoOptionsDialog";
-import { Badge, Box, Button, Card, Code, Flex, Heading, Text } from "@radix-ui/themes";
+import { Badge, Box, Button, Card, Code, Flex, Heading, Text, Tooltip } from "@radix-ui/themes";
 import { IAction, isAuthorAction } from "@fullstackcraftllc/codevideo-types";
 import { generateMarkdownFromActions, generateHtmlFromActions, generatePdfFromActions, generateJsonFromActions } from '@fullstackcraftllc/codevideo-doc-gen';
 import { VirtualEditor } from "@fullstackcraftllc/codevideo-virtual-editor";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
+import { EditorOverlay } from "./EditorOverlay";
+import { editorLoaderSlidesConfig } from "../../config/editorOverlaySlidesConfig";
 
 // use local static files for vscode monaco editor
 loader.config({ paths: { vs: "/vs" } });
@@ -23,7 +26,7 @@ export function EditorWidgetHomePage() {
   const actions: IAction[] = [
     {
       name: "author-speak-before",
-      value: "Right now, we're just looking at a blank editor. We don't even have a file open! Let's begin by creating a TypeScript file for our 'areEqual' function."
+      value: "Right now, we're just looking at a blank editor. We don't even have a file open yet! Let's begin by creating a TypeScript file for our 'areEqual' function."
     },
     {
       name: "file-explorer-create-file",
@@ -69,6 +72,20 @@ export const areEqual = (a: number, b: number): boolean => {
       value: "That should be all we need to do for this 'isEqual' function. I hope you enjoyed the lesson!"
     }
   ];
+
+  // hints should be same length as actions, we show a hint for each action
+  const hints = [
+    "In the CodeVideo ecosystem, everything is controlled by 'actions'. Each 'action' is a simple name and value object and represents a change in the editor, file explorer, or author speaking.",
+    "You can navigate through the actions using the 'Previous' and 'Next' buttons.",
+    "There are author actions, file explorer actions, and editor actions, and more. As always, each action has a name and a value.",
+    "Ah yes, the coveted 'editor-type' action. This is where the magic begins to happen. We're typing in the editor!",
+    "Note that author actions are typical speak actions, and for the purposes of preview show up as captions. In video exports however, these are auto generated via text-to-speech models.",
+    "Multiline editing is of course also supported.",
+    "The editor is readonly in this example; we're working on a direct record that you can edit actions in-place.",
+    "Code highlighting here is powered by Monaco Editor, the same editor that powers VS Code.",
+    "We hope you enjoyed this example. Don't forget to check out all our export options below!"
+  ]
+
   const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
   const [videoUrl, setVideoUrl] = useState("");
   const [videoGenerated, setVideoGenerated] = useState(false);
@@ -183,6 +200,7 @@ export const areEqual = (a: number, b: number): boolean => {
   };
 
   const onClickGenerateMarkdown = async () => {
+    mixpanel.track("Generate Markdown Homepage");
     setMarkdownGenerated(false);
     setIsGeneratingMarkdown(true);
 
@@ -194,6 +212,7 @@ export const areEqual = (a: number, b: number): boolean => {
   }
 
   const onClickGeneratePDF = async () => {
+    mixpanel.track("Generate PDF Homepage");
     setPdfGenerated(false);
     setIsGeneratingPDF(true);
 
@@ -205,6 +224,7 @@ export const areEqual = (a: number, b: number): boolean => {
   }
 
   const onClickGenerateHTML = async () => {
+    mixpanel.track("Generate HTML Homepage");
     setHtmlGenerated(false);
     setIsGeneratingHTML(true);
 
@@ -216,6 +236,7 @@ export const areEqual = (a: number, b: number): boolean => {
   }
 
   const onClickGenerateJSON = async () => {
+    mixpanel.track("Generate JSON Homepage");
     setJsonGenerated(false);
     setIsGeneratingJson(true);
 
@@ -289,11 +310,11 @@ export const areEqual = (a: number, b: number): boolean => {
 
     switch (true) {
       case name.startsWith('author'):
-        return <Badge style={{fontFamily: 'Fira Code'}} size="1" color="blue">{name}</Badge>
+        return <Badge style={{ fontFamily: 'Fira Code' }} size="1" color="blue">{name}</Badge>
       case name.startsWith('file-explorer'):
-        return <Badge style={{fontFamily: 'Fira Code'}} size="1" color="green">{name}</Badge>
+        return <Badge style={{ fontFamily: 'Fira Code' }} size="1" color="green">{name}</Badge>
       case name.startsWith('editor'):
-        return <Badge style={{fontFamily: 'Fira Code'}} size="1" color="purple">{name}</Badge>
+        return <Badge style={{ fontFamily: 'Fira Code' }} size="1" color="purple">{name}</Badge>
       default:
         return ""
     }
@@ -304,9 +325,11 @@ export const areEqual = (a: number, b: number): boolean => {
     return <Text size="1">{val.replace(/\\n/g, '\n')}</Text>
   };
 
+  const hintText = currentActionIndex < hints.length ? hints[currentActionIndex] : "";
+
   return (
     <Flex gap="1" direction="column">
-      <Heading size="7" my="3" align="center">Explore this {actions.length} step example:</Heading>
+      <Heading size="8" my="3" align="center" color="mint">Explore this {actions.length} step example:</Heading>
 
       {/* Mobile view - small overlay */}
       <Box
@@ -339,28 +362,33 @@ export const areEqual = (a: number, b: number): boolean => {
               <Text size="1" color="gray">Action Editor</Text>
             </Flex>
             <Flex direction="row" justify="between" align="center">
-              <Button
-                variant="soft"
-                disabled={currentActionIndex === 0}
-                onClick={() => setCurrentActionIndex(currentActionIndex - 1)}
-              >
-                Previous
-              </Button>
+              <Tooltip content="You can also travel BACK in time!" color="mint" open={currentActionIndex === 2} style={{ backgroundColor: 'mint' }}>
+                <Button
+                  variant="soft"
+                  disabled={currentActionIndex === 0}
+                  onClick={() => setCurrentActionIndex(currentActionIndex - 1)}
+                >
+                  Previous
+                </Button>
+              </Tooltip>
               <Text>Action <Text color="mint" weight="bold">{currentActionIndex + 1}</Text> of {actions.length}</Text>
-              <Button
-                variant="soft"
-                disabled={currentActionIndex === actions.length - 1}
-                onClick={() => setCurrentActionIndex(currentActionIndex + 1)}
-              >
-                Next
-              </Button>
+              <Tooltip content="Click me to get started!" color="mint" open={currentActionIndex === 0} style={{ backgroundColor: 'mint' }}>
+                <Button
+                  size={currentActionIndex === 0 ? "4" : "2"}
+                  variant={currentActionIndex === 0 ? "solid" : "soft"}
+                  disabled={currentActionIndex === actions.length - 1}
+                  onClick={() => setCurrentActionIndex(currentActionIndex + 1)}
+                >
+                  Next
+                </Button>
+              </Tooltip>
             </Flex>
 
             <Box
               style={{
                 padding: '12px',
                 borderRadius: '4px',
-                
+
                 overflowX: 'auto',
                 height: '100%'
               }}
@@ -371,7 +399,7 @@ export const areEqual = (a: number, b: number): boolean => {
                 </Text>
                 {nameBadge()}
               </Flex>
-              <Flex my="3" gap="3" direction="row" justify="start" align="center">
+              <Flex my="3" gap="3" direction="row" justify="start" align="center" mb="9">
                 <Text size="1">
                   Value:
                 </Text>
@@ -386,95 +414,136 @@ export const areEqual = (a: number, b: number): boolean => {
                     <Code size="2" color="gray">{actions[currentActionIndex].value}</Code>
                   )}
               </Flex>
+              <Flex my="3" gap="3" direction="row" justify="start" align="center" mt="9">
+                <Text size="1">
+                  <InfoCircledIcon />
+                </Text>
+                <Tooltip content="These notes also provide useful information" color="mint" open={currentActionIndex === 4} style={{ backgroundColor: 'mint' }}>
+                  <Text size="1">
+                    {hintText}
+                  </Text>
+                </Tooltip>
+              </Flex>
             </Box>
           </Flex>
         </Card>
 
         {/* Right side - Editor */}
         <Card style={{ width: '60%' }}>
-          <Box >
+        <Tooltip content="Perfect! Your video is ready!" color="mint" open={videoUrl !== ""} style={{ backgroundColor: 'mint' }}>
+          <Box>
             <Flex mb="3" direction="row" justify="center" align="center">
-              <Text size="1" color="gray">Lesson Preview</Text>
+              <Text size="1" color="gray">{videoUrl === "" ? 'Lesson' : 'Video'} Preview</Text>
             </Flex>
-            <Card>
-              <Flex gap="3" direction="row" align="center">
-                <Box
-                  style={{
-                    backgroundColor: "mint",
-                    fontFamily: "Fira Code"
-                  }}
-                >
-                  {currentActionIndex === 0 ? '<editor tab>' : "areEqual.ts"}
-                </Box>
-              </Flex>
-              {/* Add YouTube style comment overlay */}
-              {isAuthorAction(actions[currentActionIndex]) && (
-                <Box
-                  style={{
-                    position: 'absolute',
-                    bottom: '24px',
-                    left: '24px',
-                    right: '24px',
-                    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                    padding: '12px 16px',
-                    borderRadius: '8px',
-                    color: 'white',
-                    fontFamily: 'system-ui',
-                    fontSize: '14px',
-                    zIndex: 10,
-                  }}
-                >
-                  <Text style={{ margin: 0 }}>
-                    {actions[currentActionIndex].value}
-                  </Text>
-                </Box>
-              )}
-              <Editor
-                path="areEqual.ts"
-                width={videoUrl !== "" ? 0 : "100%"}
-                height={videoUrl !== "" ? 0 : editorElementHeight}
-                defaultLanguage="typescript"
-                language="typescript"
-                value={code}
-                options={{
-                  minimap: { enabled: false },
-                  scrollBeyondLastLine: false,
-                  fontFamily: "Fira Code",
-                  fontSize: 13,
-                  fontLigatures: true,
-                  lineNumbers: "off",
-                  folding: true,
-                  automaticLayout: true,
-                  autoIndent: "full",
-                  readOnly: true
-                }}
-                onMount={handleOnMount}
-              />
-            </Card>
+            <Tooltip content="Nice, we've now added our comment in the editor!" color="mint" open={currentActionIndex === 3} style={{ backgroundColor: 'mint' }}>
+              <Card>
+                {videoUrl === "" ? (
+                  <>
+                    <Flex gap="3" direction="row" align="center">
+                      <Tooltip content="Nice, we've just changed the filename." color="mint" open={currentActionIndex === 1} style={{ backgroundColor: 'mint' }}>
+                        <Box
+                          style={{
+                            backgroundColor: "mint",
+                            fontFamily: "Fira Code"
+                          }}
+                        >
+                          {currentActionIndex === 0 ? '<editor tab>' : "areEqual.ts"}
+                        </Box>
+                      </Tooltip>
+                    </Flex>
+                    {/* Add YouTube style comment overlay */}
+                    {isAuthorAction(actions[currentActionIndex]) && (
+                      <Box
+                        style={{
+                          position: 'absolute',
+                          bottom: '24px',
+                          left: '24px',
+                          right: '24px',
+                          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                          padding: '12px 16px',
+                          borderRadius: '8px',
+                          color: 'white',
+                          fontFamily: 'system-ui',
+                          fontSize: '14px',
+                          zIndex: 10,
+                        }}
+                      >
+                        <Text style={{ margin: 0 }}>
+                          {actions[currentActionIndex].value}
+                        </Text>
+                      </Box>
+                    )}
+
+                    <Editor
+                      path="areEqual.ts"
+                      width={videoUrl !== "" ? 0 : "100%"}
+                      height={videoUrl !== "" ? 0 : editorElementHeight}
+                      defaultLanguage="typescript"
+                      language="typescript"
+                      value={code}
+                      options={{
+                        minimap: { enabled: false },
+                        scrollBeyondLastLine: false,
+                        fontFamily: "Fira Code",
+                        fontSize: 13,
+                        fontLigatures: true,
+                        lineNumbers: "off",
+                        folding: true,
+                        automaticLayout: true,
+                        autoIndent: "full",
+                        readOnly: true
+                      }}
+                      onMount={handleOnMount}
+                    />
+                  </>
+                ) : (
+                  <video
+                    crossOrigin="anonymous"
+                    src={videoUrl}
+                    controls
+                    style={{
+                      width: editorElementWidth,
+                      height: editorElementHeight,
+                    }}
+                  />
+                )}
+                <EditorOverlay
+                  isActive={isGeneratingVideo}
+                  slides={editorLoaderSlidesConfig}
+                />
+              </Card>
+            </Tooltip>
           </Box>
+          </Tooltip>
         </Card>
+
       </Flex>
       <Card>
-        <Flex mt="3" direction="row" justify="between" align="center">
-          <Flex gap="3" direction="row" align="center">
-            <Button onClick={onClickGenerateVideo} disabled={isGeneratingVideo || videoGenerated}>
-              {isGeneratingVideo ? "Generating..." : videoGenerated ? "Generated!" : "Generate Video"}
-            </Button>
-            <Code>{"<"}- get your video!</Code>
-            {videoUrl === "" && isGeneratingVideo && (
-              <Button color="crimson" variant="soft" onClick={onClickCancel}>
-                Cancel
-              </Button>
-            )}
+        <Tooltip content="Even though we're not fully through the example, we can still export the full lesson in any format since CodeVideo actions are totally time-travellable. Give it a try!" color="mint" open={currentActionIndex === 5} style={{ backgroundColor: 'mint' }}>
+
+          <Flex mt="3" direction="row" justify="between" align="center">
+            <Flex gap="3" direction="row" align="center">
+              <Tooltip content="Yes, our coveted 'export to video' option" color="mint" open={currentActionIndex === 8} style={{ backgroundColor: 'mint' }}>
+                <Button onClick={onClickGenerateVideo} disabled={isGeneratingVideo || videoGenerated}>
+                  {isGeneratingVideo ? "Generating..." : videoGenerated ? "Generated!" : "Generate Video"}
+                </Button>
+              </Tooltip>
+              <Code>{"<"}- get your video!</Code>
+              {videoUrl === "" && isGeneratingVideo && (
+                <Button color="crimson" variant="soft" onClick={onClickCancel}>
+                  Cancel
+                </Button>
+              )}
+            </Flex>
+            {/* right side is always the advanced options button, doesn't show on mobile */}
+            <Flex display={{ initial: 'none', sm: 'flex' }} gap="3" direction="row" align="center">
+              {showAdvancedOptionsHint && (
+                <Code>advanced video options for connoisseurs -{">"}</Code>
+              )}
+              <AdvancedVideoOptionsDialog onClicked={onClickAdvanced} />
+            </Flex>
           </Flex>
-          {/* right side is always the advanced options button, doesn't show on mobile */}
-          <Flex display={{ initial: 'none', sm: 'flex' }} gap="3" direction="row" align="center">
-            {showAdvancedOptionsHint && (
-              <Code>advanced video options for connoisseurs -{">"}</Code>
-            )}
-            <AdvancedVideoOptionsDialog onClicked={onClickAdvanced} />
-          </Flex>
-        </Flex>
+        </Tooltip>
         <Flex direction="row" justify="between" align="center">
           <Flex gap="3" direction="row" align="center" mt="3">
             <Button onClick={onClickGenerateMarkdown} disabled={isGeneratingMarkdown || markdownGenerated}>

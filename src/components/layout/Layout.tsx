@@ -1,13 +1,14 @@
 import * as React from "react";
 import { Nav } from "./Nav";
 import { Footer } from "./Footer";
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { usePageRedirects } from "../../hooks/usePageRedirects";
 import { Flex, Theme } from "@radix-ui/themes";
 import { SVGBackground } from "./SvgBackground";
 
 const Layout = (props: PropsWithChildren) => {
   const { children } = props;
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   usePageRedirects();
 
@@ -40,13 +41,13 @@ const Layout = (props: PropsWithChildren) => {
   return (
     <Theme
       accentColor="mint"
-      appearance="dark"
+      appearance={theme}
       panelBackground="translucent"
       radius="large"
     >
       <SVGBackground />
       <Flex gap="3" p="3" direction="column" justify="between">
-        <Nav />
+        <Nav onToggleTheme={setTheme}/>
         <main style={{marginBottom:'auto'}}>{children}</main>
         <Footer />
       </Flex>

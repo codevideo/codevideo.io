@@ -1,4 +1,5 @@
 import { IEditorOverlaySlide } from "./../interfaces/IEditorOverlaySlide";
+
 export const editorLoaderSlidesConfig: Array<IEditorOverlaySlide> = [
   {
     emoji: "⏳",

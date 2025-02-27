@@ -20,14 +20,14 @@ export function Home() {
                 borderRadius: 'var(--radius-4)',
                 padding: 'var(--space-2) var(--space-4)'
               }}>
-              <Text size="2" weight="bold">🚀 Create professional educational content 100x faster. Literally.</Text>
+              <Text size="2" weight="bold">🚀 Create professional educational content 1000x faster. (Seriously, read our white paper!)</Text>
             </Box>
             <Heading size="9" align="center">
               Create Educational Software Content in{" "}
               <Text color="mint">Minutes</Text>, Not Hours
             </Heading>
             <Text size="4" color="gray" align="center" style={{ maxWidth: '700px' }}>
-              Stop wasting time with video retakes and editing. Our deterministic recording system ensures perfect tutorials every time. Export your course to video, markdown, PDF, or web in literal seconds.
+              Stop wasting time with video retakes and editing. Our deterministic recording system ensures perfect tutorials every time. Export your course to video, markdown, PDF, web, and more in literal seconds.
             </Text>
             <Flex gap="4" wrap="wrap" align="center" justify="center">
               <Link href="https://studio.codevideo.io" target="_blank">
@@ -78,7 +78,7 @@ export function Home() {
                 borderRadius: 'var(--radius-4)',
                 padding: 'var(--space-2) var(--space-4)'
               }}>
-              <Text size="2" weight="bold">👆 The editor in <Link href="https://studio.codevideo.io">CodeVideo Studio</Link> is far more complex than this example and supports file explorer, terminal, and even mouse actions.</Text>
+              <Text size="2" weight="bold">👆 The editor in <Link href="https://studio.codevideo.io" target="_blank">CodeVideo Studio</Link> is far more complex than this example and supports file explorer, terminal, and even mouse actions.</Text>
             </Box>
           </Flex>
         </Container>
@@ -89,7 +89,7 @@ export function Home() {
         <Container>
           <Grid columns="3" gap="8">
             <Flex direction="column" align="center">
-              <Heading size="8" color="mint" mb="2">100x</Heading>
+              <Heading size="8" color="mint" mb="2">1000x</Heading>
               <Text color="gray" align="center">Faster Content Creation</Text>
             </Flex>
             <Flex direction="column" align="center">
@@ -104,8 +104,17 @@ export function Home() {
         </Container>
       </Section>
 
+      {/* Hidden link for scroll */}
+      <span id="benefits" style={{
+        display: 'block',
+        height: '60px',
+        marginTop: '-60px',
+        visibility: 'hidden',
+        pointerEvents: 'none'
+      }}></span>
+
       {/* Benefits */}
-      <Section id="benefits" size="3">
+      <Section size="3">
         <Container>
           <Heading size="8" align="center" mb="8">Why Creators Love Us</Heading>
           <Grid columns={{ initial: "1", md: "2" }} gap="6">
@@ -122,8 +131,17 @@ export function Home() {
         </Container>
       </Section>
 
+      {/* Hidden link for scroll */}
+      <span id="features" style={{
+        display: 'block',
+        height: '60px',
+        marginTop: '-60px',
+        visibility: 'hidden',
+        pointerEvents: 'none'
+      }}></span>
+
       {/* Features */}
-      <Section id="features" size="3">
+      <Section size="3">
         <Container>
           <Heading size="8" align="center" mb="8">Key Features</Heading>
           <Grid columns={{ initial: "1", sm: "2", lg: "3" }} gap="6">
@@ -140,8 +158,17 @@ export function Home() {
         </Container>
       </Section>
 
+      {/* Hidden link for scroll */}
+      <span id="how-it-works" style={{
+        display: 'block',
+        height: '60px',
+        marginTop: '-60px',
+        visibility: 'hidden',
+        pointerEvents: 'none'
+      }}></span>
+
       {/* How It Works */}
-      <Section id="how-it-works" size="3">
+      <Section size="3">
         <Container>
           <Heading size="8" align="center" mb="8">How It Works</Heading>
           <Grid columns={{ initial: "1", md: "3" }} gap="8">
@@ -168,8 +195,17 @@ export function Home() {
         </Container>
       </Section>
 
+      {/* Hidden link for scroll */}
+      <span id="integrations" style={{
+        display: 'block',
+        height: '60px',
+        marginTop: '-60px',
+        visibility: 'hidden',
+        pointerEvents: 'none'
+      }}></span>
+
       {/* Integrations Section */}
-      <Section id="integrations" size="3">
+      <Section size="3">
         <Container>
           <Heading size="8" align="center" mb="8">Seamless Integrations</Heading>
           <Grid
@@ -188,8 +224,17 @@ export function Home() {
         </Container>
       </Section>
 
+      {/* Hidden link for scroll */}
+      <span id="pricing" style={{
+        display: 'block',
+        height: '60px',
+        marginTop: '-60px',
+        visibility: 'hidden',
+        pointerEvents: 'none'
+      }}></span>
+
       {/* Pricing Section */}
-      <Section id="pricing" size="3">
+      <Section size="3">
         <Container>
           <Heading size="8" align="center" mb="8">Simple, Token-Based Pricing</Heading>
           <Flex direction="column" align="center" gap="4">
@@ -200,7 +245,14 @@ export function Home() {
 
           <PricingSection />
 
-          <Box mt="8">
+          <Flex direction="column" align="center" gap="4">
+            <Text size="4" weight="bold" align="center" my="8">
+              Need a custom pricing solution with custom export options? We're happy to help - <Link color="mint" href="mailto:hi@fullstackcraft.com">contact us!
+              </Link>
+            </Text>
+          </Flex>
+
+          <Box>
             <Heading size="4" align="center" mb="4">Token Usage Per Export</Heading>
             <Grid columns={{ initial: "1", sm: "2", lg: "4" }} gap="4">
               {tokenCosts.map(cost => (
@@ -226,7 +278,7 @@ export function Home() {
 const benefits = [
   {
     title: "Save Hours of Time",
-    description: "Create once, generate multiple formats. No more endless retakes or manual editing.",
+    description: "Create once, generate multiple formats. No more endless retakes or tedious manual video editing.",
     icon: TimerIcon,
   },
   {
@@ -236,7 +288,7 @@ const benefits = [
   },
   {
     title: "Instant Multi-Format Export",
-    description: "Generate videos, blog posts, and documentation with one click.",
+    description: "Generate videos, blog posts, and entire web pages with one click.",
     icon: LightningBoltIcon,
   },
   {
@@ -282,11 +334,11 @@ const features = [
 const steps = [
   {
     title: "Create",
-    description: <>Start building your course step by step in the  <Link color="mint" href="https://studio.codevideo.io">CodeVideo Studio</Link>.</>,
+    description: <>Start building your course step by step in the  <Link color="mint" href="https://studio.codevideo.io" target="_blank">CodeVideo Studio</Link>.</>,
   },
   {
-    title: "Edit Steps",
-    description: "Need to fix a mistake? Add something you forgot? Edit, insert, or remove items in the timeline instantly.",
+    title: "Edit Actions",
+    description: "Need to fix a mistake? Add something you forgot? Edit, insert, or remove actions in the timeline instantly.",
   },
   {
     title: "Export, Share, and Sell",
@@ -302,7 +354,7 @@ const integrations = [
   },
   {
     title: "Team Collaboration",
-    description: <>Share your account in the  <Link color="mint" href="https://studio.codevideo.io">CodeVideo Studio</Link> with as many collaborators as you'd like - create multiple versions and styles of a course or lesson as you'd like.</>,
+    description: <>Share your account in the  <Link color="mint" href="https://studio.codevideo.io" target="_blank">CodeVideo Studio</Link> with as many collaborators as you'd like - create multiple versions and styles of a course or lesson as you'd like.</>,
     icon: Share2Icon,
   },
   {

@@ -34,7 +34,7 @@ const config: GatsbyConfig = {
         background_color: `#23ffb2`,
         theme_color: `#23ffb2`,
         display: `minimal-ui`,
-        icon: `src/images/logo.svg`,
+        icon: `src/images/favicon.svg`,
       },
     },
     `gatsby-plugin-offline`,
