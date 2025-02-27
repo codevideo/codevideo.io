@@ -3,14 +3,12 @@ import Editor, { Monaco, loader } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
 import mixpanel from "mixpanel-browser";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { EditorOverlay } from "./EditorOverlay";
-import { editorLoaderSlidesConfig } from "../../config/editorOverlaySlidesConfig";
 import { useEffect, useRef, useState } from "react";
 import { codeToVideo } from "../../utils/video/codeToVideo";
 import { AdvancedVideoOptionsDialog } from "./AdvancedVideoOptionsDialog";
-import { Box, Button, Card, Code, Em, Flex, Heading, Text } from "@radix-ui/themes";
-import { IAction, isAuthorAction, isEditorAction } from "@fullstackcraftllc/codevideo-types";
-import { generateMarkdownFromActions, generateHtmlFromActions, generatePdfFromActions } from '@fullstackcraftllc/codevideo-doc-gen';
+import { Badge, Box, Button, Card, Code, Flex, Heading, Text } from "@radix-ui/themes";
+import { IAction, isAuthorAction } from "@fullstackcraftllc/codevideo-types";
+import { generateMarkdownFromActions, generateHtmlFromActions, generatePdfFromActions, generateJsonFromActions } from '@fullstackcraftllc/codevideo-doc-gen';
 import { VirtualEditor } from "@fullstackcraftllc/codevideo-virtual-editor";
 
 // use local static files for vscode monaco editor
@@ -80,6 +78,8 @@ export const areEqual = (a: number, b: number): boolean => {
   const [pdfGenerated, setPdfGenerated] = useState(false);
   const [isGeneratingHTML, setIsGeneratingHTML] = useState(false);
   const [htmlGenerated, setHtmlGenerated] = useState(false);
+  const [isGeneratingJson, setIsGeneratingJson] = useState(false);
+  const [jsonGenerated, setJsonGenerated] = useState(false);
   const [showAdvancedOptionsHint, setShowAdvancedOptionsHint] = useState(true);
   const abortController = new AbortController();
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>();
@@ -160,7 +160,7 @@ export const areEqual = (a: number, b: number): boolean => {
     }
   };
 
-  const onClickGenerate = async () => {
+  const onClickGenerateVideo = async () => {
     setVideoGenerated(false);
     const virtualEditor = new VirtualEditor([])
     virtualEditor.applyActions(actions)
@@ -182,19 +182,12 @@ export const areEqual = (a: number, b: number): boolean => {
     setVideoGenerated(true);
   };
 
-  const onClickGenerateMarkdown = () => {
+  const onClickGenerateMarkdown = async () => {
     setMarkdownGenerated(false);
     setIsGeneratingMarkdown(true);
-    // generate markdown using codevideo-doc-gen
-    const markdown = generateMarkdownFromActions(actions);
 
-    // trigger download
-    const element = document.createElement("a");
-    const file = new Blob([markdown], { type: 'text/plain' });
-    element.href = URL.createObjectURL(file);
-    element.download = "codevideo-markdown-export.md";
-    document.body.appendChild(element); // Required for this to work in FireFox
-    element.click();
+    // generate markdown using codevideo-doc-gen
+    await generateMarkdownFromActions(actions);
 
     setIsGeneratingMarkdown(false);
     setMarkdownGenerated(true);
@@ -222,6 +215,17 @@ export const areEqual = (a: number, b: number): boolean => {
     setHtmlGenerated(true);
   }
 
+  const onClickGenerateJSON = async () => {
+    setJsonGenerated(false);
+    setIsGeneratingJson(true);
+
+    // generate json using codevideo-doc-gen
+    await generateJsonFromActions(actions);
+
+    setIsGeneratingJson(false);
+    setJsonGenerated(true);
+  }
+
   const onClickAdvanced = () => {
     setShowAdvancedOptionsHint(false);
   };
@@ -230,10 +234,6 @@ export const areEqual = (a: number, b: number): boolean => {
     setVideoUrl("");
     setIsGeneratingVideo(false);
     abortController.abort();
-  };
-
-  const onClickMakeAnother = () => {
-    setVideoUrl("");
   };
 
   const getOrientation = () => {
@@ -283,161 +283,181 @@ export const areEqual = (a: number, b: number): boolean => {
   virtualEditor.applyActions(actionsToApply)
   const code = virtualEditor.getCode()
 
+  // get nameBadge component based on name
+  const nameBadge = () => {
+    const name = actions[currentActionIndex].name;
+
+    switch (true) {
+      case name.startsWith('author'):
+        return <Badge style={{fontFamily: 'Fira Code'}} size="1" color="blue">{name}</Badge>
+      case name.startsWith('file-explorer'):
+        return <Badge style={{fontFamily: 'Fira Code'}} size="1" color="green">{name}</Badge>
+      case name.startsWith('editor'):
+        return <Badge style={{fontFamily: 'Fira Code'}} size="1" color="purple">{name}</Badge>
+      default:
+        return ""
+    }
+  }
+
+  // Helper function to format value with preserved newlines
+  const formatValue = (val: string) => {
+    return <Text size="1">{val.replace(/\\n/g, '\n')}</Text>
+  };
+
   return (
     <Flex gap="1" direction="column">
-      <Heading size="7" my="3" align="center">Explore this 3 step example:</Heading>
-      <Card style={{ minHeight: '300px' }}>
-        <Flex direction="column" gap="3">
-          <Text color="mint" align="center">
-            Action: {currentActionIndex + 1} of {actions.length}
-          </Text>
-          <Flex direction="row" align="center" justify="between" style={{ minHeight: '200px' }}>
-            {/* Previous Button */}
-            <Button
-              variant="soft"
-              disabled={currentActionIndex === 0}
-              onClick={() => setCurrentActionIndex(currentActionIndex - 1)}
-            >
-              Previous
-            </Button>
+      <Heading size="7" my="3" align="center">Explore this {actions.length} step example:</Heading>
 
-            {/* Main Content - using flex-grow to take up available space */}
-            <Flex grow="1" direction="column" align="center" justify="center" mx="4">
-              <Box
-                mb="2"
-                style={{
-                  backgroundColor: "var(--mint-a3)",
-                  padding: "8px 16px",
-                  borderRadius: "4px",
-                  fontFamily: "Fira Code"
-                }}
+      {/* Mobile view - small overlay */}
+      <Box
+        display={{ initial: 'block', sm: 'none' }}
+        style={{
+          position: 'absolute',
+          top: '8px',
+          right: '8px',
+          backgroundColor: 'var(--mint-a3)',
+          padding: '4px 8px',
+          borderRadius: '4px',
+          zIndex: 10,
+          fontFamily: 'Fira Code',
+          fontSize: '12px'
+        }}
+      >
+        {currentActionIndex + 1}/{actions.length}
+      </Box>
+      {/* Desktop view - side by side layout */}
+      <Flex
+        direction="row"
+        gap="3"
+        display={{ initial: 'none', sm: 'flex' }}
+        style={{ width: '100%' }}
+      >
+        <Card style={{ width: '40%' }}>
+          {/* Left side - Navigation and Step Info */}
+          <Flex direction="column" gap="3" >
+            <Flex direction="row" justify="center" align="center">
+              <Text size="1" color="gray">Action Editor</Text>
+            </Flex>
+            <Flex direction="row" justify="between" align="center">
+              <Button
+                variant="soft"
+                disabled={currentActionIndex === 0}
+                onClick={() => setCurrentActionIndex(currentActionIndex - 1)}
               >
-                {actions[currentActionIndex].name}
-              </Box>
-
-              <Box
-                style={{
-                  backgroundColor: "var(--mint-a3)",
-                  padding: "16px",
-                  borderRadius: "4px",
-                  width: "100%",
-                  maxWidth: "800px"
-                }}
+                Previous
+              </Button>
+              <Text>Action <Text color="mint" weight="bold">{currentActionIndex + 1}</Text> of {actions.length}</Text>
+              <Button
+                variant="soft"
+                disabled={currentActionIndex === actions.length - 1}
+                onClick={() => setCurrentActionIndex(currentActionIndex + 1)}
               >
-                {isEditorAction(actions[currentActionIndex]) ? (
-                  <pre style={{
-                    fontFamily: "Fira Code",
-                    margin: 0,
-                    whiteSpace: "pre-wrap",
-                    wordBreak: "break-word"
-                  }}>
-                    {actions[currentActionIndex].value}
-                  </pre>
-                ) : (
-                  <Text align="center">{actions[currentActionIndex].value}</Text>
-                )}
-              </Box>
+                Next
+              </Button>
             </Flex>
 
-            {/* Next Button */}
-            <Button
-              variant="soft"
-              disabled={currentActionIndex === actions.length - 1}
-              onClick={() => setCurrentActionIndex(currentActionIndex + 1)}
-            >
-              Next
-            </Button>
-          </Flex>
-        </Flex>
-      </Card>
-      <Card my="3">
-        <Flex gap="3" direction="row" align="center" justify="center">
-          <Text size="1" style={{
-            backgroundColor: "mint",
-            fontFamily: "Fira Code"
-          }} align="center">
-            <Em>{'<'}Editor Preview{'>'}</Em>
-          </Text>
-        </Flex>
-        <Card mb="1">
-          <Flex gap="3" direction="row" align="center">
             <Box
               style={{
-                backgroundColor: "mint",
-                fontFamily: "Fira Code"
+                padding: '12px',
+                borderRadius: '4px',
+                
+                overflowX: 'auto',
+                height: '100%'
               }}
             >
-              {currentActionIndex === 0 ? '<editor tab>' : "areEqual.ts"}
+              <Flex my="3" gap="3" direction="row" justify="start" align="center">
+                <Text size="1">
+                  Name:
+                </Text>
+                {nameBadge()}
+              </Flex>
+              <Flex my="3" gap="3" direction="row" justify="start" align="center">
+                <Text size="1">
+                  Value:
+                </Text>
+                {actions[currentActionIndex].name.startsWith("editor-") ? (
+                  <Badge size="1" color="gray" style={{ whiteSpace: 'pre-wrap' }}>
+                    <Box mt="1" style={{ fontFamily: 'monospace' }}>
+                      {formatValue(actions[currentActionIndex].value)}
+                    </Box>
+                  </Badge>
+                ) :
+                  (
+                    <Code size="2" color="gray">{actions[currentActionIndex].value}</Code>
+                  )}
+              </Flex>
             </Box>
           </Flex>
         </Card>
-        <Card>
-          {/* Add YouTube style comment overlay */}
-          {isAuthorAction(actions[currentActionIndex]) && (
-            <Box
-              style={{
-                position: 'absolute',
-                bottom: '24px',
-                left: '24px',
-                right: '24px',
-                backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                padding: '12px 16px',
-                borderRadius: '8px',
-                color: 'white',
-                fontFamily: 'system-ui',
-                fontSize: '14px',
-                zIndex: 10,
-              }}
-            >
-              <Text style={{ margin: 0 }}>
-                {actions[currentActionIndex].value}
-              </Text>
-            </Box>
-          )}
-          <Editor
-            path="areEqual.ts"
-            width={videoUrl !== "" ? 0 : editorElementWidth}
-            height={videoUrl !== "" ? 0 : editorElementHeight}
-            defaultLanguage="typescript"
-            language="typescript"
-            value={code}
-            options={{
-              minimap: { enabled: false },
-              scrollBeyondLastLine: false,
-              fontFamily: "Fira Code",
-              fontSize: 13,
-              fontLigatures: true,
-              lineNumbers: "off",
-              folding: true,
-              automaticLayout: true,
-              autoIndent: "full",
-              readOnly: true
-            }}
-            onMount={handleOnMount}
-          />
+
+        {/* Right side - Editor */}
+        <Card style={{ width: '60%' }}>
+          <Box >
+            <Flex mb="3" direction="row" justify="center" align="center">
+              <Text size="1" color="gray">Lesson Preview</Text>
+            </Flex>
+            <Card>
+              <Flex gap="3" direction="row" align="center">
+                <Box
+                  style={{
+                    backgroundColor: "mint",
+                    fontFamily: "Fira Code"
+                  }}
+                >
+                  {currentActionIndex === 0 ? '<editor tab>' : "areEqual.ts"}
+                </Box>
+              </Flex>
+              {/* Add YouTube style comment overlay */}
+              {isAuthorAction(actions[currentActionIndex]) && (
+                <Box
+                  style={{
+                    position: 'absolute',
+                    bottom: '24px',
+                    left: '24px',
+                    right: '24px',
+                    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                    padding: '12px 16px',
+                    borderRadius: '8px',
+                    color: 'white',
+                    fontFamily: 'system-ui',
+                    fontSize: '14px',
+                    zIndex: 10,
+                  }}
+                >
+                  <Text style={{ margin: 0 }}>
+                    {actions[currentActionIndex].value}
+                  </Text>
+                </Box>
+              )}
+              <Editor
+                path="areEqual.ts"
+                width={videoUrl !== "" ? 0 : "100%"}
+                height={videoUrl !== "" ? 0 : editorElementHeight}
+                defaultLanguage="typescript"
+                language="typescript"
+                value={code}
+                options={{
+                  minimap: { enabled: false },
+                  scrollBeyondLastLine: false,
+                  fontFamily: "Fira Code",
+                  fontSize: 13,
+                  fontLigatures: true,
+                  lineNumbers: "off",
+                  folding: true,
+                  automaticLayout: true,
+                  autoIndent: "full",
+                  readOnly: true
+                }}
+                onMount={handleOnMount}
+              />
+            </Card>
+          </Box>
         </Card>
-        {videoUrl !== "" && (
-          <video
-            crossOrigin="anonymous"
-            src={videoUrl}
-            controls
-            style={{
-              width: editorElementWidth,
-              height: editorElementHeight,
-            }}
-          />
-        )}
-        <EditorOverlay
-          isActive={isGeneratingVideo}
-          slides={editorLoaderSlidesConfig}
-        />
-
-      </Card>
-
+      </Flex>
       <Card>
-        <Flex direction="row" justify="between" align="center">
+        <Flex mt="3" direction="row" justify="between" align="center">
           <Flex gap="3" direction="row" align="center">
-            <Button onClick={onClickGenerate} disabled={isGeneratingVideo || videoGenerated}>
+            <Button onClick={onClickGenerateVideo} disabled={isGeneratingVideo || videoGenerated}>
               {isGeneratingVideo ? "Generating..." : videoGenerated ? "Generated!" : "Generate Video"}
             </Button>
             <Code>{"<"}- get your video!</Code>
@@ -488,6 +508,19 @@ export const areEqual = (a: number, b: number): boolean => {
             </Button>
             <Code>{"<"}- get a webpage!</Code>
             {!htmlGenerated && isGeneratingHTML && (
+              <Button color="crimson" variant="soft" onClick={onClickCancel}>
+                Cancel
+              </Button>
+            )}
+          </Flex>
+        </Flex>
+        <Flex direction="row" justify="between" align="center">
+          <Flex gap="3" direction="row" align="center" mt="3">
+            <Button onClick={onClickGenerateJSON} disabled={isGeneratingJson || jsonGenerated}>
+              {isGeneratingJson ? "Generating..." : jsonGenerated ? "Generated!" : "Generate JSON"}
+            </Button>
+            <Code>{"<"}- get JSON!</Code>
+            {!jsonGenerated && isGeneratingJson && (
               <Button color="crimson" variant="soft" onClick={onClickCancel}>
                 Cancel
               </Button>
