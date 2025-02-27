@@ -110,26 +110,6 @@ export function EditorWidget() {
       setEditorWidth(editor.clientWidth);
     }
     setIsGeneratingVideo(true);
-    const calculatedTimeBasedOnCodeLength = Math.floor(code.length * 0.2);
-    // toast(
-    //   <div className="text-center">
-    //     🕒🕒🕒
-    //     <br />
-    //     You've got <b>{code.length} characters</b> in your snippet. Using our
-    //     extremely powerful ML assisted prediction model, it can take up to{" "}
-    //     <b>{calculatedTimeBasedOnCodeLength} seconds</b> to generate your video.
-    //     <br />
-    //     <br />
-    //     <b>Please be patient!</b>
-    //   </div>,
-    //   {
-    //     position: "top-center",
-    //   }
-    // );
-
-    // good for testing loader
-    // await sleep(20000);
-    // await codeToVideo(fileLabel, code, setVideoUrl);
     await codeToVideo(
       width,
       height,

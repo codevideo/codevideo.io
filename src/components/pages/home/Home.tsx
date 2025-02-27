@@ -30,13 +30,17 @@ export function Home() {
               Stop wasting time with video retakes and editing. Our deterministic recording system ensures perfect tutorials every time. Export your course to video, markdown, PDF, or web in literal seconds.
             </Text>
             <Flex gap="4" wrap="wrap" align="center" justify="center">
-              <Button size="4">
-                Start Creating Free
-                <ArrowRightIcon />
-              </Button>
-              <Button size="4" variant="soft">
-                Watch Demo
-              </Button>
+              <Link href="https://studio.codevideo.io" target="_blank">
+                <Button size="4">
+                  Start Creating Free
+                  <ArrowRightIcon />
+                </Button>
+              </Link>
+              <Link href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank">
+                <Button size="4" variant="soft">
+                  Watch Demo
+                </Button>
+              </Link>
             </Flex>
           </Flex>
         </Container>
@@ -45,8 +49,8 @@ export function Home() {
       {/* Social Proof */}
       <Section py="6">
         <Container>
-        <Flex direction="column" align="center">
-          <Text size="2" align="center" style={{ color: 'var(--gray-8)' }} mb="6">TRUSTED BY LEADING EDUCATORS AND COMPANIES</Text>
+          <Flex direction="column" align="center">
+            <Text size="2" align="center" style={{ color: 'var(--gray-8)' }} mb="6">TRUSTED BY LEADING EDUCATORS AND COMPANIES</Text>
           </Flex>
           <Flex wrap="wrap" justify="center" align="center" gap="8" style={{ opacity: 0.7 }}>
             <Box style={{ color: 'var(--gray-8)' }}>
@@ -68,7 +72,7 @@ export function Home() {
         <Container>
           <EditorWidgetHomePage />
           <Flex direction="column" align="center" justify="center" gap="4" mt="4">
-          <Box
+            <Box
               style={{
                 background: 'rgba(0, 0, 0, 0.2)',
                 borderRadius: 'var(--radius-4)',
@@ -76,7 +80,7 @@ export function Home() {
               }}>
               <Text size="2" weight="bold">👆 The editor in <Link href="https://studio.codevideo.io">CodeVideo Studio</Link> is far more complex than this example and supports file explorer, terminal, and even mouse actions.</Text>
             </Box>
-            </Flex>
+          </Flex>
         </Container>
       </Section>
 
@@ -168,9 +172,9 @@ export function Home() {
       <Section id="integrations" size="3">
         <Container>
           <Heading size="8" align="center" mb="8">Seamless Integrations</Heading>
-          <Grid 
-          columns={{ initial: "1", sm: "2"}} 
-          gap="6">
+          <Grid
+            columns={{ initial: "1", sm: "2" }}
+            gap="6">
             {integrations.map(integration => (
               <Card key={integration.title}>
                 <Flex direction="column" gap="3" p="4">
@@ -189,12 +193,12 @@ export function Home() {
         <Container>
           <Heading size="8" align="center" mb="8">Simple, Token-Based Pricing</Heading>
           <Flex direction="column" align="center" gap="4">
-          <Text size="4" color="gray" align="center" mb="8">
-            Purchase tokens and use them for any type of export. The more complex the output, the more tokens required.
-          </Text>
+            <Text size="4" color="gray" align="center" mb="8">
+              Purchase tokens and use them for any type of export. The more complex the output, the more tokens required.
+            </Text>
           </Flex>
-          
-          <PricingSection/>
+
+          <PricingSection />
 
           <Box mt="8">
             <Heading size="4" align="center" mb="4">Token Usage Per Export</Heading>
@@ -244,7 +248,12 @@ const benefits = [
 
 const features = [
   {
-    title: "Event Sourcing",
+    title: "Multi-Format Export",
+    description: "Convert actions into video, blog posts, or PDFs with one click.",
+    icon: FileIcon,
+  },
+  {
+    title: "Event Sourced",
     description: "Create every action in a fully deterministic timeline. No more missed steps.",
     icon: CodeIcon,
   },
@@ -252,11 +261,6 @@ const features = [
     title: "Instant Replays",
     description: "Scrub through your coding session like a video timeline—jump back and forth.",
     icon: VideoIcon,
-  },
-  {
-    title: "Multi-Format Export",
-    description: "Convert actions into video, blog posts, or PDFs with one click.",
-    icon: FileIcon,
   },
   {
     title: "Deterministic Accuracy",
@@ -293,7 +297,7 @@ const steps = [
 const integrations = [
   {
     title: "Custom API",
-    description: <>Build custom integrations with the <Link color="mint" href="https://api.codevideo.io/swagger/index.html" target="_blank">CodeVideo API</Link>. Send the actions in JSON format and get a link to an mp4, markdown, html, or any other export formats of your content.</>,
+    description: <>Build custom integrations with the <Link color="mint" href="https://api.codevideo.io/swagger" target="_blank">CodeVideo API</Link>. Send the actions in JSON format and get a link to an mp4, markdown, html, or any other export formats of your content.</>,
     icon: MagicWandIcon,
   },
   {
