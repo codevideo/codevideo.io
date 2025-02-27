@@ -327,6 +327,7 @@ export function AdvancedVideoOptionsDialog(
             </Table.Root>
           </Inset>
           <Text size="4">Mimic Typos:</Text>
+          <Text size="2" color="gray">During video generation, CodeVideo can simulate typing errors at various intervals. Select the option that fits best.</Text>
           <RadioGroup.Root
             defaultValue={'NEVER'}
             value={mimicTypos}
