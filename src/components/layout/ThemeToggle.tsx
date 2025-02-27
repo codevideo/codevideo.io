@@ -3,9 +3,19 @@ import { Button, Flex, Theme } from '@radix-ui/themes'
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 
-export function ThemeToggle() {
+export interface IThemeProps {
+  onToggleTheme: (theme: "dark" | "light") => void;
+}
+
+export function ThemeToggle(props: IThemeProps) {
+  const { onToggleTheme } = props;
   // Check system preference, fallback to dark
   const [theme, setTheme] = useState<'light' | 'dark'>('dark')
+
+  useEffect(() => {
+    // whenever theme changes, call onToggleTheme
+    onToggleTheme(theme)
+  }, [theme])
 
   useEffect(() => {
     // Check if user has theme preference in localStorage
