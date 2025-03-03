@@ -3,6 +3,7 @@ import IEditorSettings from "../interfaces/IEditorSettings";
 
 interface EditorState {
   editorSetting: IEditorSettings;
+  theme: "light" | "dark";
 }
 
 const initialState: EditorState = {
@@ -21,6 +22,7 @@ export const areEqual = (a: number, b: number): boolean => {
     isActive: true,
     language: "typescript",
   },
+  theme: "light",
 };
 
 const extractLanguageFromFileLabel = (fileLabel: string): "javascript" | "typescript" | "python" | "css" | "html" => {
@@ -92,9 +94,12 @@ export const editorSlice = createSlice({
         language,
       };
     },
+    setTheme: (state, action: PayloadAction< "light" | "dark" >) => {
+      state.theme = action.payload
+    }
   },
 });
 
-export const { fileLabelEdited, codeEdited, setLanguage } = editorSlice.actions;
+export const { fileLabelEdited, codeEdited, setLanguage, setTheme } = editorSlice.actions;
 
 export default editorSlice.reducer;

@@ -8,8 +8,8 @@ const pricingTiers = [
     {
         name: "QA Tester",
         price: "0",
-        actionsLimit: "Max 50 actions per export",
         tokens: "0",
+        actionsLimit: "Max 50 actions per export",
         features: [
             "Markdown export only",
             "Maximum 50 actions",
@@ -18,11 +18,10 @@ const pricingTiers = [
         actionButtonText: "Get Started Free"
     },
     {
-        name: "Fledgling Creator",
-        featured: true,
-        price: "49",
+        name: "Starter",
+        price: "10",
         actionsLimit: "Max 250 actions per export",
-        tokens: "500",
+        tokens: "50",
         features: [
             "All export formats",
             "Basic integrations",
@@ -31,11 +30,24 @@ const pricingTiers = [
         actionButtonText: "Get Starter"
     },
     {
-        name: "YouTube Influencer",
-        price: "499",
+        name: "Creator",
+        featured: true,
+        price: "49",
+        tokens: "500",
         actionsLimit: "No action limit",
+        features: [
+            "All export formats",
+            "Basic integrations",
+            "Email support"
+        ],
+        actionButtonText: "Get Creator"
+    },
+    {
+        name: "Enterprise",
+        price: "499",
         period: "/ mo.",
         tokens: "10,000",
+        actionsLimit: "No action limit",
         features: [
             "All export formats",
             "Custom solutions",
@@ -47,13 +59,25 @@ const pricingTiers = [
         name: "Pay As You Go",
         price: "10 tokens / $1",
         tokens: "Any number of tokens",
-        actionsLimit: "Reasonable max action limit",
+        actionsLimit: "Max 250 actions per export",
         features: [
             "Top up as needed",
             "No commitment",
             "Tokens never expire"
         ],
         actionButtonText: "Buy Tokens"
+    },
+    {
+        name: "Lifetime License",
+        price: "1000",
+        tokens: "Infinite tokens",
+        actionsLimit: "No action limit",
+        features: [
+            "Guaranteed lifetime access",
+            "All export formats",
+            "No hassle with subscriptions"
+        ],
+        actionButtonText: "Buy License"
     }
 ];
 
@@ -68,10 +92,10 @@ export function PricingSection() {
     const calculateUsage = (tokens: any) => {
         const numTokens = parseInt(tokens.replace(',', ''));
         return {
-            markdown: Math.floor(numTokens / tokenCosts.markdown),
-            html: Math.floor(numTokens / tokenCosts.html),
-            pdf: Math.floor(numTokens / tokenCosts.pdf),
-            video: Math.floor(numTokens / tokenCosts.video)
+            markdown: Math.floor(numTokens / tokenCosts.markdown) || 'Infinite',
+            html: Math.floor(numTokens / tokenCosts.html) || 'Infinite',
+            pdf: Math.floor(numTokens / tokenCosts.pdf) || 'Infinite',
+            video: Math.floor(numTokens / tokenCosts.video) || 'Infinite'
         };
     };
 
@@ -80,12 +104,14 @@ export function PricingSection() {
     };
 
     return (
-        <Grid columns={{ initial: "1", md: "2", lg: "4" }} gap="6">
+        <Grid columns={{ initial: "1", sm: "2", md: "3" }} gap="6" width="100%">
             {pricingTiers.map(tier => {
                 const usage = calculateUsage(tier.tokens);
                 return (
-                    <Card key={tier.name}>
-                        <Flex direction="column" gap="4" p="6">
+                    <Card key={tier.name} style={{
+                        backgroundColor : tier.featured ? 'var(--mint-4)' : 'var(--mint-1)' ,
+                    }}>
+                        <Flex direction="column" justify="center" align="center" gap="4" p="6">
                             <Box>
                                 <Heading size="2" mb="2">{tier.name}</Heading>
                                 <Flex align="baseline" gap="1">
