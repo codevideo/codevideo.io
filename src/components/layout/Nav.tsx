@@ -1,16 +1,9 @@
-import { GitHubLogoIcon, HomeIcon } from "@radix-ui/react-icons";
-import { Box, Button, Card, Code, Container, Flex, Heading, Link } from "@radix-ui/themes";
+import { Box, Button, Card, Container, Flex, Heading, Link } from "@radix-ui/themes";
 import * as React from "react";
 import { Logo } from "../shared/Logo";
 import { ThemeToggle } from "./ThemeToggle";
 
-export interface INavProps {
-  onToggleTheme: (theme: "dark" | "light"
-  ) => void;
-}
-
-export function Nav(props: INavProps) {
-  const { onToggleTheme } = props;
+export function Nav() {
   return (
     <Box position="fixed" left="0" right="0" style={{ zIndex: 10000, backdropFilter: 'blur(8px)' }} className="z-40" mx="3">
       <Card>
@@ -34,7 +27,7 @@ export function Nav(props: INavProps) {
               <Link href="https://studio.codevideo.io" target="_blank">
                 <Button style={{cursor: 'pointer'}}>Get Started Free</Button>
               </Link>
-              <ThemeToggle onToggleTheme={onToggleTheme}/>
+              <ThemeToggle />
             </Flex>
           </Flex>
         </Container>
