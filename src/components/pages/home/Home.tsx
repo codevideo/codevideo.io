@@ -20,7 +20,9 @@ export function Home() {
                 borderRadius: 'var(--radius-4)',
                 padding: 'var(--space-2) var(--space-4)'
               }}>
-              <Text size="2" weight="bold">🚀 Create professional educational content 1000x faster. (Seriously, read our white paper!)</Text>
+              <Flex>
+                <Text size="2" align="center" weight="bold">🚀 Create professional educational content 1000x faster. (Seriously - read our white paper!)</Text>
+              </Flex>
             </Box>
             <Heading size="9" align="center">
               Create Educational Software Content in{" "}
@@ -30,14 +32,14 @@ export function Home() {
               Stop wasting time with video retakes and editing. Our deterministic recording system ensures perfect tutorials every time. Export your course to video, markdown, PDF, web, and more in literal seconds.
             </Text>
             <Flex gap="4" wrap="wrap" align="center" justify="center">
-              <Link href="https://studio.codevideo.io" target="_blank">
-                <Button size="4">
+              <Link href="https://studio.codevideo.io" target="_blank" >
+                <Button size="4" style={{ cursor: 'pointer' }}>
                   Start Creating Free
                   <ArrowRightIcon />
                 </Button>
               </Link>
-              <Link href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank">
-                <Button size="4" variant="soft">
+              <Link href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank" >
+                <Button size="4" variant="soft" style={{ cursor: 'pointer' }}>
                   Watch Demo
                 </Button>
               </Link>
@@ -247,7 +249,7 @@ export function Home() {
 
           <Flex direction="column" align="center" gap="4">
             <Text size="4" weight="bold" align="center" my="8">
-              Need a custom pricing solution with custom export options? We're happy to help - <Link color="mint" href="mailto:hi@fullstackcraft.com">contact us!
+              Need a custom pricing solution with custom export options or formats? We're happy to help - <Link color="mint" href="mailto:hi@fullstackcraft.com">contact us!
               </Link>
             </Text>
           </Flex>
@@ -260,7 +262,7 @@ export function Home() {
                   <Flex direction="column" align="center" gap="2" p="4">
                     <Text weight="bold">{cost.format}</Text>
                     <Text color="mint" size="6" weight="bold">{cost.tokens}</Text>
-                    <Text size="2" color="gray">tokens per export</Text>
+                    <Text size="2" color="gray">token{cost.tokens === "1" ? '' : 's'} per export</Text>
                   </Flex>
                 </Card>
               ))}
@@ -386,4 +388,4 @@ const tokenCosts = [
     format: "Video",
     tokens: "10"
   }
-];
+]

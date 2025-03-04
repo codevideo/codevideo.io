@@ -5,10 +5,11 @@ import { PropsWithChildren, useEffect, useState } from "react";
 import { usePageRedirects } from "../../hooks/usePageRedirects";
 import { Flex, Theme } from "@radix-ui/themes";
 import { SVGBackground } from "./SvgBackground";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 const Layout = (props: PropsWithChildren) => {
   const { children } = props;
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const { theme } = useAppSelector((state) => state.editor);
 
   usePageRedirects();
 
@@ -27,16 +28,16 @@ const Layout = (props: PropsWithChildren) => {
 
   useEffect(() => {
     // Add a class to the body tag
-    document.body.classList.add("dark");
+    document.body.classList.add(theme);
 
     // Load the voices for speech synthesis
     getVoices();
 
     // Cleanup function to remove the class on component unmount
     return () => {
-      document.body.classList.remove("dark");
+      document.body.classList.remove(theme);
     };
-  }, []); // Empty dependency array means this effect runs once after the initial render
+  }, [theme]); // Empty dependency array means this effect runs once after the initial render
 
   return (
     <Theme
@@ -47,7 +48,7 @@ const Layout = (props: PropsWithChildren) => {
     >
       <SVGBackground />
       <Flex gap="3" p="3" direction="column" justify="between">
-        <Nav onToggleTheme={setTheme}/>
+        <Nav/>
         <main style={{marginBottom:'auto'}}>{children}</main>
         <Footer />
       </Flex>

@@ -13,14 +13,17 @@ import { VirtualEditor } from "@fullstackcraftllc/codevideo-virtual-editor";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { EditorOverlay } from "./EditorOverlay";
 import { editorLoaderSlidesConfig } from "../../config/editorOverlaySlidesConfig";
+import { useIsDesktop } from "../../hooks/useIsDesktop";
 
 // use local static files for vscode monaco editor
 loader.config({ paths: { vs: "/vs" } });
 
 export function EditorWidgetHomePage() {
+  const { theme } = useAppSelector((state) => state.editor);
   const { width, height, gradientColors, mimicTypos, engine } = useAppSelector(
     (state) => state.video
   );
+  const isDesktop = useIsDesktop();
   const [currentActionIndex, setCurrentActionIndex] = useState(0);
   // actions just a const since the homepage example is a readonly example
   const actions: IAction[] = [
@@ -310,11 +313,13 @@ export const areEqual = (a: number, b: number): boolean => {
 
     switch (true) {
       case name.startsWith('author'):
-        return <Badge style={{ fontFamily: 'Fira Code' }} size="1" color="blue">{name}</Badge>
+        return <Badge style={{ fontFamily: 'Fira Code, monospace' }} size="1" color="blue">{name}</Badge>
       case name.startsWith('file-explorer'):
-        return <Badge style={{ fontFamily: 'Fira Code' }} size="1" color="green">{name}</Badge>
+        return <Badge style={{ fontFamily: 'Fira Code, monospace' }} size="1" color="green">{name}</Badge>
       case name.startsWith('editor'):
-        return <Badge style={{ fontFamily: 'Fira Code' }} size="1" color="purple">{name}</Badge>
+        return <Badge style={{ fontFamily: 'Fira Code, monospace' }} size="1" color="purple">{name}</Badge>
+      case name.startsWith('external'):
+        return <Badge style={{ fontFamily: 'Fira Code, monospace' }} size="1" color="orange">{name}</Badge>
       default:
         return ""
     }
@@ -330,39 +335,26 @@ export const areEqual = (a: number, b: number): boolean => {
   return (
     <Flex gap="1" direction="column">
       <Heading size="8" my="3" align="center" color="mint">Explore this {actions.length} step example:</Heading>
-
-      {/* Mobile view - small overlay */}
-      <Box
-        display={{ initial: 'block', sm: 'none' }}
-        style={{
-          position: 'absolute',
-          top: '8px',
-          right: '8px',
-          backgroundColor: 'var(--mint-a3)',
-          padding: '4px 8px',
-          borderRadius: '4px',
-          zIndex: 10,
-          fontFamily: 'Fira Code',
-          fontSize: '12px'
-        }}
-      >
-        {currentActionIndex + 1}/{actions.length}
-      </Box>
       {/* Desktop view - side by side layout */}
       <Flex
         direction="row"
         gap="3"
         display={{ initial: 'none', sm: 'flex' }}
         style={{ width: '100%' }}
+        wrap={isDesktop ? 'nowrap' : 'wrap-reverse'}
       >
-        <Card style={{ width: '40%' }}>
-          {/* Left side - Navigation and Step Info */}
+        {/* Left side - Navigation and Step Info - hidden on small screens */}
+        <Card style={{ width: isDesktop ? '40%' : '100%' }} >
           <Flex direction="column" gap="3" >
             <Flex direction="row" justify="center" align="center">
               <Text size="1" color="gray">Action Editor</Text>
             </Flex>
-            <Flex direction="row" justify="between" align="center">
-              <Tooltip content="You can also travel BACK in time!" color="mint" open={currentActionIndex === 2} style={{ backgroundColor: 'mint' }}>
+            <Flex direction="row" justify="between" align="center" style={{ display: isDesktop ? 'flex' : 'none' }}>
+              <Tooltip content="You can also travel BACK in time!" color="mint" open={currentActionIndex === 2} style={{
+                  backgroundColor: 'mint',
+                  // hide on mobile
+                  display: isDesktop ? 'block' : 'none'
+                }}>
                 <Button
                   variant="soft"
                   disabled={currentActionIndex === 0}
@@ -372,7 +364,11 @@ export const areEqual = (a: number, b: number): boolean => {
                 </Button>
               </Tooltip>
               <Text>Action <Text color="mint" weight="bold">{currentActionIndex + 1}</Text> of {actions.length}</Text>
-              <Tooltip content="Click me to get started!" color="mint" open={currentActionIndex === 0} style={{ backgroundColor: 'mint' }}>
+              <Tooltip content="Click me to get started!" color="mint" open={currentActionIndex === 0} style={{
+                  backgroundColor: 'mint',
+                  // hide on mobile
+                  display: isDesktop ? 'block' : 'none'
+                }}>
                 <Button
                   size={currentActionIndex === 0 ? "4" : "2"}
                   variant={currentActionIndex === 0 ? "solid" : "soft"}
@@ -418,7 +414,11 @@ export const areEqual = (a: number, b: number): boolean => {
                 <Text size="1">
                   <InfoCircledIcon />
                 </Text>
-                <Tooltip content="These notes also provide useful information" color="mint" open={currentActionIndex === 4} style={{ backgroundColor: 'mint' }}>
+                <Tooltip content="These notes also provide useful information" color="mint" open={currentActionIndex === 4} style={{
+                    backgroundColor: 'mint',
+                    // hide on mobile
+                    display: isDesktop ? 'block' : 'none'
+                  }}>                  
                   <Text size="1">
                     {hintText}
                   </Text>
@@ -429,7 +429,7 @@ export const areEqual = (a: number, b: number): boolean => {
         </Card>
 
         {/* Right side - Editor */}
-        <Card style={{ width: '60%' }}>
+        <Card style={{ width: isDesktop ? '60%' : '100%' }}>
         <Tooltip content="Perfect! Your video is ready!" color="mint" open={videoUrl !== ""} style={{ backgroundColor: 'mint' }}>
           <Box>
             <Flex mb="3" direction="row" justify="center" align="center">
@@ -475,6 +475,7 @@ export const areEqual = (a: number, b: number): boolean => {
                     )}
 
                     <Editor
+                      theme={theme === "light" ? "vs" : "vs-dark"}
                       path="areEqual.ts"
                       width={videoUrl !== "" ? 0 : "100%"}
                       height={videoUrl !== "" ? 0 : editorElementHeight}
