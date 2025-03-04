@@ -47,14 +47,13 @@ export const EditorOverlay: React.FC<{
               justifyContent: "center",
               flexDirection: "column",
               backgroundColor: "rgba(0, 0, 0, 0.8)",
-              transition: "opacity 0.5s ease-in-out",
               opacity: index === currentIndex % slides.length ? 1 : 0,
             }}
           >
-            <Flex direction="column" justify="center" align="center">
-              <Text>Generating video (takes a while since everything is done directly here in the browser)...</Text>
-              <Text className="display-4 rotate-infinite">{slide.emoji}</Text>
-              <Text>{slide.message}</Text>
+            <Flex direction="column" justify="center" align="center" p="5">
+              <Text align="center">Generating video (takes a while since everything is done directly here in the browser)...</Text>
+              <Text align="center" className="display-4 rotate-infinite">{slide.emoji}</Text>
+              <Text align="center">{slide.message}</Text>
             </Flex>
           </div>
         );

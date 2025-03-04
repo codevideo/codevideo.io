@@ -2,21 +2,7 @@ import Monokai from "monaco-themes/themes/Monokai.json";
 import * as monaco from "monaco-editor";
 import { colorCodeCharacter } from "../tokens/colorCodeCharacter";
 import { sleep } from "../sleep";
-import MimicTypos from "../../enums/MimicTypos";
-
-interface IStory {
-  txt: string;
-  storycount: number;
-  linecount: number;
-  lineheight: number;
-  xpos: number;
-  ypos: number;
-  startY: number;
-  speed: number;
-  animate: boolean;
-  complete: boolean;
-  storyarr: Array<string>;
-}
+import { MimicTypos } from "@fullstackcraftllc/codevideo-frontend";
 
 const getRandomInt = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -105,7 +91,7 @@ export const animateText = async (
   // now loop at each line and each character
   // and color code it based on the token type
   for (let lineIndex = 0; lineIndex < tokens.length; lineIndex++) {
-    const sleepAmount = 50;
+    const sleepAmount = 40;
     // calculate a sleep amount randomly anywhere between 50 - 100 - but this seems to make ffmpeg go haywire
     // const sleepAmount = Math.floor(Math.random() * 50) + 50;
     const lineCharacters = codeLines[lineIndex];

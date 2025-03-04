@@ -33,6 +33,7 @@ const pricingTiers = [
         name: "Creator",
         featured: true,
         price: "49",
+        period: "/ mo.",
         tokens: "500",
         actionsLimit: "No action limit",
         features: [
@@ -84,7 +85,9 @@ const pricingTiers = [
 const tokenCosts = {
     markdown: 1,
     html: 2,
+    react: 3,
     pdf: 5,
+    pptx: 5,
     video: 10
 };
 
@@ -94,7 +97,9 @@ export function PricingSection() {
         return {
             markdown: Math.floor(numTokens / tokenCosts.markdown) || 'Infinite',
             html: Math.floor(numTokens / tokenCosts.html) || 'Infinite',
+            react: Math.floor(numTokens / tokenCosts.react) || 'Infinite',
             pdf: Math.floor(numTokens / tokenCosts.pdf) || 'Infinite',
+            pptx: Math.floor(numTokens / tokenCosts.pptx) || 'Infinite',
             video: Math.floor(numTokens / tokenCosts.video) || 'Infinite'
         };
     };
@@ -127,7 +132,9 @@ export function PricingSection() {
                                     <Flex direction="column" mt="2">
                                         <Text size="1" color="gray">~10 Markdown exports / $1</Text>
                                         <Text size="1" color="gray">~5 HTML exports / $1</Text>
+                                        <Text size="1" color="gray">~3 React exports / $1</Text>
                                         <Text size="1" color="gray">~2 PDF exports / $1</Text>
+                                        <Text size="1" color="gray">~2 PPTX exports / $1</Text>
                                         <Text size="1" color="gray">~1 Video export / $1</Text>
                                     </Flex>
                                 )}
@@ -142,7 +149,9 @@ export function PricingSection() {
                                     <Flex direction="column" mt="2">
                                         <Text size="1" color="gray">~{usage.markdown} Markdown exports</Text>
                                         <Text size="1" color="gray">~{usage.html} HTML exports</Text>
+                                        <Text size="1" color="gray">~{usage.react} React exports</Text>
                                         <Text size="1" color="gray">~{usage.pdf} PDF exports</Text>
+                                        <Text size="1" color="gray">~{usage.pptx} PPTX exports</Text>
                                         <Text size="1" color="gray">~{usage.video} Video exports</Text>
                                     </Flex>)}
                             </Box>
