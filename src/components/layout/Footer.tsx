@@ -1,4 +1,4 @@
-import { Box, Card, Flex, Link, Text } from "@radix-ui/themes";
+import { Card, Flex, Link, Text } from "@radix-ui/themes";
 import * as React from "react";
 import { useIsDesktop } from "../../hooks/useIsDesktop";
 

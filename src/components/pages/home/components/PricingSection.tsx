@@ -78,7 +78,7 @@ const pricingTiers = [
             "All export formats",
             "No hassle with subscriptions"
         ],
-        actionButtonText: "Buy License"
+        actionButtonText: "Buy Lifetime"
     }
 ];
 
