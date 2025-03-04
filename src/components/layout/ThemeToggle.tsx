@@ -1,7 +1,7 @@
 import { SunIcon, MoonIcon } from '@radix-ui/react-icons'
 import { Button } from '@radix-ui/themes'
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { setTheme } from '../../store/editorSlice'
@@ -9,8 +9,8 @@ import { setTheme } from '../../store/editorSlice'
 export function ThemeToggle() {
   const { theme } = useAppSelector((state) => state.editor)
   const dispatch = useAppDispatch();
-  // Check system preference, fallback to dark
 
+  // Check system preference, fallback to dark
   useEffect(() => {
     // Check if user has theme preference in localStorage
     const savedTheme = localStorage.getItem('theme')

@@ -27,7 +27,7 @@ export function Nav() {
               <Link href="https://studio.codevideo.io" target="_blank">
                 <Button style={{cursor: 'pointer'}}>Get Started Free</Button>
               </Link>
-              <ThemeToggle />
+              <ThemeToggle/>
             </Flex>
           </Flex>
         </Container>

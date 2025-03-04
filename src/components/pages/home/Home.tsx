@@ -395,4 +395,4 @@ const tokenCosts = [
     format: "Video",
     tokens: "10"
   }
-];
+]
