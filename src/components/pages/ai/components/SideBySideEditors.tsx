@@ -1,6 +1,5 @@
 import {
   Button,
-  Card,
   Code,
   Flex,
   Heading,
@@ -19,15 +18,13 @@ import {
   pythonExampleSteps,
 } from "../examples";
 import { CodeCheckDialog } from "./CodeCheckDialog";
-import {
-  MimicTypos,
-} from "@fullstackcraftllc/codevideo-frontend";
 import { HiddenCanvas } from "../../../shared/HiddenCanvas";
 import { codeToVideo } from "../../../../utils/video/codeToVideo";
 import Engine from "../../../../enums/Engine";
 import { VirtualEditor } from "@fullstackcraftllc/codevideo-virtual-editor";
 import mixpanel from "mixpanel-browser";
 import { ToggleEditor } from "../../../shared/ToggleEditor";
+import MimicTypos from "../../../../enums/MimicTypos";
 
 const tokenizerCode = `[
     {

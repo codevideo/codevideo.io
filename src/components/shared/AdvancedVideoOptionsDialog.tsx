@@ -19,7 +19,6 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
-// import { MimicTypos } from "@fullstackcraftllc/codevideo-frontend";
 
 export interface IAdvancedVideoOptionsDialogProps {
   onClicked: () => void;

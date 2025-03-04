@@ -2,7 +2,8 @@ import Monokai from "monaco-themes/themes/Monokai.json";
 import * as monaco from "monaco-editor";
 import { colorCodeCharacter } from "../tokens/colorCodeCharacter";
 import { sleep } from "../sleep";
-import { MimicTypos } from "@fullstackcraftllc/codevideo-frontend";
+import MimicTypos from "../../enums/MimicTypos";
+
 
 const getRandomInt = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;

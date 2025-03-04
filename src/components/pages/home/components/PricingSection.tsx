@@ -69,7 +69,7 @@ const pricingTiers = [
         actionButtonText: "Buy Tokens"
     },
     {
-        name: "Lifetime License",
+        name: "CodeVideo Lifetime",
         price: "1000",
         tokens: "Infinite tokens",
         actionsLimit: "No action limit",
