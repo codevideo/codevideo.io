@@ -5,7 +5,7 @@ import { ThemeToggle } from "./ThemeToggle";
 
 export function Nav() {
   return (
-    <Box position="fixed" left="0" right="0" style={{ zIndex: 10000, backdropFilter: 'blur(8px)' }} className="z-40" mx="3">
+    <Box position="fixed" left="0" right="0" style={{ zIndex: 10000000000, backdropFilter: 'blur(8px)' }} className="z-40" mx="3">
       <Card>
         <Container size="4">
           <Flex py="4" justify="between" align="center">

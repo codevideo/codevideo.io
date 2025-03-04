@@ -304,92 +304,50 @@ export const areEqual = (a: number, b: number): boolean => {
   return (
     <Flex gap="1" direction="column">
       <Heading size="8" my="3" align="center" color="mint">Explore this {actions.length} step example:</Heading>
+
+
       {/* Desktop view - side by side layout */}
       <Flex
         direction="row"
         gap="3"
         style={{ width: '100%' }}
-        wrap={isDesktop ? 'nowrap' : 'wrap-reverse'}
+        wrap={isDesktop ? "nowrap" : "wrap-reverse"}
       >
         {/* Left side - Navigation and Step Info - hidden on small screens */}
-        <Card style={{ width: isDesktop ? '40%' : '100%' }} >
-          <Flex direction="column" gap="3" >
-            <Flex direction="row" justify="center" align="center">
-              <Text size="1" color="gray">Action Editor</Text>
-            </Flex>
-            <Flex direction="row" justify="between" align="center" style={{ display: isDesktop ? 'flex' : 'none' }}>
-              <Tooltip content="You can also travel BACK in time!" color="mint" open={currentActionIndex === 2} style={{
+          <Card style={{ width: isDesktop ? '40%' : '100%' }} >
+            <Flex direction="column" gap="3" >
+              <Flex direction="row" justify="center" align="center">
+                <Text size="1" color="gray">Action Editor</Text>
+              </Flex>
+              {/* Hide the prev / next buttons on mobile (they are in a widget in the editor) */}
+              <Flex direction="row" justify="between" align="center" style={{ display: isDesktop ? 'flex' : 'none' }}>
+                <Tooltip content="You can also travel BACK in time!" color="mint" open={currentActionIndex === 2} style={{
                   backgroundColor: 'mint',
                   // hide on mobile
                   display: isDesktop ? 'block' : 'none'
                 }}>
-                <Button
-                  variant="soft"
-                  disabled={currentActionIndex === 0}
-                  onClick={() => setCurrentActionIndex(currentActionIndex - 1)}
-                >
-                  Previous
-                </Button>
-              </Tooltip>
-              <Text>Action <Text color="mint" weight="bold">{currentActionIndex + 1}</Text> of {actions.length}</Text>
-              <Tooltip content="Click me to get started!" color="mint" open={currentActionIndex === 0} style={{
+                  <Button
+                    variant="soft"
+                    disabled={currentActionIndex === 0}
+                    onClick={() => setCurrentActionIndex(currentActionIndex - 1)}
+                  >
+                    Previous
+                  </Button>
+                </Tooltip>
+                <Text>Action <Text color="mint" weight="bold">{currentActionIndex + 1}</Text> of {actions.length}</Text>
+                <Tooltip content="🚀 Click me to get started!" color="mint" open={currentActionIndex === 0} style={{
                   backgroundColor: 'mint',
                   // hide on mobile
                   display: isDesktop ? 'block' : 'none'
                 }}>
-                <Button
-                  size={currentActionIndex === 0 ? "4" : "2"}
-                  variant={currentActionIndex === 0 ? "solid" : "soft"}
-                  disabled={currentActionIndex === actions.length - 1}
-                  onClick={() => setCurrentActionIndex(currentActionIndex + 1)}
-                >
-                  Next
-                </Button>
-              </Tooltip>
-            </Flex>
-
-            <Box
-              style={{
-                padding: '12px',
-                borderRadius: '4px',
-
-                overflowX: 'auto',
-                height: '100%'
-              }}
-            >
-              <Flex my="3" gap="3" direction="row" justify="start" align="center">
-                <Text size="1">
-                  Name:
-                </Text>
-                {nameBadge()}
-              </Flex>
-              <Flex my="3" gap="3" direction="row" justify="start" align="center" mb="9">
-                <Text size="1">
-                  Value:
-                </Text>
-                {actions[currentActionIndex].name.startsWith("editor-") ? (
-                  <Badge size="1" color="gray" style={{ whiteSpace: 'pre-wrap' }}>
-                    <Box mt="1" style={{ fontFamily: 'monospace' }}>
-                      {formatValue(actions[currentActionIndex].value)}
-                    </Box>
-                  </Badge>
-                ) :
-                  (
-                    <Code size="2" color="gray">{actions[currentActionIndex].value}</Code>
-                  )}
-              </Flex>
-              <Flex my="3" gap="3" direction="row" justify="start" align="center" mt="9">
-                <Text size="1">
-                  <InfoCircledIcon />
-                </Text>
-                <Tooltip content="These notes also provide useful information" color="mint" open={currentActionIndex === 4} style={{
-                    backgroundColor: 'mint',
-                    // hide on mobile
-                    display: isDesktop ? 'block' : 'none'
-                  }}>                  
-                  <Text size="1">
-                    {hintText}
-                  </Text>
+                  <Button
+                    size={currentActionIndex === 0 ? "4" : "2"}
+                    variant={currentActionIndex === 0 ? "solid" : "soft"}
+                    disabled={currentActionIndex === actions.length - 1}
+                    onClick={() => setCurrentActionIndex(currentActionIndex + 1)}
+                  >
+                    Next
+                  </Button>
                 </Tooltip>
               </Flex>
 
@@ -444,17 +402,63 @@ export const areEqual = (a: number, b: number): boolean => {
 
         {/* Right side - Editor */}
         <Card style={{ width: isDesktop ? '60%' : '100%' }}>
-        <Tooltip content="Perfect! Your video is ready!" color="mint" open={videoUrl !== ""} style={{ backgroundColor: 'mint' }}>
-          <Box>
-            <Flex mb="3" direction="row" justify="center" align="center">
-              <Text size="1" color="gray">{videoUrl === "" ? 'Lesson' : 'Video'} Preview</Text>
-            </Flex>
-            <Tooltip content="Nice, we've now added our comment in the editor!" color="mint" open={currentActionIndex === 3} style={{ backgroundColor: 'mint' }}>
-              <Card>
-                {videoUrl === "" ? (
-                  <>
-                    <Flex gap="3" direction="row" align="center">
-                      <Tooltip content="Nice, we've just changed the filename." color="mint" open={currentActionIndex === 1} style={{ backgroundColor: 'mint' }}>
+          <Tooltip content="Perfect! Your video is ready! We include realistic typo animations by default! 😉 Check it out!" color="mint" open={videoUrl !== ""} style={{ backgroundColor: 'mint' }}>
+            <Box>
+              <Flex mb="3" direction="row" justify="center" align="center">
+                <Text size="1" color="gray">{videoUrl === "" ? 'Lesson' : 'Video'} Preview</Text>
+              </Flex>
+              <Tooltip content="We've just added our comment in the editor!" color="mint" open={currentActionIndex === 3} style={{ backgroundColor: 'mint' }}>
+                <Card>
+                  {videoUrl === "" ? (
+                    <>
+                      <Flex gap="3" direction="row" align="center">
+                        <Tooltip content="Nice, we've just created a file in the editor." color="mint" open={currentActionIndex === 1} style={{ backgroundColor: 'mint' }}>
+                          <Code color="gray">
+                          
+                            {currentActionIndex === 0 ? '<editor tab>' : "areEqual.ts"}
+                          </Code>
+                        </Tooltip>
+                        {/* in Mobile view - small overlay of steps with buttons */}
+                        <Box
+                          ml="auto"
+                          display={{ initial: 'block', sm: 'none' }}
+                          pb="4"
+                        >
+                          <Text size="1">Action {currentActionIndex + 1} of {actions.length}</Text>
+                          <Flex gap="1" direction="row" align="center">
+                            <Tooltip content="You can also travel BACK in time!" color="mint" open={currentActionIndex === 2} style={{
+                              backgroundColor: 'mint',
+                              // show on mobile
+                              display: isDesktop ? 'none' : 'block'
+                            }}>
+                              <Button
+                                size="1"
+                                variant="soft"
+                                disabled={currentActionIndex === 0}
+                                onClick={() => setCurrentActionIndex(currentActionIndex - 1)}
+                              >
+                                Previous
+                              </Button>
+                            </Tooltip>
+                            <Tooltip content="🚀 Click me to get started!" color="mint" open={currentActionIndex === 0} style={{
+                              backgroundColor: 'mint',
+                              // show on mobile
+                              display: isDesktop ? 'none' : 'block'
+                            }}>
+                              <Button
+                                size={currentActionIndex === 0 ? "3" : "1"}
+                                variant={currentActionIndex === 0 ? "solid" : "soft"}
+                                disabled={currentActionIndex === actions.length - 1}
+                                onClick={() => setCurrentActionIndex(currentActionIndex + 1)}
+                              >
+                                Next
+                              </Button>
+                            </Tooltip>
+                          </Flex>
+                        </Box>
+                      </Flex>
+                      {/* Add YouTube style comment overlay */}
+                      {isAuthorAction(actions[currentActionIndex]) && (
                         <Box
                           style={{
                             position: 'absolute',
@@ -476,25 +480,37 @@ export const areEqual = (a: number, b: number): boolean => {
                         </Box>
                       )}
 
-                    <Editor
-                      theme={theme === "light" ? "vs" : "vs-dark"}
-                      path="areEqual.ts"
-                      width={videoUrl !== "" ? 0 : "100%"}
-                      height={videoUrl !== "" ? 0 : editorElementHeight}
-                      defaultLanguage="typescript"
-                      language="typescript"
-                      value={code}
-                      options={{
-                        minimap: { enabled: false },
-                        scrollBeyondLastLine: false,
-                        fontFamily: "Fira Code",
-                        fontSize: 13,
-                        fontLigatures: true,
-                        lineNumbers: "off",
-                        folding: true,
-                        automaticLayout: true,
-                        autoIndent: "full",
-                        readOnly: true
+                      <Editor
+                        theme={theme === "light" ? "vs" : "vs-dark"}
+                        path="areEqual.ts"
+                        width={videoUrl !== "" ? 0 : "100%"}
+                        height={videoUrl !== "" ? 0 : editorElementHeight}
+                        defaultLanguage="typescript"
+                        language="typescript"
+                        value={code}
+                        options={{
+                          minimap: { enabled: false },
+                          scrollBeyondLastLine: false,
+                          fontFamily: "Fira Code",
+                          fontSize: 13,
+                          fontLigatures: true,
+                          lineNumbers: "off",
+                          folding: true,
+                          automaticLayout: true,
+                          autoIndent: "full",
+                          readOnly: true
+                        }}
+                        onMount={handleOnMount}
+                      />
+                    </>
+                  ) : (
+                    <video
+                      crossOrigin="anonymous"
+                      src={videoUrl}
+                      controls
+                      style={{
+                        width: editorElementWidth,
+                        height: editorElementHeight,
                       }}
                     />
                   )}
@@ -514,7 +530,7 @@ export const areEqual = (a: number, b: number): boolean => {
 
           <Flex mt="3" direction="row" justify="between" align="center">
             <Flex gap="3" direction="row" align="center">
-              <Tooltip content="🎥 Try out our coveted 'export to video' option!" color="mint" open={currentActionIndex === 8} style={{ backgroundColor: 'mint' }}>
+              <Tooltip content="🎥 Yes, that's right, you can export to video!" color="mint" open={currentActionIndex === 8} style={{ backgroundColor: 'mint' }}>
                 <Button onClick={onClickGenerateVideo} disabled={isGeneratingVideo || videoGenerated}>
                   {isGeneratingVideo ? "Generating..." : videoGenerated ? "Generated!" : "Generate Video"}
                 </Button>

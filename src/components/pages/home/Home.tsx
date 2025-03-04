@@ -79,7 +79,9 @@ export function Home() {
                 borderRadius: 'var(--radius-4)',
                 padding: 'var(--space-2) var(--space-4)'
               }}>
-              <Text size="2" weight="bold">👆 The editor in <Link href="https://studio.codevideo.io" target="_blank">CodeVideo Studio</Link> is far more powerful than this example and supports file explorer, terminal, and even mouse actions.</Text>
+                <Flex>
+              <Text align="center" size="2" weight="bold">👆 The editor in <Link href="https://studio.codevideo.io" target="_blank">CodeVideo Studio</Link> is far more powerful than this example and supports file explorer, terminal, and even mouse actions.</Text>
+              </Flex>
             </Box>
           </Flex>
         </Container>
