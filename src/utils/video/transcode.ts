@@ -1,6 +1,9 @@
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { toBlobURL } from "@ffmpeg/util";
 
+const coreVersion = "0.12.10";
+const baseURL = `https://unpkg.com/@ffmpeg/core@${coreVersion}/dist/umd`;
+
 export const transcode = async (
   recording: Uint8Array,
   width: number,
@@ -8,7 +11,7 @@ export const transcode = async (
   setVideoUrl: (videoUrl: string) => void
 ) => {
   const ffmpeg = new FFmpeg();
-  const baseURL = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
+  // const baseURL = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
   if (!ffmpeg.loaded) {
     await ffmpeg.load({
       coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, "text/javascript"),

@@ -1,9 +1,9 @@
 import { recordCanvas } from "../canvas/recordCanvas";
 import { transcode } from "./transcode";
 import { prepareCanvas } from "../canvas/prepareCanvas";
-import MimicTypos from "../../enums/MimicTypos";
 import { ArrayOfTwoOrMore } from "../../types/ArrayOfTwoOrMore";
 import Engine from "../../enums/Engine";
+import { MimicTypos } from "@fullstackcraftllc/codevideo-frontend";
 
 export const codeToVideo = async (
   width: number,

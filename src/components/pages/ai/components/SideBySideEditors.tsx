@@ -6,13 +6,11 @@ import {
   Heading,
   RadioGroup,
   Select,
-  Switch,
   Text,
 } from "@radix-ui/themes";
 import * as React from "react";
 import { SimpleEditor } from "../../../shared/SimpleEditor";
 import { useEffect, useState } from "react";
-import { ActionEditor } from "../../../shared/ActionEditor";
 import { IAction } from "@fullstackcraftllc/codevideo-types";
 import {
   cSharpExampleSteps,
@@ -21,12 +19,11 @@ import {
   pythonExampleSteps,
 } from "../examples";
 import { CodeCheckDialog } from "./CodeCheckDialog";
-// import {
-//   MimicTypos,
-// } from "@fullstackcraftllc/codevideo-frontend";
+import {
+  MimicTypos,
+} from "@fullstackcraftllc/codevideo-frontend";
 import { HiddenCanvas } from "../../../shared/HiddenCanvas";
 import { codeToVideo } from "../../../../utils/video/codeToVideo";
-import MimicTypos from "../../../../enums/MimicTypos";
 import Engine from "../../../../enums/Engine";
 import { VirtualEditor } from "@fullstackcraftllc/codevideo-virtual-editor";
 import mixpanel from "mixpanel-browser";

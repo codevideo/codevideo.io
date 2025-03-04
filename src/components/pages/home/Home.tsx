@@ -80,7 +80,7 @@ export function Home() {
                 borderRadius: 'var(--radius-4)',
                 padding: 'var(--space-2) var(--space-4)'
               }}>
-              <Text size="2" weight="bold">👆 The editor in <Link href="https://studio.codevideo.io" target="_blank">CodeVideo Studio</Link> is far more complex than this example and supports file explorer, terminal, and even mouse actions.</Text>
+              <Text size="2" weight="bold">👆 The editor in <Link href="https://studio.codevideo.io" target="_blank">CodeVideo Studio</Link> is far more powerful than this example and supports file explorer, terminal, and even mouse actions.</Text>
             </Box>
           </Flex>
         </Container>
@@ -241,7 +241,7 @@ export function Home() {
           <Heading size="8" align="center" mb="8">Simple, Token-Based Pricing</Heading>
           <Flex direction="column" align="center" gap="4">
             <Text size="4" color="gray" align="center" mb="8">
-              Purchase tokens and use them for any type of export. The more complex the output, the more tokens required.
+              Purchase tokens and use them for any type of export. The more intensive the output, the more tokens required.
             </Text>
           </Flex>
 
@@ -256,7 +256,7 @@ export function Home() {
 
           <Box>
             <Heading size="4" align="center" mb="4">Token Usage Per Export</Heading>
-            <Grid columns={{ initial: "1", sm: "2", lg: "4" }} gap="4">
+            <Grid columns={{ initial: "1", sm: "2", md: "3" }} gap="6" width="100%">
               {tokenCosts.map(cost => (
                 <Card key={cost.format}>
                   <Flex direction="column" align="center" gap="2" p="4">
@@ -381,7 +381,15 @@ const tokenCosts = [
     tokens: "2"
   },
   {
+    format: "React",
+    tokens: "3"
+  },
+  {
     format: "PDF",
+    tokens: "5"
+  },
+  {
+    format: "PPTX",
     tokens: "5"
   },
   {

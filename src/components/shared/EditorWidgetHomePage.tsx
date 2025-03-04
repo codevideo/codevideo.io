@@ -356,7 +356,7 @@ export const areEqual = (a: number, b: number): boolean => {
                   </Button>
                 </Tooltip>
                 <Text>Action <Text color="mint" weight="bold">{currentActionIndex + 1}</Text> of {actions.length}</Text>
-                <Tooltip content="Click me to get started!" color="mint" open={currentActionIndex === 0} style={{
+                <Tooltip content="🚀 Click me to get started!" color="mint" open={currentActionIndex === 0} style={{
                   backgroundColor: 'mint',
                   // hide on mobile
                   display: isDesktop ? 'block' : 'none'
@@ -406,7 +406,7 @@ export const areEqual = (a: number, b: number): boolean => {
                   <Text size="1">
                     <InfoCircledIcon />
                   </Text>
-                  <Tooltip content="These notes also provide useful information" color="mint" open={currentActionIndex === 4} style={{
+                  <Tooltip content={<>These notes also provide useful information<br/>about this example and the CodeVideo ecosystem.</>} color="mint" open={currentActionIndex === 4} style={{
                     backgroundColor: 'mint',
                     // hide on mobile
                     display: isDesktop ? 'block' : 'none'
@@ -423,17 +423,17 @@ export const areEqual = (a: number, b: number): boolean => {
 
         {/* Right side - Editor */}
         <Card style={{ width: isDesktop ? '60%' : '100%' }}>
-          <Tooltip content="Perfect! Your video is ready!" color="mint" open={videoUrl !== ""} style={{ backgroundColor: 'mint' }}>
+          <Tooltip content="Perfect! Your video is ready! We include realistic typo animations by default! 😉 Check it out!" color="mint" open={videoUrl !== ""} style={{ backgroundColor: 'mint' }}>
             <Box>
               <Flex mb="3" direction="row" justify="center" align="center">
                 <Text size="1" color="gray">{videoUrl === "" ? 'Lesson' : 'Video'} Preview</Text>
               </Flex>
-              <Tooltip content="Nice, we've now added our comment in the editor!" color="mint" open={currentActionIndex === 3} style={{ backgroundColor: 'mint' }}>
+              <Tooltip content="We've just added our comment in the editor!" color="mint" open={currentActionIndex === 3} style={{ backgroundColor: 'mint' }}>
                 <Card>
                   {videoUrl === "" ? (
                     <>
                       <Flex gap="3" direction="row" align="center">
-                        <Tooltip content="Nice, we've just changed the filename." color="mint" open={currentActionIndex === 1} style={{ backgroundColor: 'mint' }}>
+                        <Tooltip content="Nice, we've just created a file in the editor." color="mint" open={currentActionIndex === 1} style={{ backgroundColor: 'mint' }}>
                           <Box
                             style={{
                               backgroundColor: "mint",
@@ -465,7 +465,7 @@ export const areEqual = (a: number, b: number): boolean => {
                                 Previous
                               </Button>
                             </Tooltip>
-                            <Tooltip content="Click me to get started!" color="mint" open={currentActionIndex === 0} style={{
+                            <Tooltip content="🚀 Click me to get started!" color="mint" open={currentActionIndex === 0} style={{
                               backgroundColor: 'mint',
                               // show on mobile
                               display: isDesktop ? 'none' : 'block'
@@ -551,11 +551,11 @@ export const areEqual = (a: number, b: number): boolean => {
 
       </Flex>
       <Card>
-        <Tooltip content={<>Even though we're not fully through the example,<br />we can still export the full lesson in any format since<br />CodeVideo actions are totally time-travellable.<br />Give it a try!</>} color="mint" open={currentActionIndex === 5} style={{ backgroundColor: 'mint' }}>
+        <Tooltip content={<>Even though we're not fully through the example,<br />we can already export the full lesson in any format since<br />CodeVideo actions are totally time-travellable.<br />Give it a try!</>} color="mint" open={currentActionIndex === 5} style={{ backgroundColor: 'mint' }}>
 
           <Flex mt="3" direction="row" justify="between" align="center">
             <Flex gap="3" direction="row" align="center">
-              <Tooltip content="Yes, our coveted 'export to video' option!" color="mint" open={currentActionIndex === 8} style={{ backgroundColor: 'mint' }}>
+              <Tooltip content="🎥 Try out our coveted 'export to video' option!" color="mint" open={currentActionIndex === 8} style={{ backgroundColor: 'mint' }}>
                 <Button onClick={onClickGenerateVideo} disabled={isGeneratingVideo || videoGenerated}>
                   {isGeneratingVideo ? "Generating..." : videoGenerated ? "Generated!" : "Generate Video"}
                 </Button>
