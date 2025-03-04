@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ArrayOfTwoOrMore } from "../types/ArrayOfTwoOrMore";
 import Engine from "../enums/Engine";
-// import { MimicTypos } from "@fullstackcraftllc/codevideo-frontend";
+import { MimicTypos } from "@fullstackcraftllc/codevideo-frontend";
 
 interface VideoState {
   height: number;
   width: number;
   gradientColors: ArrayOfTwoOrMore<string>;
-  mimicTypos: any
+  mimicTypos: MimicTypos
   engine: Engine
 }
 
@@ -15,7 +15,7 @@ const initialState: VideoState = {
   width: 1920,
   height: 1080,
   gradientColors: ["#91ffd9", "#f5ff97"],
-  mimicTypos: 'NEVER',
+  mimicTypos: MimicTypos.SOMETIMES,
   engine: Engine.FRONTEND
 };
 

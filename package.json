@@ -14,8 +14,8 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@ffmpeg/core": "^0.11.0",
-    "@ffmpeg/ffmpeg": "^0.12.10",
+    "@ffmpeg/core": "^0.12.10",
+    "@ffmpeg/ffmpeg": "^0.12.15",
     "@fullstackcraftllc/codevideo-doc-gen": "^0.0.11",
     "@fullstackcraftllc/codevideo-frontend": "^1.2.0",
     "@fullstackcraftllc/codevideo-types": "^2.0.17",
@@ -39,7 +39,6 @@
     "gatsby-transformer-sharp": "^5.2.0",
     "highlight.js": "^11.11.1",
     "jszip": "^3.10.1",
-    "lucide-react": "^0.475.0",
     "marked": "^15.0.7",
     "marked-highlight": "^2.2.1",
     "mixpanel-browser": "^2.55.1",
