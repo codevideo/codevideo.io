@@ -9,7 +9,6 @@ import { PricingSection } from "./components/PricingSection";
 export function Home() {
   return (
     <Box>
-
       {/* Hero Section */}
       <Section size="3" mt="9" pt="9">
         <Container>
