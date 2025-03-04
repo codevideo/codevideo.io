@@ -10,6 +10,7 @@ import { useAppSelector } from "../../hooks/useAppSelector";
 const Layout = (props: PropsWithChildren) => {
   const { children } = props;
   const { theme } = useAppSelector((state) => state.editor);
+
   usePageRedirects();
 
   // for firefox to work with speech synthesis, need to load the voices 2x

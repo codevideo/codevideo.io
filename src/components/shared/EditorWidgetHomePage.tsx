@@ -413,14 +413,10 @@ export const areEqual = (a: number, b: number): boolean => {
                     <>
                       <Flex gap="3" direction="row" align="center">
                         <Tooltip content="Nice, we've just created a file in the editor." color="mint" open={currentActionIndex === 1} style={{ backgroundColor: 'mint' }}>
-                          <Box
-                            style={{
-                              backgroundColor: "mint",
-                              fontFamily: "Fira Code"
-                            }}
-                          >
+                          <Code color="gray">
+                          
                             {currentActionIndex === 0 ? '<editor tab>' : "areEqual.ts"}
-                          </Box>
+                          </Code>
                         </Tooltip>
                         {/* in Mobile view - small overlay of steps with buttons */}
                         <Box
@@ -534,7 +530,7 @@ export const areEqual = (a: number, b: number): boolean => {
 
           <Flex mt="3" direction="row" justify="between" align="center">
             <Flex gap="3" direction="row" align="center">
-              <Tooltip content="🎥 Try out our coveted 'export to video' option!" color="mint" open={currentActionIndex === 8} style={{ backgroundColor: 'mint' }}>
+              <Tooltip content="🎥 Yes, that's right, you can export to video!" color="mint" open={currentActionIndex === 8} style={{ backgroundColor: 'mint' }}>
                 <Button onClick={onClickGenerateVideo} disabled={isGeneratingVideo || videoGenerated}>
                   {isGeneratingVideo ? "Generating..." : videoGenerated ? "Generated!" : "Generate Video"}
                 </Button>

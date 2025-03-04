@@ -9,6 +9,7 @@ import {
   IconButton,
   Tooltip,
 } from "@radix-ui/themes";
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 
 // Two main ways to use this component:
 // 1. With custom trigger elements (pass children)
@@ -26,28 +27,28 @@ export interface ICouponDialogProps {
   // Optional button color
   buttonColor?: "mint" | "indigo" | "cyan" | "gray" | "tomato";
   // Optional custom children to use as trigger
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export function CouponDialog(props: ICouponDialogProps) {
-  const { 
-    onOpen, 
-    onClose, 
-    buttonText = "Get Discount", 
+  const {
+    onOpen,
+    onClose,
+    buttonText = "Get Discount",
     buttonVariant = "soft",
     buttonColor = "mint",
-    children 
+    children
   } = props;
-  
-  const [copied, setCopied] = React.useState(false);
-  const copyTimeout = React.useRef<NodeJS.Timeout | null>(null);
+
+  const [copied, setCopied] = useState(false);
+  const copyTimeout = useRef<NodeJS.Timeout | null>(null);
   const couponCode = "SAVE75";
 
-  const handleOpen = React.useCallback(() => {
+  const handleOpen = useCallback(() => {
     if (onOpen) onOpen();
   }, [onOpen]);
 
-  const handleClose = React.useCallback(() => {
+  const handleClose = useCallback(() => {
     if (onClose) onClose();
     // Reset copied state when dialog closes
     setCopied(false);
@@ -57,25 +58,27 @@ export function CouponDialog(props: ICouponDialogProps) {
     }
   }, [onClose]);
 
-  const handleCopyCode = React.useCallback(() => {
-    navigator.clipboard.writeText(couponCode).then(() => {
-      setCopied(true);
-      
-      // Clear any existing timeout
-      if (copyTimeout.current) {
-        clearTimeout(copyTimeout.current);
-      }
-      
-      // Reset copied state after 2 seconds
-      copyTimeout.current = setTimeout(() => {
-        setCopied(false);
-        copyTimeout.current = null;
-      }, 2000);
-    });
+  const handleCopyCode = useCallback(() => {
+    if (typeof window !== "undefined") {
+      navigator.clipboard.writeText(couponCode).then(() => {
+        setCopied(true);
+
+        // Clear any existing timeout
+        if (copyTimeout.current) {
+          clearTimeout(copyTimeout.current);
+        }
+
+        // Reset copied state after 2 seconds
+        copyTimeout.current = setTimeout(() => {
+          setCopied(false);
+          copyTimeout.current = null;
+        }, 2000);
+      });
+    }
   }, [couponCode]);
 
   // Clean up timeout on unmount
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       if (copyTimeout.current) {
         clearTimeout(copyTimeout.current);
@@ -99,21 +102,21 @@ export function CouponDialog(props: ICouponDialogProps) {
           </Button>
         </AlertDialog.Trigger>
       )}
-      
+
       <AlertDialog.Content>
         <Flex direction="column" gap="4" align="center" justify="center">
           <AlertDialog.Title size="6" align="center">
             Easter Egg Unlocked: Early Adopter Discount!
           </AlertDialog.Title>
-          
+
           <AlertDialog.Description size="4" align="center">
-            We suck and don't have a full checkout yet. Since this is super annoying but you're still interested in being an early adopter, 
+            We suck and don't have a full checkout yet. Since this is super annoying but you're still interested in being an early adopter,
             we're happy to give you our 75% off code for when we launch!
           </AlertDialog.Description>
-          
-          <Box 
-            p="4" 
-            style={{ 
+
+          <Box
+            p="4"
+            style={{
               background: "linear-gradient(315deg, #008a5c 0%, #295244 100%)",
               borderRadius: 8,
               width: "100%"
@@ -123,12 +126,12 @@ export function CouponDialog(props: ICouponDialogProps) {
               <Box /> {/* Spacer for visual balance */}
               <Code size="5" variant="ghost" style={{ color: "white" }}>{couponCode}</Code>
               <Tooltip content={copied ? "Copied!" : "Copy to clipboard"} open={copied ? true : undefined}>
-                <IconButton 
-                  variant="ghost" 
-                  color="gray" 
+                <IconButton
+                  variant="ghost"
+                  color="gray"
                   onClick={handleCopyCode}
-                  style={{ 
-                    color: "white", 
+                  style={{
+                    color: "white",
                     opacity: copied ? 1 : 0.8,
                     transition: "opacity 0.2s ease-in-out"
                   }}
@@ -147,7 +150,7 @@ export function CouponDialog(props: ICouponDialogProps) {
           <AlertDialog.Description size="4" align="center">
             Keep this code handy and we guarantee it will be valid when we launch!
           </AlertDialog.Description>
-          
+
           <Flex gap="3" justify="center" mt="2">
             <AlertDialog.Action>
               <Button variant="solid" color="mint">
@@ -182,7 +185,7 @@ function CheckIcon() {
 // Utility component to create a trigger for the CouponDialog
 export interface ICouponDialogTriggerProps {
   // The button text
-  children: React.ReactNode;
+  children: ReactNode;
   // Optional button variant
   variant?: "solid" | "soft" | "outline" | "ghost";
   // Optional button color
@@ -195,7 +198,7 @@ export interface ICouponDialogTriggerProps {
 
 export function CouponDialogTrigger(props: ICouponDialogTriggerProps) {
   const { children, variant = "soft", color = "mint", onOpen, onClose } = props;
-  
+
   return (
     <CouponDialog onOpen={onOpen} onClose={onClose}>
       <Button variant={variant} color={color}>
