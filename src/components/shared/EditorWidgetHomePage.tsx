@@ -8,7 +8,7 @@ import { codeToVideo } from "../../utils/video/codeToVideo";
 import { AdvancedVideoOptionsDialog } from "./AdvancedVideoOptionsDialog";
 import { Badge, Box, Button, Card, Code, Flex, Heading, Text, Tooltip } from "@radix-ui/themes";
 import { IAction, isAuthorAction } from "@fullstackcraftllc/codevideo-types";
-import { generateMarkdownFromActions, generateHtmlFromActions, generatePdfFromActions, generateJsonFromActions } from '@fullstackcraftllc/codevideo-doc-gen';
+import { generateMarkdownFromActions, generateHtmlFromActions, generatePdfFromActions, generateJsonFromActions, generatePptxFromActions } from '@fullstackcraftllc/codevideo-doc-gen';
 import { VirtualEditor } from "@fullstackcraftllc/codevideo-virtual-editor";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { EditorOverlay } from "./EditorOverlay";
@@ -17,41 +17,6 @@ import { useIsDesktop } from "../../hooks/useIsDesktop";
 
 // use local static files for vscode monaco editor
 loader.config({ paths: { vs: "/vs" } });
-
-
-monaco.editor.defineTheme("Monokai", {
-  base: "vs-dark",
-  inherit: true,
-  rules: [
-    // Keywords and operators
-    { token: 'keyword', foreground: 'F92672' },         // export, const, return
-    { token: 'type', foreground: '66D9EF' },           // boolean, number, string
-    { token: 'identifier', foreground: 'F8F8F2' },     // variable names
-    { token: 'delimiter', foreground: 'F8F8F2' },      // brackets, parentheses
-    { token: 'string', foreground: 'E6DB74' },         // string literals
-    { token: 'number', foreground: 'AE81FF' },         // numeric literals
-    { token: 'comment', foreground: '88846F' },        // comments
-
-    // TypeScript specific
-    { token: 'delimiter.parenthesis', foreground: 'F8F8F2' },
-    { token: 'delimiter.bracket', foreground: 'F8F8F2' },
-    { token: 'delimiter.array', foreground: 'F8F8F2' },
-    { token: 'operator', foreground: 'F92672' },       // =>, ===
-    { token: 'function', foreground: '66D9EF' },       // function names
-
-    // JSDoc
-    { token: 'comment.doc', foreground: '88846F' },
-    { token: 'comment.doc.tag', foreground: '66D9EF' },
-    { token: 'comment.doc.param', foreground: 'FD971F' },
-  ],
-  colors: {
-    'editor.background': '#272822',
-    'editor.foreground': '#F8F8F2',
-    'editorLineNumber.foreground': '#88846F',
-    'editor.selectionBackground': '#49483E',
-    'editor.wordHighlightBackground': '#49483E',
-  }
-});
 
 export function EditorWidgetHomePage() {
   const { theme } = useAppSelector((state) => state.editor);
@@ -131,6 +96,8 @@ export const areEqual = (a: number, b: number): boolean => {
   const [markdownGenerated, setMarkdownGenerated] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [pdfGenerated, setPdfGenerated] = useState(false);
+  const [isGeneratingPPTX, setIsGeneratingPPTX] = useState(false);
+  const [pptxGenerated, setPPTXGenerated] = useState(false);
   const [isGeneratingHTML, setIsGeneratingHTML] = useState(false);
   const [htmlGenerated, setHtmlGenerated] = useState(false);
   const [isGeneratingJson, setIsGeneratingJson] = useState(false);
@@ -214,6 +181,18 @@ export const areEqual = (a: number, b: number): boolean => {
 
     setIsGeneratingPDF(false);
     setPdfGenerated(true);
+  }
+
+  const onClickGeneratePPTX = async () => {
+    mixpanel.track("Generate PPTX Homepage");
+    setPPTXGenerated(false);
+    setIsGeneratingPPTX(true);
+
+    // generate pptx using codevideo-doc-gen
+    await generatePptxFromActions(actions);
+
+    setIsGeneratingPPTX(false);
+    setPPTXGenerated(true);
   }
 
   const onClickGenerateHTML = async () => {
@@ -596,6 +575,19 @@ export const areEqual = (a: number, b: number): boolean => {
             </Button>
             <Code>{"<"}- get a PDF!</Code>
             {!pdfGenerated && isGeneratingPDF && (
+              <Button color="crimson" variant="soft" onClick={onClickCancel}>
+                Cancel
+              </Button>
+            )}
+          </Flex>
+        </Flex>
+        <Flex direction="row" justify="between" align="center">
+          <Flex gap="3" direction="row" align="center" mt="3">
+            <Button onClick={onClickGeneratePPTX} disabled={isGeneratingPPTX || pptxGenerated}>
+              {isGeneratingPPTX ? "Generating..." : pptxGenerated ? "Generated!" : "Generate PPTX"}
+            </Button>
+            <Code>{"<"}- get a PPTX!</Code>
+            {!pptxGenerated && isGeneratingPPTX && (
               <Button color="crimson" variant="soft" onClick={onClickCancel}>
                 Cancel
               </Button>

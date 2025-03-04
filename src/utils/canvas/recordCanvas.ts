@@ -1,4 +1,5 @@
-import { MimicTypos } from "@fullstackcraftllc/codevideo-frontend";
+
+import MimicTypos from "../../enums/MimicTypos";
 import { animateText } from "./animateText";
 
 export const recordCanvas = async (

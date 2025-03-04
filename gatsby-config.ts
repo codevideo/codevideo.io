@@ -1,6 +1,9 @@
 import type { GatsbyConfig } from "gatsby"
 
 const config: GatsbyConfig = {
+  flags: {
+    DEV_SSR: true
+  },
   developMiddleware: app => {
     app.use((req: any, res: { set: (arg0: string, arg1: string) => void; }, next: () => void) => {
      res.set('Cross-Origin-Embedder-Policy', 'require-corp');

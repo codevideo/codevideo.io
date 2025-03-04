@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ArrayOfTwoOrMore } from "../types/ArrayOfTwoOrMore";
 import Engine from "../enums/Engine";
-import { MimicTypos } from "@fullstackcraftllc/codevideo-frontend";
+import MimicTypos from "../enums/MimicTypos";
 
 interface VideoState {
   height: number;

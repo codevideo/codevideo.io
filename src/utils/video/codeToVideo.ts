@@ -3,7 +3,7 @@ import { transcode } from "./transcode";
 import { prepareCanvas } from "../canvas/prepareCanvas";
 import { ArrayOfTwoOrMore } from "../../types/ArrayOfTwoOrMore";
 import Engine from "../../enums/Engine";
-import { MimicTypos } from "@fullstackcraftllc/codevideo-frontend";
+import MimicTypos from "../../enums/MimicTypos";
 
 export const codeToVideo = async (
   width: number,
