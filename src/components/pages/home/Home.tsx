@@ -5,6 +5,7 @@ import { ArrowRightIcon, CodeIcon, UploadIcon, VideoIcon, MagicWandIcon, Share2I
 import { Box, Button, Card, Container, Flex, Grid, Heading, Link, Section, Text } from "@radix-ui/themes";
 import { CodecademyLogo, UdemyLogo, YouTubeLogo } from "./components/Logos";
 import { PricingSection } from "./components/PricingSection";
+import mixpanel from "mixpanel-browser";
 
 export function Home() {
   return (
@@ -32,13 +33,13 @@ export function Home() {
             </Text>
             <Flex gap="4" wrap="wrap" align="center" justify="center">
               <Link href="https://studio.codevideo.io" target="_blank" >
-                <Button size="4" style={{ cursor: 'pointer' }}>
+                <Button size="4" style={{ cursor: 'pointer' }} onClick={() => mixpanel.track("Get Started Free Clicked Homepage")}>
                   Start Creating Free
                   <ArrowRightIcon />
                 </Button>
               </Link>
-              <Link href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank" >
-                <Button size="4" variant="soft" style={{ cursor: 'pointer' }}>
+              <Link href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank">
+                <Button size="4" variant="soft" style={{ cursor: 'pointer' }} onClick={() => mixpanel.track("Watch Demo Clicked Homepage")}>
                   Watch Demo
                 </Button>
               </Link>
