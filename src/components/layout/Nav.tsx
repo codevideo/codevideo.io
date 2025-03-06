@@ -2,6 +2,7 @@ import { Box, Button, Card, Container, Flex, Heading, Link } from "@radix-ui/the
 import * as React from "react";
 import { Logo } from "../shared/Logo";
 import { ThemeToggle } from "./ThemeToggle";
+import mixpanel from "mixpanel-browser";
 
 export function Nav() {
   return (
@@ -20,11 +21,11 @@ export function Nav() {
             </Flex>
             <Flex gap="4" align="center">
               <Box display={{ initial: 'none', sm: 'block' }}>
-                <Link href="https://studio.codevideo.io/pdf/CodeVideo_Framework_White_Paper.pdf" target="_blank" >
+                <Link href="https://studio.codevideo.io/pdf/CodeVideo_Framework_White_Paper.pdf" target="_blank" onClick={() => mixpanel.track("Read White Paper Clicked Homepage")}>
                   <Button color="gray" style={{cursor: 'pointer'}}>Read White Paper</Button>
                 </Link>
               </Box>
-              <Link href="https://studio.codevideo.io" target="_blank">
+              <Link href="https://studio.codevideo.io" target="_blank" onClick={() => mixpanel.track("Get Started Free Clicked Homepage")}>
                 <Button style={{cursor: 'pointer'}}>Get Started Free</Button>
               </Link>
               <ThemeToggle/>
