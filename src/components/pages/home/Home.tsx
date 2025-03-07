@@ -33,8 +33,8 @@ export function Home() {
             </Text>
             <Flex gap="4" wrap="wrap" align="center" justify="center">
               <Link href="https://studio.codevideo.io" target="_blank" >
-                <Button size="4" style={{ cursor: 'pointer' }} onClick={() => mixpanel.track("Get Started Free Clicked Homepage")}>
-                  Start Creating Free
+                <Button color="amber" size="4" style={{ cursor: 'pointer' }} onClick={() => mixpanel.track("Get Started Free Clicked Homepage")}>
+                  Start Creating With 50 Free Tokens
                   <ArrowRightIcon />
                 </Button>
               </Link>
