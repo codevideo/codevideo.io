@@ -28,7 +28,8 @@ const pricingTiers = [
             "Basic integrations",
             "Email support"
         ],
-        actionButtonText: "Get Starter"
+        actionButtonText: "Get Starter",
+        stripePaymentLink: "https://buy.stripe.com/test_bIYeYScxq1M70GkeUZ"
     },
     {
         name: "Creator",
@@ -42,7 +43,8 @@ const pricingTiers = [
             "Basic integrations",
             "Email support"
         ],
-        actionButtonText: "Get Creator"
+        actionButtonText: "Get Creator",
+        stripePaymentLink: "https://buy.stripe.com/test_9AQeYS0OI9ezcp2003"
     },
     {
         name: "Enterprise",
@@ -55,7 +57,8 @@ const pricingTiers = [
             "Custom solutions",
             "Priority support"
         ],
-        actionButtonText: "Get Enterprise"
+        actionButtonText: "Get Enterprise",
+        stripePaymentLink: "https://buy.stripe.com/test_00g5oi8ha76r0GkbIK"
     },
     {
         name: "Pay As You Go",
@@ -67,7 +70,8 @@ const pricingTiers = [
             "No commitment",
             "Tokens never expire"
         ],
-        actionButtonText: "Buy Tokens"
+        actionButtonText: "Buy Tokens",
+        stripePaymentLink: "https://buy.stripe.com/test_3cs7wq40U9ezexa5kl"
     },
     {
         name: "CodeVideo Lifetime",
@@ -79,7 +83,8 @@ const pricingTiers = [
             "All export formats",
             "No hassle with subscriptions"
         ],
-        actionButtonText: "Buy Lifetime"
+        actionButtonText: "Buy Lifetime",
+        stripePaymentLink: "https://buy.stripe.com/test_fZe7wq1SMeyTfBe288"
     }
 ];
 
@@ -169,24 +174,35 @@ export function PricingSection() {
                                 ))}
                             </Flex>
 
-                            {tier.actionButtonText === "Get Started Free" ? (
-                                <Link href="https://studio.codevideo.io" target='_blank'>
-                                    <Button
 
-                                        size="3"
-                                        variant="soft"
-                                        color="mint"
-                                    >
+
+                            {tier.stripePaymentLink ? (
+                                <Link href={tier.stripePaymentLink} target='_blank'>
+                                    <Button onClick={() => handleOnClickTier(tier.name)} size="3" variant={tier.featured ? "solid" : "soft"} color={tier.name === "CodeVideo Lifetime" ? "amber" : "mint"}>
                                         {tier.actionButtonText}
                                     </Button>
                                 </Link>
                             ) : (
+                                <>
+                                    {tier.actionButtonText === "Get Started Free" ? (
+                                        <Link href="https://studio.codevideo.io" target='_blank'>
+                                            <Button
 
-                            <CouponDialog>
-                                <Button onClick={() => handleOnClickTier(tier.name)} size="3" variant={tier.featured ? "solid" : "soft"} color={tier.name === "CodeVideo Lifetime" ? "amber" : "mint"}>
-                                    {tier.actionButtonText}
-                                </Button>
-                            </CouponDialog>
+                                                size="3"
+                                                variant="soft"
+                                                color="mint"
+                                            >
+                                                {tier.actionButtonText}
+                                            </Button>
+                                        </Link>
+                                    ) : (
+                                        <CouponDialog>
+                                            <Button onClick={() => handleOnClickTier(tier.name)} size="3" variant={tier.featured ? "solid" : "soft"} color={tier.name === "CodeVideo Lifetime" ? "amber" : "mint"}>
+                                                {tier.actionButtonText}
+                                            </Button>
+                                        </CouponDialog>
+                                    )}
+                                </>
                             )}
                         </Flex>
                     </Card>
