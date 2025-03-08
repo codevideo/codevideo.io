@@ -17,6 +17,7 @@ export function Nav() {
               <Link href="/#how-it-works">How it Works</Link>
               <Link href="/#integrations">Integrations</Link>
               <Link href="/#pricing">Pricing</Link>
+              <Link href="/blog">Blog</Link>
               <Link href="https://github.com/orgs/codevideo/repositories" target="_blank">GitHub</Link>
             </Flex>
             <Flex gap="4" align="center">

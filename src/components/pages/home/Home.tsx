@@ -6,8 +6,11 @@ import { Box, Button, Card, Container, Flex, Grid, Heading, Link, Section, Text 
 import { CodecademyLogo, UdemyLogo, YouTubeLogo } from "./components/Logos";
 import { PricingSection } from "./components/PricingSection";
 import mixpanel from "mixpanel-browser";
+import { useIsDesktop } from "../../../hooks/useIsDesktop";
 
 export function Home() {
+  const isDesktop = useIsDesktop()
+
   return (
     <Box>
       {/* Hero Section */}
@@ -34,7 +37,7 @@ export function Home() {
             <Flex gap="4" wrap="wrap" align="center" justify="center">
               <Link href="https://studio.codevideo.io" target="_blank" >
                 <Button color="amber" size="4" style={{ cursor: 'pointer' }} onClick={() => mixpanel.track("Get Started Free Clicked Homepage")}>
-                  Start Creating With 50 Free Tokens
+                  {isDesktop ? "Start Creating With 50 Free Tokens" : "Start Creating Free"}
                   <ArrowRightIcon />
                 </Button>
               </Link>
@@ -186,7 +189,7 @@ export function Home() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    background: 'var(--mint-11)'
+                    background: 'var(--mint-9)'
                   }}
                 >
                   <Text size="5" weight="bold" color="gray">{index + 1}</Text>
@@ -345,8 +348,8 @@ const steps = [
     description: "Need to fix a mistake? Add something you forgot? Edit, insert, or remove actions in the timeline instantly.",
   },
   {
-    title: "Export, Share, and Sell",
-    description: "Generate a polished video, PDF, or website showcasing your course or lesson. Any content you create belongs 100% to you.",
+    title: "Export, Share, or Sell",
+    description: "Generate a clean IDE video, PDF, website, or blog post showcasing your course or lesson. Any content you create belongs 100% to you.",
   },
 ];
 
