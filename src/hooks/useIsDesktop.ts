@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 // Custom hook to detect if viewport is desktop size
-export const useIsDesktop = (breakpoint = 768) => {
+export const useIsDesktop = (breakpoint = 800) => {
   // Initialize with server-side compatible check
   const [isDesktop, setIsDesktop] = useState(
     typeof window !== 'undefined' ? window.innerWidth > breakpoint : true
