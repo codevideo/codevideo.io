@@ -56,7 +56,7 @@ export function EditorWidgetHomePage() {
 * 
 * @param a - The first number to compare
 * @param b - The second number to compare
-* @returns True if the numbers are strictly equal, false otherwise
+* @returns true if the numbers are strictly equal, false otherwise
 */`
     },
     {
@@ -72,7 +72,7 @@ export const areEqual = (a: number, b: number): boolean => {
     },
     {
       name: "author-speak-before",
-      value: "That should be all we need to do for this 'isEqual' function. I hope you enjoyed the lesson!"
+      value: "That should be all we need to do for this 'areEqual' function. I hope you enjoyed the lesson!"
     }
   ];
 
@@ -92,6 +92,8 @@ export const areEqual = (a: number, b: number): boolean => {
   const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
   const [videoUrl, setVideoUrl] = useState("");
   const [videoGenerated, setVideoGenerated] = useState(false);
+  const [isGeneratingVideoAPI, setIsGeneratingVideoAPI] = useState(false);
+  const [videoGeneratedAPI, setVideoGeneratedAPI] = useState(false);
   const [isGeneratingMarkdown, setIsGeneratingMarkdown] = useState(false);
   const [markdownGenerated, setMarkdownGenerated] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
@@ -158,6 +160,21 @@ export const areEqual = (a: number, b: number): boolean => {
     setIsGeneratingVideo(false);
     setVideoGenerated(true);
   };
+
+  const onClickGenerateVideoAPI = async () => {
+    setVideoGeneratedAPI(false);
+    setIsGeneratingVideoAPI(true);
+    // lil marketing cheat - download the pregenerated video from /video/example.mp4
+    const link = document.createElement('a');
+    link.href = '/video/example.mp4';
+    link.setAttribute('download', 'example.mp4');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    setIsGeneratingVideoAPI(false);
+    setVideoGeneratedAPI(true);
+  }
 
   const onClickGenerateMarkdown = async () => {
     mixpanel.track("Generate Markdown Homepage");
@@ -314,91 +331,91 @@ export const areEqual = (a: number, b: number): boolean => {
         wrap={isDesktop ? "nowrap" : "wrap-reverse"}
       >
         {/* Left side - Navigation and Step Info - hidden on small screens */}
-          <Card style={{ width: isDesktop ? '40%' : '100%' }} >
-            <Flex direction="column" gap="3" >
-              <Flex direction="row" justify="center" align="center">
-                <Text size="1" color="gray">Action Editor</Text>
-              </Flex>
-              {/* Hide the prev / next buttons on mobile (they are in a widget in the editor) */}
-              <Flex direction="row" justify="between" align="center" style={{ display: isDesktop ? 'flex' : 'none' }}>
-                <Tooltip content="You can also travel BACK in time!" color="mint" open={currentActionIndex === 2} style={{
-                  backgroundColor: 'mint',
-                  // hide on mobile
-                  display: isDesktop ? 'block' : 'none'
-                }}>
-                  <Button
-                    variant="soft"
-                    disabled={currentActionIndex === 0}
-                    onClick={() => setCurrentActionIndex(currentActionIndex - 1)}
-                  >
-                    Previous
-                  </Button>
-                </Tooltip>
-                <Text>Action <Text color="mint" weight="bold">{currentActionIndex + 1}</Text> of {actions.length}</Text>
-                <Tooltip content="🚀 Click me to get started!" color="mint" open={currentActionIndex === 0} style={{
-                  backgroundColor: 'mint',
-                  // hide on mobile
-                  display: isDesktop ? 'block' : 'none'
-                }}>
-                  <Button
-                    size={currentActionIndex === 0 ? "4" : "2"}
-                    variant={currentActionIndex === 0 ? "solid" : "soft"}
-                    disabled={currentActionIndex === actions.length - 1}
-                    onClick={() => setCurrentActionIndex(currentActionIndex + 1)}
-                  >
-                    Next
-                  </Button>
-                </Tooltip>
-              </Flex>
-
-              <Box
-                style={{
-                  padding: '12px',
-                  borderRadius: '4px',
-
-                  overflowX: 'auto',
-                  height: '100%'
-                }}
-              >
-                <Flex my="3" gap="3" direction="row" justify="start" align="center">
-                  <Text size="1">
-                    Name:
-                  </Text>
-                  {nameBadge()}
-                </Flex>
-                <Flex my="3" gap="3" direction="row" justify="start" align="center" mb="9">
-                  <Text size="1">
-                    Value:
-                  </Text>
-                  {actions[currentActionIndex].name.startsWith("editor-") ? (
-                    <Badge size="1" color="gray" style={{ whiteSpace: 'pre-wrap' }}>
-                      <Box mt="1" style={{ fontFamily: 'monospace' }}>
-                        {formatValue(actions[currentActionIndex].value)}
-                      </Box>
-                    </Badge>
-                  ) :
-                    (
-                      <Code size="2" color="gray">{actions[currentActionIndex].value}</Code>
-                    )}
-                </Flex>
-                <Flex my="3" gap="3" direction="row" justify="start" align="center" mt="9">
-                  <Text size="1">
-                    <InfoCircledIcon />
-                  </Text>
-                  <Tooltip content={<>These notes also provide useful information<br/>about this example and the CodeVideo ecosystem.</>} color="mint" open={currentActionIndex === 4} style={{
-                    backgroundColor: 'mint',
-                    // hide on mobile
-                    display: isDesktop ? 'block' : 'none'
-                  }}>
-                    <Text size="1">
-                      {hintText}
-                    </Text>
-                  </Tooltip>
-                </Flex>
-              </Box>
+        <Card style={{ width: isDesktop ? '40%' : '100%' }} >
+          <Flex direction="column" gap="3" >
+            <Flex direction="row" justify="center" align="center">
+              <Text size="1" color="gray">Action Editor</Text>
             </Flex>
-          </Card>
- 
+            {/* Hide the prev / next buttons on mobile (they are in a widget in the editor) */}
+            <Flex direction="row" justify="between" align="center" style={{ display: isDesktop ? 'flex' : 'none' }}>
+              <Tooltip content="You can also travel BACK in time!" color="mint" open={currentActionIndex === 2} style={{
+                backgroundColor: 'mint',
+                // hide on mobile
+                display: isDesktop ? 'block' : 'none'
+              }}>
+                <Button
+                  variant="soft"
+                  disabled={currentActionIndex === 0}
+                  onClick={() => setCurrentActionIndex(currentActionIndex - 1)}
+                >
+                  Previous
+                </Button>
+              </Tooltip>
+              <Text>Action <Text color="mint" weight="bold">{currentActionIndex + 1}</Text> of {actions.length}</Text>
+              <Tooltip content="🚀 Click me to get started!" color="mint" open={currentActionIndex === 0} style={{
+                backgroundColor: 'mint',
+                // hide on mobile
+                display: isDesktop ? 'block' : 'none'
+              }}>
+                <Button
+                  size={currentActionIndex === 0 ? "4" : "2"}
+                  variant={currentActionIndex === 0 ? "solid" : "soft"}
+                  disabled={currentActionIndex === actions.length - 1}
+                  onClick={() => setCurrentActionIndex(currentActionIndex + 1)}
+                >
+                  Next
+                </Button>
+              </Tooltip>
+            </Flex>
+
+            <Box
+              style={{
+                padding: '12px',
+                borderRadius: '4px',
+
+                overflowX: 'auto',
+                height: '100%'
+              }}
+            >
+              <Flex my="3" gap="3" direction="row" justify="start" align="center">
+                <Text size="1">
+                  Name:
+                </Text>
+                {nameBadge()}
+              </Flex>
+              <Flex my="3" gap="3" direction="row" justify="start" align="center" mb="9">
+                <Text size="1">
+                  Value:
+                </Text>
+                {actions[currentActionIndex].name.startsWith("editor-") ? (
+                  <Badge size="1" color="gray" style={{ whiteSpace: 'pre-wrap' }}>
+                    <Box mt="1" style={{ fontFamily: 'monospace' }}>
+                      {formatValue(actions[currentActionIndex].value)}
+                    </Box>
+                  </Badge>
+                ) :
+                  (
+                    <Code size="2" color="gray">{actions[currentActionIndex].value}</Code>
+                  )}
+              </Flex>
+              <Flex my="3" gap="3" direction="row" justify="start" align="center" mt="9">
+                <Text size="1">
+                  <InfoCircledIcon />
+                </Text>
+                <Tooltip content={<>These notes also provide useful information<br />about this example and the CodeVideo ecosystem.</>} color="mint" open={currentActionIndex === 4} style={{
+                  backgroundColor: 'mint',
+                  // hide on mobile
+                  display: isDesktop ? 'block' : 'none'
+                }}>
+                  <Text size="1">
+                    {hintText}
+                  </Text>
+                </Tooltip>
+              </Flex>
+            </Box>
+          </Flex>
+        </Card>
+
 
         {/* Right side - Editor */}
         <Card style={{ width: isDesktop ? '60%' : '100%' }}>
@@ -414,7 +431,7 @@ export const areEqual = (a: number, b: number): boolean => {
                       <Flex gap="3" direction="row" align="center">
                         <Tooltip content="Nice, we've just created a file in the editor." color="mint" open={currentActionIndex === 1} style={{ backgroundColor: 'mint' }}>
                           <Code color="gray">
-                          
+
                             {currentActionIndex === 0 ? '<editor tab>' : "areEqual.ts"}
                           </Code>
                         </Tooltip>
@@ -532,25 +549,34 @@ export const areEqual = (a: number, b: number): boolean => {
             <Flex gap="3" direction="row" align="center">
               <Tooltip content="🎥 Yes, that's right, you can export to video!" color="mint" open={currentActionIndex === 8} style={{ backgroundColor: 'mint' }}>
                 <Button onClick={onClickGenerateVideo} disabled={isGeneratingVideo || videoGenerated}>
-                  {isGeneratingVideo ? "Generating..." : videoGenerated ? "Generated!" : "Generate Video"}
+                  {isGeneratingVideo ? "Generating..." : videoGenerated ? "Generated!" : "Generate Video (Web)"}
                 </Button>
               </Tooltip>
-              <Code>{"<"}- get your video!</Code>
+              <Code>{"<"}- get your video! (web)</Code>
               {videoUrl === "" && isGeneratingVideo && (
                 <Button color="crimson" variant="soft" onClick={onClickCancel}>
                   Cancel
                 </Button>
               )}
             </Flex>
+
             {/* right side is always the advanced options button, doesn't show on mobile */}
             <Flex display={{ initial: 'none', sm: 'flex' }} gap="3" direction="row" align="center">
               {showAdvancedOptionsHint && (
-                <Code>advanced video options for connoisseurs -{">"}</Code>
+                <Code>advanced video (web) options for connoisseurs -{">"}</Code>
               )}
               <AdvancedVideoOptionsDialog onClicked={onClickAdvanced} />
             </Flex>
           </Flex>
         </Tooltip>
+        <Flex gap="3" direction="row" align="center">
+          <Flex gap="3" direction="row" align="center" mt="3">
+            <Button onClick={onClickGenerateVideoAPI} disabled={isGeneratingVideoAPI || videoGeneratedAPI}>
+              {isGeneratingVideoAPI ? "Generating..." : videoGeneratedAPI ? "Generated!" : "Generate Video (API)"}
+            </Button>
+            <Code>{"<"}- get your video! (api)</Code>
+          </Flex>
+        </Flex>
         <Flex direction="row" justify="between" align="center">
           <Flex gap="3" direction="row" align="center" mt="3">
             <Button onClick={onClickGenerateMarkdown} disabled={isGeneratingMarkdown || markdownGenerated}>
