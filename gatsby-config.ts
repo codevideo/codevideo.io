@@ -40,6 +40,16 @@ const config: GatsbyConfig = {
         icon: `src/images/favicon.svg`,
       },
     },
+    {
+      resolve: 'gatsby-transformer-remark'
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'content',
+        path: `${__dirname}/src/content`
+      }
+    },
     `gatsby-plugin-offline`,
     `gatsby-plugin-sass`
   ],
