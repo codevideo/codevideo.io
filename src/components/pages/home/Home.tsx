@@ -41,7 +41,7 @@ export function Home() {
                   <ArrowRightIcon />
                 </Button>
               </Link>
-              <Link href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank">
+              <Link href="https://youtu.be/4nyuhWF6SS0" target="_blank">
                 <Button size="4" variant="soft" style={{ cursor: 'pointer' }} onClick={() => mixpanel.track("Watch Demo Clicked Homepage")}>
                   Watch Demo
                 </Button>
