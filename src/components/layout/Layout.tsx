@@ -7,8 +7,12 @@ import { Flex, Theme } from "@radix-ui/themes";
 import { SVGBackground } from "./SvgBackground";
 import { useAppSelector } from "../../hooks/useAppSelector";
 
-const Layout = (props: PropsWithChildren) => {
-  const { children } = props;
+export interface ILayoutProps {
+  opacity?: string;
+}
+
+const Layout = (props: PropsWithChildren<ILayoutProps>) => {
+  const { children, opacity } = props;
   const { theme } = useAppSelector((state) => state.editor);
 
   usePageRedirects();
@@ -46,7 +50,7 @@ const Layout = (props: PropsWithChildren) => {
       panelBackground="translucent"
       radius="large"
     >
-      <SVGBackground />
+      <SVGBackground opacity={opacity}/>
       <Flex gap="3" p="3" direction="column" justify="between">
         <Nav/>
         <main style={{marginBottom:'auto'}}>{children}</main>
