@@ -1,14 +1,17 @@
 import * as React from "react";
 
-export interface ISVGBackgroundProps {}
+export interface ISVGBackgroundProps {
+  opacity?: string;
+}
 
 export function SVGBackground(props: ISVGBackgroundProps) {
+  const { opacity } = props;
   return (
     <svg
       viewBox="0 0 2560 1920"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ opacity: "0.5", position: 'fixed', top: -20, left: -20, overflow: 'hidden', zIndex: -1000}}
+      style={{ opacity: opacity ? opacity : "0.5", position: 'fixed', top: -20, left: -20, overflow: 'hidden', zIndex: -1000}}
     >
       <g>
         <path

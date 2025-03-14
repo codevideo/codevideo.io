@@ -27,3 +27,29 @@
 .rotate-infinite {
   animation: rotate 2s linear infinite;
 }
+
+.blog img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.blog iframe {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.blog blockquote {
+  border-left: 5px solid var(--mint-9);
+  margin: 0;
+  padding: 0 0 0 1rem;
+  font-style: italic;
+  color: var(--mint-9);
+}
+
+.blog code {
+  background-color: var(--mint-3);
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+}

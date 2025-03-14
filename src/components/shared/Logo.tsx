@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { useState } from 'react';
 
-export function Logo() {
+export interface ILogoProps {
+  fontSize?: string;
+}
+
+export function Logo(props: ILogoProps) {
+  const { fontSize  } = props;
   const [isWiggling, setIsWiggling] = useState(false);
   
   // Toggle wiggling on mouse enter/leave
@@ -24,7 +29,7 @@ export function Logo() {
   };
   
   const iconStyle = {
-    fontSize: 24,
+    fontSize: fontSize ? `${fontSize}px` : '24px',
     fontWeight: 'bold',
     display: 'inline-block',
     transformOrigin: 'bottom center',
