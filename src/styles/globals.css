@@ -53,3 +53,7 @@
   border-radius: 0.5rem;
   padding: 0.25rem;
 }
+
+.blog a {
+  color: var(--mint-9);
+}
