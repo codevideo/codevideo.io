@@ -19,11 +19,11 @@ const BlogPostTemplate = ({ data, pageContext }: any) => {
                 <Flex direction="column" align="center" justify="center">
 
                     <Box style={{ maxWidth: '750px' }}>
-                    <Heading size="9" mb="2" color='mint'>{post.frontmatter.title}</Heading>
-                    <Heading size="6" color="gray" mb="2">{post.frontmatter.description}</Heading>
-                    <Text size="3" color="gray">
-                        <Text><i>Written by Chris {new Date(post.frontmatter.date).toLocaleDateString()}</i></Text>
-                    </Text>
+                        <Heading size="9" mb="2" color='mint'>{post.frontmatter.title}</Heading>
+                        <Heading size="6" color="gray" mb="2">{post.frontmatter.description}</Heading>
+                        <Text size="3" color="gray">
+                            <Text><i>Written by Chris {new Date(post.frontmatter.date).toLocaleDateString()}</i></Text>
+                        </Text>
                     </Box>
 
                     <Flex direction="column" justify="center" align="center">
@@ -33,7 +33,7 @@ const BlogPostTemplate = ({ data, pageContext }: any) => {
                     <Heading size="5" mt="8" mb="4">More posts:</Heading>
                     <Separator size="4" mb="5" />
 
-                    <Flex direction="column" gap="4">
+                    <Flex className='blog' direction="column" gap="4">
                         {previous && (
                             <Box>
                                 <Link to={previous.fields.slug} rel="prev">
