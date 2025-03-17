@@ -19,8 +19,8 @@ const Blog = ({ posts }: any) => {
                     const date = node.frontmatter.date;
                     return (
                         <Flex key={node.fields.slug} direction="column" gap="2">
-                            <Link to={node.fields.slug} style={{ textDecoration: 'none', color: 'var(--mint-10)' }}>
-                                <Heading size="6">{title}</Heading>
+                            <Link to={node.fields.slug} style={{ textDecoration: 'none', color: 'var(--accent-a11)' }}>
+                                <Heading size="8">{title}</Heading>
                             </Link>
                             <Text size="3">
                                 <i>{new Date(date).toLocaleDateString()}</i>
@@ -33,7 +33,7 @@ const Blog = ({ posts }: any) => {
                                 }}
                             />
                             <Box>
-                                <Button asChild variant="solid" size="2">
+                                <Button asChild variant="solid" size="2" style={{ backgroundColor: 'var(--accent-a11)' }}>
                                     <Link to={node.fields.slug}>
                                         Read More
                                     </Link>
