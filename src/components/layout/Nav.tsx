@@ -14,8 +14,6 @@ export function Nav() {
             <Flex display={{ initial: 'none', md: 'flex' }} gap="6">
               <Link href="/#features">Features</Link>
               <Link href="/#benefits">Benefits</Link>
-              <Link href="/#how-it-works">How it Works</Link>
-              <Link href="/#integrations">Integrations</Link>
               <Link href="/#pricing">Pricing</Link>
               <Link href="/blog">Blog</Link>
               <Link href="https://docs.codevideo.io">Docs</Link>
