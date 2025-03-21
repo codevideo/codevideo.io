@@ -26,7 +26,6 @@
     "@radix-ui/react-navigation-menu": "^1.1.4",
     "@radix-ui/themes": "^2.0.3",
     "@reduxjs/toolkit": "^1.9.1",
-    "@supabase/supabase-js": "^2.45.4",
     "email-validator": "^2.0.4",
     "gatsby": "^5.2.0",
     "gatsby-plugin-image": "^3.2.0",
