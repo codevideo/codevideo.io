@@ -9,15 +9,6 @@
   publish = "public"
   functions = "functions/dist"
 
-[context.dev]
-  environment = { GATSBY_API_URL = "http://localhost:3000", GATSBY_SUPABASE_URL = "https://wtghbadnylqtykzsrqtv.supabase.co", GATSBY_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind0Z2hiYWRueWxxdHlrenNycXR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzE3MzI2MjQsImV4cCI6MTk4NzMwODYyNH0.Y-KubjgwR1p8SG8XFKIIZ5VHqCrhDP0reNnAfG1NaVg" }
-
-[context.staging]
-  environment = { GATSBY_API_URL = "https://staging.api.codevideo.io", GATSBY_SUPABASE_URL = "https://wtghbadnylqtykzsrqtv.supabase.co", GATSBY_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind0Z2hiYWRueWxxdHlrenNycXR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzE3MzI2MjQsImV4cCI6MTk4NzMwODYyNH0.Y-KubjgwR1p8SG8XFKIIZ5VHqCrhDP0reNnAfG1NaVg" }
-
-[context.production]
-  environment = { GATSBY_API_URL = "https://api.codevideo.io", GATSBY_SUPABASE_URL = "https://wtghbadnylqtykzsrqtv.supabase.co", GATSBY_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind0Z2hiYWRueWxxdHlrenNycXR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzE3MzI2MjQsImV4cCI6MTk4NzMwODYyNH0.Y-KubjgwR1p8SG8XFKIIZ5VHqCrhDP0reNnAfG1NaVg" }
-
 [[headers]]
   for = "/*"
   [headers.values]

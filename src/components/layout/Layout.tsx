@@ -1,8 +1,7 @@
 import * as React from "react";
 import { Nav } from "./Nav";
 import { Footer } from "./Footer";
-import { PropsWithChildren, useEffect, useState } from "react";
-import { usePageRedirects } from "../../hooks/usePageRedirects";
+import { PropsWithChildren, useEffect } from "react";
 import { Flex, Theme } from "@radix-ui/themes";
 import { SVGBackground } from "./SvgBackground";
 import { useAppSelector } from "../../hooks/useAppSelector";
@@ -14,8 +13,6 @@ export interface ILayoutProps {
 const Layout = (props: PropsWithChildren<ILayoutProps>) => {
   const { children, opacity } = props;
   const { theme } = useAppSelector((state) => state.editor);
-
-  usePageRedirects();
 
   // for firefox to work with speech synthesis, need to load the voices 2x
   // see https://caniuse.com/?search=speechsynthesis
