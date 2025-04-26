@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { Container, Flex, Grid, Heading, Text, Button, Box } from '@radix-ui/themes';
+import { Container, Flex, Grid, Heading, Text, Button, Box, Link as RadixLink } from '@radix-ui/themes';
 import { Logo } from '../../shared/Logo';
 
 const Blog = ({ posts }: any) => {
@@ -9,7 +9,7 @@ const Blog = ({ posts }: any) => {
             <Flex direction="column" align="center" mb="6">
                 <Heading size="8" mb="3"><Logo fontSize="40" /> CodeVideo Blog</Heading>
                 <Text size="5" mb="4">
-                    Our blog is full of new features, updates, and discussion about the CodeVideo framework and ecosystem.
+                    Our blog is full of new features, updates, and discussion about the CodeVideo framework and ecosystem. All posts here are also posted to our <RadixLink href="https://medium.com/codevideo">Medium</RadixLink> and <RadixLink href="https://codevideo.substack.com">Substack</RadixLink> if you prefer to read on those platforms.
                 </Text>
             </Flex>
 
