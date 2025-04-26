@@ -10,7 +10,9 @@ export function Nav() {
       <Card>
         <Container size="4">
           <Flex py="4" justify="between" align="center">
-            <Heading size="4" style={{cursor: 'default'}}><Logo />CodeVideo</Heading>
+            <Link href="/" onClick={() => mixpanel.track("CodeVideo Logo Clicked Homepage")} style={{ textDecoration: 'none', cursor: 'pointer' }}>
+              <Heading size="4"><Logo />CodeVideo</Heading>
+            </Link>
             <Flex display={{ initial: 'none', md: 'flex' }} gap="6">
               <Link href="/#features">Features</Link>
               <Link href="/#benefits">Benefits</Link>

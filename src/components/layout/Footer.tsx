@@ -22,6 +22,8 @@ export function Footer() {
           <Link href="https://codevideo.substack.com" target="_blank">Substack</Link>
           <Text mx="1">|</Text>
           <Link href="https://medium.com/codevideo" target="_blank">Medium</Link>
+          <Text mx="1">|</Text>
+          <Link href="/glossary">Glossary</Link>
         </Flex>
 
         {/* Right section */}
