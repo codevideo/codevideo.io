@@ -1,5 +1,6 @@
 import wrapWithProvider from './wrap-with-provider'
 import './src/styles/globals.css'
+import './src/styles/action-badges.css'
 import mixpanel from "mixpanel-browser"
 require('@radix-ui/themes/styles.css');
 
