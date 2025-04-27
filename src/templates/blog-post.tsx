@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Link, graphql } from 'gatsby'
 import Layout from '../components/layout/Layout'
 import { Container, Flex, Heading, Text, Box, Section, Separator } from '@radix-ui/themes'
 import SEO from '../components/SEO'
+import { processActionNames } from '../utils/processActionNames'
 
 export const Head = ({ data }: any) => {
     const post = data.markdownRemark
@@ -12,6 +13,21 @@ export const Head = ({ data }: any) => {
 const BlogPostTemplate = ({ data, pageContext }: any) => {
     const post = data.markdownRemark
     const { previous, next } = pageContext
+    const contentRef = useRef<HTMLDivElement>(null);
+
+    // Process action names after render - convert them to badges from our codevideo-react-components library
+    useEffect(() => {
+        if (!contentRef.current) return;
+
+        // Call the helper function to replace action names with badges
+        const cleanup = processActionNames(contentRef.current, {
+            size: 'sm',
+            variant: 'soft',
+        });
+
+        // Clean up when component unmounts
+        return cleanup;
+    }, [post.html]);
 
     return (
         <Layout opacity='0.05'>
@@ -27,7 +43,11 @@ const BlogPostTemplate = ({ data, pageContext }: any) => {
                     </Box>
 
                     <Flex direction="column" justify="center" align="center">
-                        <Section className='blog' style={{ fontSize: '1.3rem', maxWidth: '750px' }} dangerouslySetInnerHTML={{ __html: post.html }} />
+                        <Section
+                            ref={contentRef}
+                            className='blog'
+                            style={{ fontSize: '1.3rem', maxWidth: '750px' }}
+                            dangerouslySetInnerHTML={{ __html: post.html }} />
                     </Flex>
 
                     <Heading size="5" mt="8" mb="4">More posts:</Heading>

@@ -31,9 +31,9 @@ In an event-sourced nature, when you, as a human editor, go to create a folder o
 
  6. In the case of a file, the file is opened up blank, but in an initially clean and saved empty state, ready for you to edit
 
-When I originally launched CodeVideo, all I had for all these discrete actions was `file-explorer-create-file`
+When I originally launched CodeVideo, all I had for all these discrete actions was `file-explorer-create-file`!
 
-That meant I was missing at least 4–5 actions, not even in the CodeVideo framework at all at that time. Big oof.
+That meant I was missing at least 4–5 action types, not even in the CodeVideo framework at all at that time. Big oof.
 
 This is also where I realized I might as well implement a variety of context menus — one for right-clicking anywhere in the file explorer, one for right-clicking. There is still much more to do here, such as options when right-clicking in the editor, terminal, and so on. Even for the existing implementation, it’s the true “bare bones” strongly opinionated version of what I think any creator would need at minimum to make a coherent software course.
 
@@ -106,7 +106,7 @@ Even then — it’s not the same behavior as creating through the file explorer
 
 ## Some Good News
 
-The good news is that this next level of the domain expansion helped me refine things heavily in the `virtual-mouse` and `virtual-file-explorer` domains. Until now, I didn’t even *have* a mouse-move action for any of the given IDE locations: `mouse-move-file-explorer`, `mouse-move-file-explorer-file-name`, mouse-move-file-explorer-folder-name, and so on! Heck, I didn’t even have the [`@fullstackcraft/codevideo-virtual-mouse` implementation](https://github.com/codevideo/codevideo-virtual-mouse) when starting this context menu insanity!
+The good news is that this next level of the domain expansion helped me refine things heavily in the `virtual-mouse` and `virtual-file-explorer` domains. Until now, I didn’t even *have* a mouse-move action for any of the given IDE locations: `mouse-move-file-explorer`, `mouse-move-file-explorer-file`, mouse-move-file-explorer-folder, and so on! Heck, I didn’t even have the [`@fullstackcraft/codevideo-virtual-mouse` implementation](https://github.com/codevideo/codevideo-virtual-mouse) when starting this context menu insanity!
 
 While this definitely complicates things for the user side, (but can be abstracted away with composite actions — which I’ll touch on in a bit), this heavily improves things on the UI side — as a developer working with these event names, I know exactly what is happening and where. When was previously just `file-explorer-create-file` - there were many logical, and thus visual jumps that would occur (mouse move to file name, file name appears, etc.), Now, we have very atomic actions that are easy to reproduce visually. In a way, while the user-facing side of things becomes more verbose, actually debugging any issues becomes much simpler - the actions are so atomic you can easily trace which one is the potential troublemaker.
 

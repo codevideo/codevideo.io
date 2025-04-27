@@ -23,12 +23,16 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
+    allMarkdownRemark(
+      sort: { frontmatter: { date: DESC } }
+      filter: { fields: { contentType: { eq: "blog" } } }
+    ) {
       edges {
         node {
           excerpt
           fields {
             slug
+            contentType
           }
           frontmatter {
             date(formatString: "MMMM DD, YYYY")
