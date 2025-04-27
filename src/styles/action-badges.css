@@ -1,0 +1,27 @@
+/* Special styling for badges inside code elements */
+.code-badge {
+    /* Adjust for code font and background */
+    font-family: inherit;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+}
+
+/* Handle monospace font sizing */
+code .action-badge-container {
+    font-size: 0.9em;
+}
+
+/* Ensure badges stand out against code highlighting */
+pre .action-badge-container {
+    margin: 0 2px;
+}
+
+code {
+    background: none !important;
+    background-color: transparent !important;
+}
+pre {
+    background: none !important;
+    background-color: transparent !important;
+}
