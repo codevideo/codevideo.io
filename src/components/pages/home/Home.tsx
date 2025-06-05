@@ -1,15 +1,18 @@
 import * as React from "react";
 import { EditorWidgetHomePage } from "../../shared/EditorWidgetHomePage";
 import { HiddenCanvas } from "../../shared/HiddenCanvas";
-import { ArrowRightIcon, CodeIcon, UploadIcon, VideoIcon, MagicWandIcon, Share2Icon, LaptopIcon, TimerIcon, CheckCircledIcon, LightningBoltIcon, GearIcon, FileIcon, } from "@radix-ui/react-icons";
+import { ArrowRightIcon, CodeIcon, UploadIcon, VideoIcon, MagicWandIcon, Share2Icon, LaptopIcon, TimerIcon, CheckCircledIcon, LightningBoltIcon, GearIcon, FileIcon, PlayIcon } from "@radix-ui/react-icons";
 import { Box, Button, Card, Container, Flex, Grid, Heading, Link, Section, Text } from "@radix-ui/themes";
 import { CodecademyLogo, UdemyLogo, YouTubeLogo } from "./components/Logos";
 import { PricingSection } from "./components/PricingSection";
 import mixpanel from "mixpanel-browser";
 import { useIsDesktop } from "../../../hooks/useIsDesktop";
+import { useRef, useState } from "react";
 
 export function Home() {
   const isDesktop = useIsDesktop()
+  const [showVideo, setShowVideo] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   return (
     <Box>
@@ -34,6 +37,73 @@ export function Home() {
             <Text size="4" color="gray" align="center" style={{ maxWidth: '700px' }}>
               Stop wasting time with video retakes and editing. Our deterministic recording system ensures perfect tutorials every time. Export your course to video, markdown, PDF, web, and more in literal seconds.
             </Text>
+            
+            <Box style={{ position: 'relative', width: '100%', maxWidth: '600px' }}>
+              <video 
+                ref={videoRef}
+                src="/video/codevideo-intro.mp4" 
+                controls={showVideo}
+                style={{ 
+                  width: '100%', 
+                  maxWidth: '600px',
+                  borderRadius: '8px'
+                }} 
+              />
+              {!showVideo && (
+                <Box
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'rgba(0, 0, 0, 0.6)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    borderRadius: '8px',
+                    transition: 'background 0.2s ease'
+                  }}
+                  onClick={() => {
+                    setShowVideo(true);
+                    // Play the video after showing controls
+                    setTimeout(() => {
+                      if (videoRef.current) {
+                        videoRef.current.play();
+                      }
+                    }, 100);
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(0, 0, 0, 0.4)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(0, 0, 0, 0.6)'
+                  }}
+                >
+                  <Flex direction="column" align="center" gap="2">
+                    <Box
+                      style={{
+                        width: '60px',
+                        height: '60px',
+                        borderRadius: '50%',
+                        background: 'var(--mint-9)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'transform 0.2s ease'
+                      }}
+                    >
+                      <PlayIcon width="24" height="24" color="white" />
+                    </Box>
+                    <Text size="4" weight="bold">
+                      Play Demo
+                    </Text>
+                  </Flex>
+                </Box>
+              )}
+            </Box>
+            
             <Flex gap="4" wrap="wrap" align="center" justify="center">
               <Link href="https://studio.codevideo.io" target="_blank" >
                 <Button color="amber" size="4" style={{ cursor: 'pointer' }} onClick={() => mixpanel.track("Get Started Free Clicked Homepage")}>
@@ -43,7 +113,7 @@ export function Home() {
               </Link>
               <Link href="https://youtu.be/4nyuhWF6SS0" target="_blank">
                 <Button size="4" variant="soft" style={{ cursor: 'pointer' }} onClick={() => mixpanel.track("Watch Demo Clicked Homepage")}>
-                  Watch Demo
+                  Watch Additional Demo
                 </Button>
               </Link>
             </Flex>
@@ -83,8 +153,8 @@ export function Home() {
                 borderRadius: 'var(--radius-4)',
                 padding: 'var(--space-2) var(--space-4)'
               }}>
-                <Flex>
-              <Text align="center" size="2" weight="bold">👆 The editor in <Link href="https://studio.codevideo.io" target="_blank">CodeVideo Studio</Link> is far more powerful than this example and supports file explorer, terminal, and even mouse actions.</Text>
+              <Flex>
+                <Text align="center" size="2" weight="bold">👆 The editor in <Link href="https://studio.codevideo.io" target="_blank">CodeVideo Studio</Link> is far more powerful than this example and supports file explorer, terminal, and even mouse actions.</Text>
               </Flex>
             </Box>
           </Flex>
