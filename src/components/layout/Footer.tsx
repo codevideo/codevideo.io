@@ -29,7 +29,33 @@ export function Footer() {
             <Link mx="2" href="https://github.com/codevideo" target="_blank">GitHub</Link>
             <Link mx="2" href="https://codevideo.substack.com" target="_blank">Substack</Link>
             <Link mx="2" href="https://medium.com/codevideo" target="_blank">Medium</Link>
+            <Link mx="2" href="/blog">Blog</Link>
+            <Link mx="2" href="/guides">Guides</Link>
+            <Link mx="2" href="/features">Features</Link>
+            <Link mx="2" href="/multilingual">Multilingual</Link>
+            <Link mx="2" href="/actions">Actions</Link>
             <Link mx="2" href="/glossary">Glossary</Link>
+          </Flex>
+        )}
+
+        {/* Mobile links section */}
+        {!isDesktop && (
+          <Flex 
+            width="100%" 
+            justify="center" 
+            align="center" 
+            wrap="wrap" 
+            gap="3"
+            mb="2"
+          >
+            <Link href="https://studio.codevideo.io" target="_blank">Studio</Link>
+            <Link href="https://github.com/codevideo" target="_blank">GitHub</Link>
+            <Link href="/blog">Blog</Link>
+            <Link href="/guides">Guides</Link>
+            <Link href="/features">Features</Link>
+            <Link href="/multilingual">Multilingual</Link>
+            <Link href="/actions">Actions</Link>
+            <Link href="/glossary">Glossary</Link>
           </Flex>
         )}
 
