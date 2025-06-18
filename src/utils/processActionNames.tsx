@@ -94,7 +94,7 @@ export const processActionNames = (
         root.render(
           <ActionBadge
             actionName={actionName as any}
-            size={options.size}
+            // size={options.size as any}
           />
         );
       } catch (error) {
