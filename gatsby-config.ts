@@ -15,6 +15,7 @@ const config: GatsbyConfig = {
     title: `CodeVideo`,
     description: `Convert code snippets into videos.`,
     author: `Chris Frewin`,
+    siteUrl: `https://codevideo.io`, // Add your site URL here
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -51,7 +52,61 @@ const config: GatsbyConfig = {
       }
     },
     `gatsby-plugin-offline`,
-    `gatsby-plugin-sass`
+    `gatsby-plugin-sass`,
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        // Exclude dev pages and other non-public pages
+        excludes: [`/dev-404-page/`, `/404/`, `/offline-plugin-app-shell-fallback/`],
+        // Custom query to get lastmod dates from your markdown files
+        query: `
+          {
+            site {
+              siteMetadata {
+                siteUrl
+              }
+            }
+            allSitePage {
+              nodes {
+                path
+              }
+            }
+            allMarkdownRemark {
+              nodes {
+                frontmatter {
+                  date
+                }
+                fields {
+                  slug
+                }
+              }
+            }
+          }
+        `,
+        resolvePages: ({
+          allSitePage: { nodes: allPages },
+          allMarkdownRemark: { nodes: allMarkdownNodes },
+        }: any) => {
+          const markdownNodeMap = allMarkdownNodes.reduce((acc: any, node: any) => {
+            const { fields, frontmatter } = node
+            if (fields?.slug) {
+              acc[fields.slug] = frontmatter
+            }
+            return acc
+          }, {})
+
+          return allPages.map((page: any) => {
+            return { ...page, ...markdownNodeMap[page.path] }
+          })
+        },
+        serialize: ({ path, date }: any) => {
+          return {
+            url: path,
+            lastmod: date || new Date().toISOString(),
+          }
+        },
+      },
+    },
   ],
 }
 
