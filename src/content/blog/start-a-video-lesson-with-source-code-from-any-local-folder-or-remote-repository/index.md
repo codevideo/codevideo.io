@@ -27,7 +27,7 @@ For the third point, this allows you to kick off a lesson exactly with the same 
 
 ## Formal Validation of a Software Course
 
-In our whitepaper, we describe that a software course is nothing more than a series of lessons, where each lesson is made up of a series of actions. In summary, we can define that each lesson has:
+In our [whitepaper](https://studio.codevideo.io/pdf/CodeVideo_Framework_White_Paper.pdf), we describe that a software course is nothing more than a series of lessons, where each lesson is made up of a series of actions. In summary, we can define that each lesson has:
 
  1. an initial snapshot, which is either completely empty or based on a previous lesson / point in time from any codebase or other lesson
 
