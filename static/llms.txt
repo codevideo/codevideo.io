@@ -1,0 +1,38 @@
+# CodeVideo
+
+> A revolutionary platform for creating educational software content 1000x faster using declarative, action-based video generation. Transform JSON actions into professional tutorials, documentation, and multi-format exports without screen recording or video editing.
+
+CodeVideo is a deterministic recording system that allows creators to build educational programming content by defining sequences of actions rather than manually recording them. The platform uses a virtual IDE environment to simulate coding activities, enabling the generation of videos, markdown documentation, PDFs, presentations, and web content from a single source of truth.
+
+Key innovations include:
+- **Declarative Video Creation**: Specify what should happen rather than manually recording
+- **Action-Based System**: Control editors, terminals, file explorers, and more through JSON actions
+- **Multi-Format Export**: Generate videos, blog posts, PDFs, presentations, and websites from one source
+- **Deterministic Accuracy**: Every step is guaranteed correct with no need for retakes
+- **Virtual IDE**: Simulate development environments without actual screen recording
+
+## Documentation
+
+- [Actions Reference](https://codevideo.io/actions): Complete documentation for all 90+ CodeVideo actions across domains (author, editor, file, mouse, terminal, slide, external)
+- [Features Overview](https://codevideo.io/features): Detailed explanation of CodeVideo's capabilities and advantages over traditional screen recording
+- [Glossary](https://codevideo.io/glossary): Key concepts in declarative video creation and software education
+- [API Documentation](https://api.codevideo.io/swagger): REST API for integrating CodeVideo exports into custom workflows
+
+## Guides & Tutorials
+
+- [How to Create Code Tutorials Without Screen Recording](https://codevideo.io/guides/create-code-tutorials-without-screen-recording/): Step-by-step guide to CodeVideo's declarative approach
+- [How to Make Coding Lesson Videos That Students Actually Watch](https://codevideo.io/guides/how-to-make-coding-lesson-videos-2025/): Best practices for engaging educational content
+- [How to Translate Educational Videos to Different Languages](https://codevideo.io/guides/how-to-translate-educational-videos-to-different-languages/): Multi-language content creation guide
+- [How to Build Web Projects Directly Within the Web Browser](https://codevideo.io/guides/how-to-build-web-projects-within-the-web/): WebAssembly development guide
+
+## Getting Started
+
+- [CodeVideo Studio](https://studio.codevideo.io/): Web-based editor for creating and managing CodeVideo projects
+- [CodeVideo Framework White Paper](https://studio.codevideo.io/pdf/CodeVideo_Framework_White_Paper.pdf): Technical foundation and methodology
+- [Blog](https://codevideo.io/blog): Latest updates, case studies, and educational content
+
+## Optional
+
+- [Multilingual Support](https://codevideo.io/multilingual): Information about international content creation
+- [OBS vs CodeVideo Comparison](https://codevideo.io/features/obs-vs-codevideo-why-free-recording-software-has-hidden-costs/): Why declarative beats traditional screen recording
+- [Video Export Feature](https://codevideo.io/features/video-export/): Professional video creation without screen recording
