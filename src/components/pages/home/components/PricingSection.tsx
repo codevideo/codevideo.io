@@ -188,7 +188,9 @@ export function PricingSection() {
 
                             {tier.stripePaymentLink ? (
                                 <Link href={tier.stripePaymentLink} target='_blank'>
-                                    <Button onClick={() => handleOnClickTier(tier.name)} size="3" variant={tier.featured ? "solid" : "soft"} color={tier.name === "CodeVideo Lifetime" ? "amber" : "mint"}>
+                                    <Button 
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => handleOnClickTier(tier.name)} size="3" variant={tier.featured ? "solid" : "soft"} color={tier.name === "CodeVideo Lifetime" ? "amber" : "mint"}>
                                         {tier.actionButtonText}
                                     </Button>
                                 </Link>
@@ -197,7 +199,7 @@ export function PricingSection() {
                                     {tier.actionButtonText === "Get Started Free" ? (
                                         <Link href="https://studio.codevideo.io" target='_blank'>
                                             <Button
-
+                                            style={{ cursor: 'pointer' }}
                                                 size="3"
                                                 variant="soft"
                                                 color="mint"
@@ -207,7 +209,9 @@ export function PricingSection() {
                                         </Link>
                                     ) : (
                                         <CouponDialog>
-                                            <Button onClick={() => handleOnClickTier(tier.name)} size="3" variant={tier.featured ? "solid" : "soft"} color={tier.name === "CodeVideo Lifetime" ? "amber" : "mint"}>
+                                            <Button 
+                                            style={{ cursor: 'pointer' }}
+                                            onClick={() => handleOnClickTier(tier.name)} size="3" variant={tier.featured ? "solid" : "soft"} color={tier.name === "CodeVideo Lifetime" ? "amber" : "mint"}>
                                                 {tier.actionButtonText}
                                             </Button>
                                         </CouponDialog>
@@ -217,7 +221,7 @@ export function PricingSection() {
                             <Flex direction="column" gap="3">
                                 {tier.name === "CodeVideo Lifetime" && (
                                     <Text size="1" color="gray" align="center">
-                                        <sup style={{ fontSize: '1.2rem', color: 'var(--amber-9)' }}>*</sup>Social experiment: for every lifetime license purchased, <RadixLink href="https://chrisfrew.in" target="_blank">Chris</RadixLink> will take a month off his day job to work on CodeVideo!
+                                        <sup style={{ fontSize: '0.75rem', color: 'var(--amber-9)' }}>*</sup>Social experiment: for every lifetime license purchased, <RadixLink href="https://chrisfrew.in" target="_blank">Chris</RadixLink> will take a month off his day job to work on CodeVideo!
                                     </Text>
                                 )}
                             </Flex>
