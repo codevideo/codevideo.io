@@ -28,7 +28,6 @@ export default function ActionTemplate({ data }: any) {
                 <Badge color={domainColors[domain] || 'gray'} size="2">
                   {domain}
                 </Badge>
-                <Text size="2" color="gray">Action</Text>
               </Flex>
               
               <Heading size="9" color="mint">

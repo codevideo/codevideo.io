@@ -6,4 +6,5 @@ export const domainColors: Record<string, any> = {
     'terminal': 'gray',
     'external': 'yellow',
     'slide': 'cyan',
+    'composite': 'pink',
 };
