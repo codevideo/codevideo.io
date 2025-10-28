@@ -151,7 +151,6 @@ const ActionsIndex = () => {
                                 <Heading size="6" mb="4">{letter}</Heading>
                                 <Grid gap="4">
                                     {filteredGroups[letter].map((action: any) => {
-                                        const domain = action.name.split('-')[0];
                                         const actionSlug = `/actions/${action.name}`;
 
                                         return (
@@ -163,18 +162,10 @@ const ActionsIndex = () => {
                                                 <Link to={actionSlug} style={{ textDecoration: 'none' }}>
                                                     <Flex direction="column" gap="2">
 
-                                                        {/* Action name and domain */}
-                                                        <Flex align="center" gap="2" mb="2">
-                                                            <Badge color={domainColors[domain] || 'gray'} size="1">
-                                                                {domain}
-                                                            </Badge>
-                                                            {/*<Code style={{ fontSize: '14px' }}>
-                                                                    {action.name}
-                                                                </Code> */}
-                                                            <ActionBadge actionName={action.name} />
-                                                        </Flex>
-
-                                                        {/* Description */}
+                                        {/* Action name */}
+                                        <Flex align="center" gap="2" mb="2">
+                                            <ActionBadge actionName={action.name} />
+                                        </Flex>                                                        {/* Description */}
                                                         <Text size="3" color="gray" style={{ lineHeight: '1.4' }}>
                                                             {action.description}
                                                         </Text>
