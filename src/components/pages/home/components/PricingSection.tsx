@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Button, Card, Flex, Grid, Heading, Link, Text, Link as RadixLink } from "@radix-ui/themes";
+import { Box, Button, Card, Flex, Grid, Heading, Link, Text } from "@radix-ui/themes";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { CouponDialog } from '../../../shared/CouponDialog';
 import mixpanel from 'mixpanel-browser';
@@ -77,7 +77,7 @@ const pricingTiers = [
     },
     {
         name: "CodeVideo Lifetime",
-        price: "2000",
+        price: "499",
         tokens: "Infinite generations",
         actionsLimit: "No action limit",
         features: [
@@ -134,7 +134,7 @@ export function PricingSection() {
                     }}>
                         <Flex direction="column" justify="center" align="center" gap="4" p="6">
                             <Box>
-                                <Heading size="2" mb="2">{tier.name}{tier.name === "CodeVideo Lifetime" && <sup style={{ fontSize: '1.2rem', color: 'var(--amber-9)' }}>*</sup>}</Heading>
+                                <Heading size="2" mb="2">{tier.name}</Heading>
                                 <Flex align="baseline" gap="1">
                                     <Heading size="6">{tier.name !== "Pay As You Go" && <>$</>}{tier.price}</Heading>
                                     {tier.period && <Text size="2" color="gray">{tier.period}</Text>}
@@ -218,13 +218,6 @@ export function PricingSection() {
                                     )}
                                 </>
                             )}
-                            <Flex direction="column" gap="3">
-                                {tier.name === "CodeVideo Lifetime" && (
-                                    <Text size="1" color="gray" align="center">
-                                        <sup style={{ fontSize: '0.75rem', color: 'var(--amber-9)' }}>*</sup>Social experiment: for every lifetime license purchased, <RadixLink href="https://chrisfrew.in" target="_blank">Chris</RadixLink> will take a month off his day job to work on CodeVideo!
-                                    </Text>
-                                )}
-                            </Flex>
                         </Flex>
                     </Card>
                 );

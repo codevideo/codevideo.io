@@ -4,6 +4,9 @@
   "description": "The website for CodeVideo.",
   "version": "1.0.0",
   "license": "MIT",
+  "engines": {
+    "node": ">=24 <25"
+  },
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",

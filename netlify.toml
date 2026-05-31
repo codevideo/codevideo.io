@@ -1,5 +1,5 @@
 [build]
-  command = "cd functions && npm install && npm run build && cd .. && npm run build"
+  command = "cd functions && npm ci && npm run build && cd .. && npm run build"
   publish = "public"
   functions = "functions/dist"
 
