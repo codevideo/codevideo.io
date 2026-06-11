@@ -7,7 +7,7 @@ import SEO from '../components/SEO'
 const ActionsPage = ({ data }: any) => {
   return (
     <Layout>
-      <SEO title="CodeVideo: Actions Reference" />
+      <SEO title="Actions Reference — CodeVideo" description="Browse all CodeVideo actions: editor commands, terminal operations, file management, mouse interactions, and slide controls." pathname="/actions" />
       <ActionsIndex  />
     </Layout>
   )

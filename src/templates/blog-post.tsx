@@ -3,11 +3,72 @@ import { Link, graphql } from 'gatsby'
 import Layout from '../components/layout/Layout'
 import { Container, Flex, Heading, Text, Box, Section, Separator } from '@radix-ui/themes'
 import SEO from '../components/SEO'
+import { JsonLd } from '../components/JsonLd'
 import { processActionNames } from '../utils/processActionNames'
+
+const siteUrl = "https://codevideo.io"
 
 export const Head = ({ data }: any) => {
     const post = data.markdownRemark
-    return <SEO title={post.frontmatter.title} description={post.frontmatter.description || post.excerpt} />
+    const slug = post.fields?.slug || ''
+    return (
+        <>
+            <SEO
+                title={post.frontmatter.title}
+                description={post.frontmatter.description || post.excerpt}
+                pathname={slug}
+                ogType="article"
+            />
+            <JsonLd schema={[
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BlogPosting",
+                    headline: post.frontmatter.title,
+                    description: post.frontmatter.description || post.excerpt,
+                    url: `${siteUrl}${slug}`,
+                    datePublished: post.frontmatter.rawDate || undefined,
+                    image: [`${siteUrl}/og.png`],
+                    mainEntityOfPage: {
+                        "@type": "WebPage",
+                        "@id": `${siteUrl}${slug}`,
+                    },
+                    author: {
+                        "@type": "Person",
+                        name: post.frontmatter.author || "Chris Frewin",
+                    },
+                    publisher: {
+                        "@type": "Organization",
+                        name: "CodeVideo",
+                        url: siteUrl,
+                    },
+                },
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    itemListElement: [
+                        {
+                            "@type": "ListItem",
+                            position: 1,
+                            name: "Home",
+                            item: siteUrl,
+                        },
+                        {
+                            "@type": "ListItem",
+                            position: 2,
+                            name: "Blog",
+                            item: `${siteUrl}/blog`,
+                        },
+                        {
+                            "@type": "ListItem",
+                            position: 3,
+                            name: post.frontmatter.title,
+                            item: `${siteUrl}${slug}`,
+                        },
+                    ],
+                },
+            ]} />
+        </>
+    )
 }
 
 const BlogPostTemplate = ({ data, pageContext }: any) => {
@@ -90,11 +151,15 @@ export const pageQuery = graphql`
       id
       excerpt(pruneLength: 160)
       html
+      fields {
+        slug
+      }
       frontmatter {
         title
         author
         description
         date(formatString: "MMMM DD, YYYY")
+        rawDate: date
       }
     }
   }

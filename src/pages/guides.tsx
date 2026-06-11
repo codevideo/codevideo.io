@@ -8,7 +8,7 @@ const GuidesPage = ({ data }: any) => {
   const guides = data.allMarkdownRemark.edges
   return (
     <Layout>
-      <SEO title="CodeVideo: Guides" />
+      <SEO title="Guides — CodeVideo" description="Guides for creating code tutorials, translating educational videos, and building web projects with CodeVideo." pathname="/guides" />
       <Guides guides={guides} />
     </Layout>
   )
