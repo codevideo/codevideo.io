@@ -3,10 +3,54 @@ import { graphql, Link } from "gatsby";
 import Layout from '../components/layout/Layout'
 import { Container, Flex, Heading, Text, Box, Section, Separator, Card } from '@radix-ui/themes'
 import SEO from '../components/SEO'
+import { JsonLd } from '../components/JsonLd'
+
+const siteUrl = "https://codevideo.io"
 
 export const Head = ({ data }: any) => {
   const { markdownRemark } = data;
-  return <SEO title={markdownRemark.frontmatter.title} description={markdownRemark.frontmatter.description} />
+  const slug = markdownRemark.fields?.slug || ''
+  return (
+    <>
+      <SEO
+        title={`${markdownRemark.frontmatter.title} — CodeVideo Glossary`}
+        description={markdownRemark.frontmatter.description}
+        pathname={slug}
+      />
+      <JsonLd schema={[
+        {
+          "@context": "https://schema.org",
+          "@type": "DefinedTerm",
+          name: markdownRemark.frontmatter.title,
+          description: markdownRemark.frontmatter.description,
+          url: `${siteUrl}${slug}`,
+          inDefinedTermSet: {
+            "@type": "DefinedTermSet",
+            name: "CodeVideo Glossary",
+            url: `${siteUrl}/glossary/`,
+          },
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Glossary",
+              item: `${siteUrl}/glossary/`,
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: markdownRemark.frontmatter.title,
+              item: `${siteUrl}${slug}`,
+            },
+          ],
+        },
+      ]} />
+    </>
+  )
 }
 
 export default function GlossaryTermTemplate({ data }: any) {
@@ -60,6 +104,9 @@ export const pageQuery = graphql`
   query($id: String!) {
     markdownRemark(id: { eq: $id }) {
       html
+      fields {
+        slug
+      }
       frontmatter {
         title
         description

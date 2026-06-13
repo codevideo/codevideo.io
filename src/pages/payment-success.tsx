@@ -10,6 +10,8 @@ export default function PaymentSuccessPage() {
       <SEO
         title="CodeVideo: Payment Successful"
         description="Your CodeVideo Lifetime purchase was successful."
+        pathname="/payment-success"
+        noIndex={true}
       />
       <Section size="3" mt="9" pt="9">
         <Container size="2">
