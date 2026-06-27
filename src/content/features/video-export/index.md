@@ -152,7 +152,7 @@ A detailed walkthrough of a useful C# unit test, showing how CodeVideo can handl
 
 Ready to create your first video with CodeVideo? Here's how to get started:
 
-1. **Sign up for a free account** at [studio.codevideo.io](https://studio.codevideo.io)
+1. **Sign up for a free account** at [studio.codevideo.io](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=feature&utm_campaign=video-export&utm_content=studio-codevideo-home)
 2. **Create a new project** using our intuitive interface
 3. **Define your actions** (speech, typing, file navigation, etc.)
 4. **Preview your tutorial** in real-time
@@ -188,4 +188,4 @@ The free plan supports videos up to 10 minutes in length. Premium plans allow fo
 
 Join thousands of educators, developers, and content creators who have revolutionized their workflow with CodeVideo's Video Export feature.
 
-[Create Your First Video Today →](https://studio.codevideo.io)
+[Create Your First Video Today →](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=feature&utm_campaign=video-export&utm_content=studio-codevideo-home)

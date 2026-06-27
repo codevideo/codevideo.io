@@ -88,7 +88,7 @@ CodeVideo's multilingual functionality makes language conversion remarkably simp
 - Make adjustments to terminology or pacing as needed
 - Export in your preferred format (video, embedded player, markdown, PDF, etc.)
 
-[Try CodeVideo Studio →](https://studio.codevideo.io)
+[Try CodeVideo Studio →](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=guide&utm_campaign=how-to-translate-educational-videos-to-different-languages&utm_content=studio-codevideo-home)
 
 ### Method 2: Using CodeVideo MCP (Advanced Users)
 
@@ -143,7 +143,7 @@ Implement a review process for the converted content:
 - **85% completion rate** maintained across languages
 - **$50,000 saved** compared to traditional dubbing costs
 
-[Need a corporate license? Contact us for enterprise solutions →](https://codevideo.io/contact)
+[Need a corporate license? Contact us for enterprise solutions →](https://codevideo.io/contact?utm_source=codevideo.io&utm_medium=guide&utm_campaign=how-to-translate-educational-videos-to-different-languages&utm_content=codevideo-contact)
 
 ### Case Study 2: Corporate Technical Training
 
@@ -156,7 +156,7 @@ Implement a review process for the converted content:
 - **Consistent messaging** across all regions
 - **Higher engagement** with native-language content
 
-[Need a corporate license? Contact us for enterprise solutions →](https://codevideo.io/contact)
+[Need a corporate license? Contact us for enterprise solutions →](https://codevideo.io/contact?utm_source=codevideo.io&utm_medium=guide&utm_campaign=how-to-translate-educational-videos-to-different-languages&utm_content=codevideo-contact)
 
 ## Cost Comparison: Traditional vs. Modern Conversion
 
@@ -180,7 +180,7 @@ Implement a review process for the converted content:
 
 ### For Individual Educators
 
-1. **Sign up for CodeVideo Studio** at [studio.codevideo.io](https://studio.codevideo.io)
+1. **Sign up for CodeVideo Studio** at [studio.codevideo.io](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=guide&utm_campaign=how-to-translate-educational-videos-to-different-languages&utm_content=studio-codevideo-home)
 2. **Upload a sample video** to test the conversion quality
 3. **Select your target languages** and preview voice options
 4. **Generate your first multilingual content** and share with your audience
@@ -229,7 +229,7 @@ Converting your educational videos to different languages no longer requires mon
 
 The world is waiting to learn from you—in their own language.
 
-[Get Started with CodeVideo →](https://studio.codevideo.io)
+[Get Started with CodeVideo →](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=guide&utm_campaign=how-to-translate-educational-videos-to-different-languages&utm_content=studio-codevideo-home)
 
 ---
 

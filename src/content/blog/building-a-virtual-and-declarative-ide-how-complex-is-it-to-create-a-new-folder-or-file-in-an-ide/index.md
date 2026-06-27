@@ -7,7 +7,7 @@ date: '2025-04-16'
 
 _Just a heads up here: This post is highly technical and meta in nature. It quite literally describes how I re-create the file or folder creation process in an IDE in an event-sourced and declarative manner. However, if you enjoy posts about high-level software architecture and design decisions, this post is for you!_
 
-The new features discussed in this post are immediately available in our [CodeVideo CLI tool](https://github.com/codevideo/codevideo-cli), and will be rolled out to the [CodeVideo Studio](https://studio.codevideo.io/) shortly.
+The new features discussed in this post are immediately available in our [CodeVideo CLI tool](https://github.com/codevideo/codevideo-cli), and will be rolled out to the [CodeVideo Studio](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=blog&utm_campaign=building-a-virtual-and-declarative-ide-how-complex-is-it-to-create-a-new-folder-&utm_content=studio-codevideo-home) shortly.
 
 ## In Short: It’s Complicated
 
@@ -112,7 +112,7 @@ While this definitely complicates things for the user side, (but can be abstract
 
 ## Introducing Composite Actions!
 
-It’s now time to share an idea I’ve finally solidified: composite actions. The general idea behind a composite action is that you, as a user in the [CodeVideo Studio](https://studio.codevideo.io/) would select a “composite” action, which still has the standard name and value shape, like the simple ones above, i.e. `file-explorer-create-file`, however, you could have multiple options for this, such as `composite-file-explorer-create-file-with-mouse`, or `composite-file-explorer-create-file-with-terminal`. In the background, these composite actions would facilitate the actual atomic actions necessary for the proper state and UI changes that the CodeVideo framework guarantees.
+It’s now time to share an idea I’ve finally solidified: composite actions. The general idea behind a composite action is that you, as a user in the [CodeVideo Studio](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=blog&utm_campaign=building-a-virtual-and-declarative-ide-how-complex-is-it-to-create-a-new-folder-&utm_content=studio-codevideo-home) would select a “composite” action, which still has the standard name and value shape, like the simple ones above, i.e. `file-explorer-create-file`, however, you could have multiple options for this, such as `composite-file-explorer-create-file-with-mouse`, or `composite-file-explorer-create-file-with-terminal`. In the background, these composite actions would facilitate the actual atomic actions necessary for the proper state and UI changes that the CodeVideo framework guarantees.
 
 To create composite actions, we can use generator functions to generate the steps needed. I’m still debating how to show these composite actions in the CodeVideo Studio; perhaps as a subset list of actions that are read-only, and only shown when you have a composite action chosen. [The initial draft generator functions are currently a part of the ](https://github.com/codevideo/codevideo-types/tree/main/src/generators) `@fullstackcraftllc/codevideo-types` library, written initially there to ensure future type safety. These will likely become their own repository, as I’ve brainstormed a variety of other composite actions where we can use the virtual state layer itself to generate them (Want to close all tabs? easy. Collapse all open folders? also easy. Open multiple terminals? also easy). Anyway, this is another post for another time ;)
 

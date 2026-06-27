@@ -5,6 +5,7 @@ import { PropsWithChildren, useEffect } from "react";
 import { Flex, Theme } from "@radix-ui/themes";
 import { SVGBackground } from "./SvgBackground";
 import { useAppSelector } from "../../hooks/useAppSelector";
+import ReferralTracker from "./ReferralTracker";
 
 export interface ILayoutProps {
   opacity?: string;
@@ -47,6 +48,7 @@ const Layout = (props: PropsWithChildren<ILayoutProps>) => {
       panelBackground="translucent"
       radius="large"
     >
+      <ReferralTracker />
       <SVGBackground opacity={opacity}/>
       <Flex gap="3" p="3" direction="column" justify="between">
         <Nav/>

@@ -205,7 +205,7 @@ Since your tutorials are defined as code, you can use Git to track changes, coll
 
 Ready to leave screen recording behind? Here's how to get started with declarative tutorials:
 
-1. Sign up for [CodeVideo Studio](https://studio.codevideo.io)
+1. Sign up for [CodeVideo Studio](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=guide&utm_campaign=create-code-tutorials-without-screen-recording&utm_content=studio-codevideo-home)
 2. Follow the interactive tutorial to learn the basics
 3. Start with a simple tutorial to learn the workflow
 4. Gradually build more complex educational content
@@ -230,4 +230,4 @@ Screen recording has been the default for creating code tutorials simply because
 
 By separating the content (what you want to teach) from the performance (recording yourself doing it), you can create better tutorials in a fraction of the time.
 
-Ready to transform your tutorial creation process? [Get started with CodeVideo today](https://studio.codevideo.io) and create your first declarative tutorial in minutes, not hours.
+Ready to transform your tutorial creation process? [Get started with CodeVideo today](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=guide&utm_campaign=create-code-tutorials-without-screen-recording&utm_content=studio-codevideo-home) and create your first declarative tutorial in minutes, not hours.

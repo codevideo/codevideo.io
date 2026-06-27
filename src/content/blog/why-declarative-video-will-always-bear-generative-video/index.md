@@ -67,11 +67,11 @@ But I don’t know, maybe I am just a clueless arrogant dev — if you know a ge
 
 This is not to say declarative video *isn’t* complex; think of how complex a single 2D graphic, like an SVG, can be (which [fframes](https://fframes.studio/) uses to create video). With some of the [SVGs I’ve created for my prints](https://portfolio.chrisfrew.in/), you can get into the direction of *gigabytes* in size, just for a single image! For a minute-long 4K video at 60 FPS, we’re already talking about moving potentially 3+ terabytes around to get the video!
 
-But technicalities aside, the sales pitch is from the time savings: that super crisp 4K video example above? It took me about 2 minutes to build using [CodeVideo Studio](https://studio.codevideo.io).
+But technicalities aside, the sales pitch is from the time savings: that super crisp 4K video example above? It took me about 2 minutes to build using [CodeVideo Studio](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=blog&utm_campaign=why-declarative-video-will-always-bear-generative-video&utm_content=studio-codevideo-home).
 
 ## Create Your First Automated Video Today
 
-In the [CodeVideo Studio](https://studio.codevideo.io), you can sign up today and get 50 free tokens — enough for generating 5 videos, 25 HTML exports, 16 PDF exports, and many others. Or star our various [GitHub repositories](https://github.com/codevideo) and self-host your own CodeVideo services.
+In the [CodeVideo Studio](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=blog&utm_campaign=why-declarative-video-will-always-bear-generative-video&utm_content=studio-codevideo-home), you can sign up today and get 50 free tokens — enough for generating 5 videos, 25 HTML exports, 16 PDF exports, and many others. Or star our various [GitHub repositories](https://github.com/codevideo) and self-host your own CodeVideo services.
 
 ## Thanks
 

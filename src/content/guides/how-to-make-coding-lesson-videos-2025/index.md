@@ -62,7 +62,7 @@ Once you've defined your steps, you can instantly generate:
 - **PDF guides** for offline reference
 - **Markdown documentation** for your learning management system
 
-You can do any of these either in the [CodeVideo Studio](https://studio.codevideo.io) or using a json file in our [CodeVideo CLI](https://github.com/codevideo/codevideo-cli).
+You can do any of these either in the [CodeVideo Studio](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=guide&utm_campaign=how-to-make-coding-lesson-videos-2025&utm_content=studio-codevideo-home) or using a json file in our [CodeVideo CLI](https://github.com/codevideo/codevideo-cli).
 
 ### Step 3: Iterate and Improve
 
@@ -276,7 +276,7 @@ Creating engaging coding lesson videos doesn't have to be a time-consuming ordea
 
 **Try CodeVideo free today** and experience the future of coding education. Your students (and your schedule) will thank you.
 
-[**Start Creating Better Coding Videos Now →**](https://studio.codevideo.io)
+[**Start Creating Better Coding Videos Now →**](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=guide&utm_campaign=how-to-make-coding-lesson-videos-2025&utm_content=studio-codevideo-home)
 
 ---
 

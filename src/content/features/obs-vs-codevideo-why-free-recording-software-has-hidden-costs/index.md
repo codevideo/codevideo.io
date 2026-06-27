@@ -58,7 +58,7 @@ That's it. No recording setup, no editing, no multiple takes.
 
 | Aspect | OBS Studio | CodeVideo |
 |--------|------------|-----------|
-| **Initial Cost** | Free | Free via [CLI](https://github.com/codevideo/codevideo-cli) or Paid on [Studio](https://studio.codevideo.io) (license or token-based) |
+| **Initial Cost** | Free | Free via [CLI](https://github.com/codevideo/codevideo-cli) or Paid on [Studio](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=feature&utm_campaign=obs-vs-codevideo-why-free-recording-software-has-hidden-costs&utm_content=studio-codevideo-home) (license or token-based) |
 | **Equipment Needed** | Camera, microphone, lighting | Just a computer |
 | **Setup Time** | 30-60 minutes per session | 5 minutes |
 | **Recording Time** | 2-5x final video length | No recording needed |
@@ -106,6 +106,6 @@ CodeVideo takes a fundamentally different approach. Instead of perfecting the pe
 
 For software educators and content creators, this isn't just about saving time (though you'll save a lot of that). It's about consistency, maintainability, and being able to focus on what matters most—creating great educational content rather than wrestling with production logistics.
 
-Ready to see what creating tutorials without recording feels like? [Try CodeVideo Studio](https://studio.codevideo.io) with 50 free tokens and experience the difference for yourself.
+Ready to see what creating tutorials without recording feels like? [Try CodeVideo Studio](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=feature&utm_campaign=obs-vs-codevideo-why-free-recording-software-has-hidden-costs&utm_content=studio-codevideo-home) with 50 free tokens and experience the difference for yourself.
 
 -Chris

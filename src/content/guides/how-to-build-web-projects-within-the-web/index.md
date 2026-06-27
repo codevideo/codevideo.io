@@ -71,7 +71,7 @@ Fast JavaScript/TypeScript bundler compiled to WebAssembly:
 
 ### Method 1: Using CodeVideo Studio
 
-1. Navigate to https://studio.codevideo.io
+1. Navigate to https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=guide&utm_campaign=how-to-build-web-projects-within-the-web&utm_content=studio-codevideo-home
 2. Create any series of web files (HTML, JS, CSS)
    - Example: `index.html`, `app.js`, `styles.css`
    - Use the built-in editor with syntax highlighting
@@ -220,4 +220,4 @@ Building web projects within the browser is practical today. Whether for educati
 
 Start building your web projects directly in the browser - no downloads, no setup, just code.
 
-Visit [CodeVideo Studio](https://studio.codevideo.io) to try browser-based development today.
+Visit [CodeVideo Studio](https://studio.codevideo.io/?utm_source=codevideo.io&utm_medium=guide&utm_campaign=how-to-build-web-projects-within-the-web&utm_content=studio-codevideo-home) to try browser-based development today.
