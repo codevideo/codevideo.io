@@ -6,7 +6,7 @@ import SEO from "../components/SEO";
 export default function PontificatorPage() {
   return (
     <Layout>
-      <SEO title="CodeVideo: pontificator" />
+      <SEO title="Pontificator — CodeVideo" description="The CodeVideo Pontificator: an experimental tool for generating educational content and presentations." pathname="/pontificator" />
       <Pontificator />
     </Layout>
   );

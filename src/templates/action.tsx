@@ -7,7 +7,14 @@ import { domainColors } from "../constants/domainColors";
 
 export const Head = ({ data }: any) => {
   const { actionData } = data;
-  return <SEO title={`${actionData.name} - CodeVideo Action`} description={actionData.description} />
+  const actionPath = `/actions/${actionData.name}`
+  return (
+      <SEO
+        title={`${actionData.name} — CodeVideo Action`}
+        description={actionData.description}
+        pathname={actionPath}
+      />
+  )
 }
 
 export default function ActionTemplate({ data }: any) {

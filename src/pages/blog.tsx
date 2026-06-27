@@ -8,7 +8,7 @@ const IndexPage = ({ data }: any) => {
   const posts = data.allMarkdownRemark.edges
   return (
     <Layout>
-      <SEO title="CodeVideo: Blog" />
+      <SEO title="Blog — CodeVideo" description="Latest updates, tutorials, and insights about declarative video creation and software education from the CodeVideo team." pathname="/blog" />
       <Blog posts={posts} />
     </Layout>
   )

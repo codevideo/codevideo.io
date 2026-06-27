@@ -8,7 +8,7 @@ const FeaturesPage = ({ data }: any) => {
   const features = data.allMarkdownRemark.edges
   return (
     <Layout>
-      <SEO title="CodeVideo: Features" />
+      <SEO title="Features — CodeVideo" description="Explore CodeVideo's declarative video creation features: multi-format export, action-based editing, virtual IDE, multilingual support, and more." pathname="/features" />
       <Features features={features} />
     </Layout>
   )

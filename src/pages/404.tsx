@@ -6,7 +6,7 @@ import SEO from "../components/SEO";
 export default function NotFoundPage() {
   return (
     <Layout>
-      <SEO title="CodeVideo: 404" />
+      <SEO title="Page Not Found — CodeVideo" noIndex={true} />
       <NotFound />
     </Layout>
   );

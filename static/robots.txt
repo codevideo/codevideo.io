@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /payment-success
+Disallow: /dev-404-page/
+Disallow: /offline-plugin-app-shell-fallback/
+
+Sitemap: https://codevideo.io/sitemap-index.xml

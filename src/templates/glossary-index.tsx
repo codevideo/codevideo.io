@@ -4,8 +4,23 @@ import Layout from '../components/layout/Layout'
 import { Container, Flex, Heading, Text, Box, Section, TextField, Grid, Link as RadixLink } from '@radix-ui/themes'
 import SEO from '../components/SEO'
 
+import { JsonLd } from '../components/JsonLd'
+
+const siteUrl = "https://codevideo.io"
+
 export const Head = ({ data }: any) => {
-    return <SEO title="CodeVideo Glossary" description="Your guide to key concepts in declarative video creation, software education, and coding tutorial development." />
+    return (
+        <>
+            <SEO title="CodeVideo Glossary" description="Your guide to key concepts in declarative video creation, software education, and coding tutorial development." pathname="/glossary/" />
+            <JsonLd schema={{
+                "@context": "https://schema.org",
+                "@type": "DefinedTermSet",
+                name: "CodeVideo Glossary",
+                description: "Key concepts in declarative video creation, software education, and coding tutorial development.",
+                url: `${siteUrl}/glossary/`,
+            }} />
+        </>
+    )
 }
 
 const GlossaryIndex = ({ data }: any) => {

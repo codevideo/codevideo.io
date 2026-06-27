@@ -7,7 +7,9 @@ import { ActionBadge } from "@fullstackcraftllc/codevideo-react-components";
 import { domainColors } from "../constants/domainColors";
 
 export const Head = () => {
-    return <SEO title="CodeVideo Actions Reference" description="Complete reference guide for all CodeVideo actions - from editor and terminal commands to file operations and mouse interactions." />
+    return (
+        <SEO title="CodeVideo Actions Reference" description="Complete reference guide for all CodeVideo actions - from editor and terminal commands to file operations and mouse interactions." pathname="/actions/" />
+    )
 }
 
 const ActionsIndex = () => {
