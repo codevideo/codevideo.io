@@ -21,6 +21,20 @@ const languages = [
     color: 'orange'
   },
   {
+    name: 'Hindi',
+    code: 'hi',
+    flags: ['🇮🇳'],
+    videoPath: '/video/multilingual/hindi.mp4',
+    color: 'amber'
+  },
+  {
+    name: 'Japanese',
+    code: 'ja',
+    flags: ['🇯🇵'],
+    videoPath: '/video/multilingual/japanese.mp4',
+    color: 'crimson'
+  },
+  {
     name: 'Mandarin',
     code: 'zh',
     flags: ['🇨🇳'], 
@@ -254,7 +268,7 @@ export default function Multilingual() {
             </Heading>
             <Text size="5" color="gray" mb="6">
               Experience CodeVideo's powerful multilingual capabilities. The same Python lesson automatically 
-              generated in five different languages with native pronunciation.
+              generated in seven different languages with native pronunciation.
             </Text>
             <Box
               style={{
@@ -265,7 +279,7 @@ export default function Multilingual() {
               }}
             >
               <Text size="3" weight="bold">
-                🌍 One lesson, five languages, infinite possibilities
+                🌍 One lesson, seven languages, infinite possibilities
               </Text>
             </Box>
             <Text size="3" color="gray" style={{ maxWidth: '700px' }}>
