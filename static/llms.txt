@@ -13,10 +13,10 @@ Key innovations include:
 
 ## Documentation
 
-- [Actions Reference](https://codevideo.io/actions): Complete documentation for all 90+ CodeVideo actions across domains (author, editor, file, mouse, terminal, slide, external)
+- [Actions Reference](https://codevideo.io/actions): Complete documentation for all 133 CodeVideo actions across domains (author, editor, file explorer, mouse, terminal, external, slide, composite)
 - [Features Overview](https://codevideo.io/features): Detailed explanation of CodeVideo's capabilities and advantages over traditional screen recording
 - [Glossary](https://codevideo.io/glossary): Key concepts in declarative video creation and software education
-- [API Documentation](https://api.codevideo.io/swagger): REST API for integrating CodeVideo exports into custom workflows
+- [API Documentation](https://docs.codevideo.io): Quick start and reference for the REST API (POST a JSON list of actions to https://api.codevideo.io/create-video-v3 with an x-api-key header; the MP4 link arrives by email)
 
 ## Guides & Tutorials
 

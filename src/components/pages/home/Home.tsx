@@ -5,6 +5,7 @@ import { ArrowRightIcon, CodeIcon, UploadIcon, VideoIcon, MagicWandIcon, Share2I
 import { Box, Button, Card, Container, Flex, Grid, Heading, Link, Section, Text } from "@radix-ui/themes";
 import { CodecademyLogo, UdemyLogo, YouTubeLogo } from "./components/Logos";
 import { PricingSection } from "./components/PricingSection";
+import { ApiQuickStartSection } from "./components/ApiQuickStartSection";
 import mixpanel from "mixpanel-browser";
 import { useIsDesktop } from "../../../hooks/useIsDesktop";
 import { useRef, useState } from "react";
@@ -301,6 +302,8 @@ export function Home() {
         </Container>
       </Section>
 
+      <ApiQuickStartSection />
+
       {/* Hidden link for scroll */}
       <span id="pricing" style={{
         display: 'block',
@@ -426,7 +429,7 @@ const steps = [
 const integrations = [
   {
     title: "Custom API",
-    description: <>Build custom integrations with the <Link color="mint" href="https://api.codevideo.io/swagger" target="_blank">CodeVideo API</Link>. Send the actions in JSON format and get a link to an mp4, markdown, html, or any other export formats of your content.</>,
+    description: <>Build custom integrations with the <Link color="mint" href="#api">CodeVideo API</Link>. Send your actions as JSON and get a link to the finished MP4 by email.</>,
     icon: MagicWandIcon,
   },
   {

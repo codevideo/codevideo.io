@@ -26,6 +26,8 @@ export function Footer() {
         {isDesktop && (
           <Flex grow="1" shrink="0" justify="center" align="center">
             <Link mx="2" href="https://studio.codevideo.io" target="_blank">Studio</Link>
+            <Link mx="2" href="https://docs.codevideo.io" target="_blank" rel="noopener">Docs</Link>
+            <Link mx="2" href="/#api">API</Link>
             <Link mx="2" href="https://github.com/codevideo" target="_blank">GitHub</Link>
             <Link mx="2" href="https://codevideo.substack.com" target="_blank">Substack</Link>
             <Link mx="2" href="https://medium.com/codevideo" target="_blank">Medium</Link>
@@ -49,6 +51,8 @@ export function Footer() {
             mb="2"
           >
             <Link href="https://studio.codevideo.io" target="_blank">Studio</Link>
+            <Link href="https://docs.codevideo.io" target="_blank" rel="noopener">Docs</Link>
+            <Link href="/#api">API</Link>
             <Link href="https://github.com/codevideo" target="_blank">GitHub</Link>
             <Link href="/blog">Blog</Link>
             <Link href="/guides">Guides</Link>
