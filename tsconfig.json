@@ -12,6 +12,9 @@
     "noEmit": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
+    "paths": {
+      "@fullstackcraftllc/growthkit/coupons": ["./node_modules/@fullstackcraftllc/growthkit/dist/coupons.d.ts"]
+    },
     "resolveJsonModule": true
   }
 }
