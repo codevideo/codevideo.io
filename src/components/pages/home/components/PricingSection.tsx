@@ -4,6 +4,14 @@ import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { CouponDialog } from '../../../shared/CouponDialog';
 import mixpanel from 'mixpanel-browser';
 import { useIsDesktop } from '../../../../hooks/useIsDesktop';
+import { appendCouponCodeToStripeLink, getDiscountedAmount } from '@fullstackcraftllc/growthkit';
+import { CouponBanner, CouponCampaignProvider, useCouponCode } from '@fullstackcraftllc/growthkit/coupons';
+
+const PRODUCT_NAME = 'codevideo.io';
+const couponEndpoint = process.env.GATSBY_GROWTHKIT_COUPON_ENDPOINT ||
+    'https://bvcarbcmpexuinhatrop.supabase.co/functions/v1/coupons-for-date-range';
+const usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+const formatPrice = (cents: number) => usd.format(cents / 100).replace(/\.00$/, '');
 
 const pricingTiers = [
     // {
@@ -63,7 +71,8 @@ const pricingTiers = [
     {
         name: "Creator",
         featured: true,
-        price: "49",
+        price: 4900,
+        campaignEligible: true,
         period: "/ mo.",
         tokens: "500",
         actionsLimit: "No action limit",
@@ -77,7 +86,8 @@ const pricingTiers = [
     },
     {
         name: "CodeVideo Lifetime",
-        price: "499",
+        price: 49900,
+        campaignEligible: true,
         tokens: "Infinite generations",
         actionsLimit: "No action limit",
         features: [
@@ -100,7 +110,36 @@ const tokenCosts = {
 };
 
 export function PricingSection() {
+    return (
+        <CouponCampaignProvider
+            productName={PRODUCT_NAME}
+            endpoint={couponEndpoint}
+            enabled={pricingTiers.some(tier => tier.campaignEligible && Boolean(tier.stripePaymentLink))}
+        >
+            <PricingPlans />
+        </CouponCampaignProvider>
+    );
+}
+
+function PricingPlans() {
     const isDesktop = useIsDesktop();
+    const coupon = useCouponCode(PRODUCT_NAME);
+    const orderedTiers = isDesktop ? pricingTiers : [pricingTiers[1], pricingTiers[0], pricingTiers[2]];
+    const offers = orderedTiers.map(tier => {
+        const regularLink = tier.stripePaymentLink;
+        const regularPrice = typeof tier.price === 'number' ? formatPrice(tier.price) : tier.price;
+        const checkoutLink = coupon && tier.campaignEligible && regularLink
+            ? appendCouponCodeToStripeLink(regularLink, coupon.couponCode)
+            : regularLink;
+        const salePrice = coupon && typeof tier.price === 'number' && checkoutLink !== regularLink
+            ? formatPrice(getDiscountedAmount(tier.price, coupon.discountPercent))
+            : null;
+        return { tier, regularPrice, salePrice, checkoutLink };
+    });
+    const discountedOffers = offers.filter(offer => offer.salePrice !== null);
+    const discountScope = discountedOffers.length === 2
+        ? 'Creator’s first month and CodeVideo Lifetime'
+        : discountedOffers[0]?.tier.period ? 'Creator’s first month' : 'CodeVideo Lifetime';
     const calculateUsage = (tokens: any) => {
         const numTokens = parseInt(tokens.replace(',', ''));
         return {
@@ -117,16 +156,12 @@ export function PricingSection() {
         mixpanel.track("Pricing Tier Clicked", { pricingTierName });
     };
 
-    // on mobile show the creator as the first option - swapp index 0 and 1
-    if (!isDesktop) {
-        const temp = pricingTiers[0];
-        pricingTiers[0] = pricingTiers[1];
-        pricingTiers[1] = temp;
-    }
-
     return (
+        <>
+        <CouponBanner productName={PRODUCT_NAME} enabled={discountedOffers.length > 0}
+            plansHref="#pricing" discountScope={discountScope} />
         <Grid columns={{ initial: "1", sm: "2", md: "3" }} gap="6" width="100%">
-            {pricingTiers.map(tier => {
+            {offers.map(({ tier, regularPrice, salePrice, checkoutLink }) => {
                 const usage = calculateUsage(tier.tokens);
                 return (
                     <Card key={tier.name} style={{
@@ -136,8 +171,9 @@ export function PricingSection() {
                             <Box>
                                 <Heading size="2" mb="2">{tier.name}</Heading>
                                 <Flex align="baseline" gap="1">
-                                    <Heading size="6">{tier.name !== "Pay As You Go" && <>$</>}{tier.price}</Heading>
-                                    {tier.period && <Text size="2" color="gray">{tier.period}</Text>}
+                                    {salePrice && <Text size="2" color="gray"><del>{regularPrice}</del></Text>}
+                                    <Heading size="6">{salePrice ?? regularPrice}</Heading>
+                                    {tier.period && <Text size="2" color="gray">{salePrice ? 'first month' : tier.period}</Text>}
                                 </Flex>
                                 <Flex direction="column">
                                     <Text size="1" color="gray">{tier.tokens} {tier.name !== "Pay As You Go" && tier.name !== "CodeVideo Lifetime" && <>tokens</>}</Text>
@@ -186,8 +222,8 @@ export function PricingSection() {
 
 
 
-                            {tier.stripePaymentLink ? (
-                                <Link href={tier.stripePaymentLink} target='_blank'>
+                            {checkoutLink ? (
+                                <Link href={checkoutLink} target='_blank'>
                                     <Button 
                                     style={{ cursor: 'pointer' }}
                                     onClick={() => handleOnClickTier(tier.name)} size="3" variant={tier.featured ? "solid" : "soft"} color={tier.name === "CodeVideo Lifetime" ? "amber" : "mint"}>
@@ -223,5 +259,6 @@ export function PricingSection() {
                 );
             })}
         </Grid>
+        </>
     );
 }
